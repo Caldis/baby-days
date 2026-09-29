@@ -120,6 +120,8 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 | Sparkle 更新后桌面仍显示旧画面或 "有新版本" | 系统复用旧扩展进程. 1.1.2 起旧进程检测到构建号不一致会自行退出; 必要时 pkill -f BabyDaysWidget |
 | 固定尺寸容器内文字被截成 "…" | WidgetKit 宿主渲染比扩展布局略宽, 离线渲染看不出. 这类文字加 lineLimit(1) + minimumScaleFactor |
 | actool 报 No simulator runtime version ... available | Xcode 26 构建 iOS 或 tvOS 需要匹配 SDK 的模拟器运行时: xcodebuild -downloadPlatform iOS 或 tvOS. 本机已装 iOS 26.3 与 tvOS 26.2 运行时 |
+| tvOS 归档报 requires a provisioning profile 或 Your team has no devices | 团队没有登记 Apple TV, 无法生成 tvOS 开发描述文件. release-appstore.sh 以 CODE_SIGNING_ALLOWED=NO 归档 tvOS, 用临时签名写入 App Group 权限后再由云端证书导出; 不签名直接导出会丢失 App Group 权限 |
+| 上传校验报 UIRequiredDeviceCapabilities 缺少 arm64 | tvOS 的 App 与顶部栏扩展已在 project.yml 声明 INFOPLIST_KEY_UIRequiredDeviceCapabilities: arm64, 新增 tvOS target 时照做 |
 | exportArchive 报 The request expected results but none were found | 云端签名首次遇到新能力时的偶发错误, 重试即可, 发布脚本已内置重试 |
 | xcrun simctl launch 卡住 | 本机模拟器偶发. 放到后台执行并限时, 截图用 xcrun simctl io <设备> screenshot |
 | 访达仍显示 BabyDays.app | 用户开启了显示扩展名, 且访达缓存了名称. LaunchServices 中已是 "宝宝多大", 重启访达后生效 |
@@ -138,5 +140,6 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 ## 9. 当前状态
 
 - 已发布 macOS 1.2.1 (GitHub Releases), 用户的 Mac 已通过 Sparkle 更新到该版本
-- App Store Connect 已创建 iOS 记录; tvOS 平台待用户添加; 商店文案, 截图与提交状态见 docs/app-store.md
+- App Store Connect 已创建记录; 已上传 iOS 与 tvOS 的 1.2.1 构建, 尚未提交审核; 商店文案, 截图与提交步骤见 docs/app-store.md
+- tvOS 版只经过编译, 离线渲染与上传校验, 尚未在模拟器或真机上运行验证 (本机 tvOS 模拟器启动 App 卡住)
 - 用户的 iPhone 上仍是旧的开发签名版本, 需要用 Xcode 重装或等待 TestFlight
