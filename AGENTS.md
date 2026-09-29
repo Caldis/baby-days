@@ -141,6 +141,7 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 
 - 已发布 macOS 1.2.1 (GitHub Releases), 用户的 Mac 已通过 Sparkle 更新到该版本
 - App Store Connect: iOS, macOS, tvOS 的 1.2.1 已于 2026-09-29 提交审核, 状态为等待审核, 发布方式为审核通过后自动发布. 审核联系人信息已在 App Store Connect 中填写, 不写入仓库
-- 中国大陆区需要 ICP 备案号, 用户尚未办理; 备案完成后在 App 信息中填写备案号, 并在销售范围中加回中国大陆
+- 中国大陆: 首次提交未包含中国大陆, 避免没有 ICP 备案号拖住其他地区的审核. 三个 App Store 版本都不访问网络, 属于可能豁免备案的离线应用, 但 Apple 未公布豁免清单. 审核通过后先在销售范围中加回中国大陆 (POST /iris/v2/appAvailabilities, CHN 设为 available); 若被要求备案号, 联系 Apple Developer Support 说明离线, 或由用户办理 ICP 备案后在 App 信息中填写
+- 仓库需保持公开: App Store 的隐私政策, 技术支持与营销网址, 以及 Mac 版 Sparkle 的更新清单和安装包都指向本仓库. 如需改为私有, 先新建公开仓库承接这些内容, 发布一版 Mac 更新把 UPDATE_FEED_URL 切过去, 在下一个 App Store 版本中更换网址, 最后再改私有
 - tvOS 版只经过编译, 离线渲染与上传校验, 尚未在模拟器或真机上运行验证 (本机 tvOS 模拟器启动 App 卡住)
 - 用户的 iPhone 上仍是旧的开发签名版本, 需要用 Xcode 重装或等待 TestFlight
