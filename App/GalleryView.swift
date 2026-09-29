@@ -29,7 +29,7 @@ struct GalleryView: View {
                 } else {
                     welcome
                 }
-                #if os(macOS)
+                #if os(macOS) && !APP_STORE
                 UpdateFooter()
                 #endif
             }
@@ -59,10 +59,12 @@ struct GalleryView: View {
         }
         #if os(macOS)
         .frame(minWidth: 640, minHeight: 600)
+        #if !APP_STORE
         .onOpenURL { url in
             // 小组件在有新版本时跳转 babydays://update
             if url.host == "update" { Updater.shared.checkForUpdates() }
         }
+        #endif
         #endif
     }
 
@@ -277,7 +279,7 @@ private struct GuideCard: View {
     }
 }
 
-#if os(macOS)
+#if os(macOS) && !APP_STORE
 /// 版本号与手动检查更新
 private struct UpdateFooter: View {
     @ObservedObject private var updater = Updater.shared

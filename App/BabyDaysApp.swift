@@ -14,11 +14,13 @@ struct BabyDaysApp: App {
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentMinSize)
         .defaultSize(width: 760, height: 900)
+        #if !APP_STORE
         .commands {
             CommandGroup(after: .appInfo) {
                 CheckForUpdatesCommand()
             }
         }
+        #endif
         #endif
     }
 }

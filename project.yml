@@ -101,6 +101,31 @@ targets:
         CODE_SIGN_ENTITLEMENTS: App/BabyDays.entitlements
         ENABLE_HARDENED_RUNTIME: YES
 
+  # Mac App Store 版本: 不含 Sparkle 与更新检查, 由 App Store 负责更新
+  BabyDays-macOS-AppStore:
+    templates: [App]
+    platform: macOS
+    dependencies:
+      - target: BabyDaysWidget-macOS-AppStore
+    settings:
+      base:
+        INFOPLIST_FILE: App/Info-macOS-AppStore.plist
+        APP_GROUP_ID: N7Z52F27XK.com.caldis.babydays
+        CODE_SIGN_ENTITLEMENTS: App/BabyDays-AppStore.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) APP_STORE
+
+  BabyDaysWidget-macOS-AppStore:
+    templates: [Widget]
+    platform: macOS
+    settings:
+      base:
+        CODE_SIGN_ENTITLEMENTS: Widget/BabyDaysWidget-AppStore.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+        APP_GROUP_ID: N7Z52F27XK.com.caldis.babydays
+        UPDATE_FEED_URL: ""
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) APP_STORE
+
   BabyDaysWidget-iOS:
     templates: [Widget]
     platform: iOS

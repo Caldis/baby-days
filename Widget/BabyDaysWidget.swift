@@ -31,7 +31,7 @@ struct AgeProvider: TimelineProvider {
         }
         #endif
         Task {
-            #if os(macOS)
+            #if os(macOS) && !APP_STORE
             let updateAvailable = await UpdateFeed.isUpdateAvailable()
             #else
             let updateAvailable = false

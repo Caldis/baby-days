@@ -1,10 +1,13 @@
 #if os(macOS)
 import AppKit
+#if !APP_STORE
 import Sparkle
+#endif
 import SwiftUI
 import WidgetKit
 
-/// Sparkle 自动更新: 启动时后台检查, 发现新版本后静默下载, 退出 App 时安装
+#if !APP_STORE
+/// Sparkle 自动更新: 启动时后台检查, 发现新版本后静默下载, 退出 App 时安装; Mac App Store 版本由 App Store 负责更新, 不编译此部分
 @MainActor
 final class Updater: ObservableObject {
     static let shared = Updater()
@@ -34,11 +37,15 @@ final class Updater: ObservableObject {
     }
 }
 
+#endif
+
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 更新安装后首次启动时刷新小组件, 清掉旧时间线中的 "有新版本" 提示
         WidgetCenter.shared.reloadAllTimelines()
+        #if !APP_STORE
         Updater.shared.checkInBackground()
+        #endif
     }
 
     /// 关闭窗口即退出, 已下载的更新在退出时安装
@@ -47,6 +54,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
+#if !APP_STORE
 /// 菜单栏中的 "检查更新…"
 struct CheckForUpdatesCommand: View {
     @ObservedObject private var updater = Updater.shared
@@ -56,4 +64,5 @@ struct CheckForUpdatesCommand: View {
             .disabled(!updater.canCheckForUpdates)
     }
 }
+#endif
 #endif
