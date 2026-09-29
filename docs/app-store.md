@@ -65,7 +65,7 @@ iOS 版本只支持 iPhone (TARGETED_DEVICE_FAMILY 为 1), 因此只需提供 iP
 | 营销网址 | https://github.com/Caldis/baby-days |
 | Apple TV 隐私政策 (文本) | 与 PRIVACY.md 内容一致的一段文字 |
 | 内容版权 | 不使用第三方内容 |
-| 审核联系人 | 已在 App Store Connect 中填写; 三个平台各有一份审核信息, 备注按平台区分 |
+| 审核联系人 | 已在 App Store Connect 中填写, 联系方式不写入公开仓库; 三个平台各有一份审核信息, 备注按平台区分 |
 | 版权 | 2026 BIAO CHEN |
 | 价格 | 免费 |
 | 出口合规 | Info.plist 已声明 ITSAppUsesNonExemptEncryption 为 NO, 上传后无需再回答 |
@@ -120,6 +120,7 @@ scripts/release-appstore.sh ios      # 只上传 iOS
 | 内容版权 | PATCH /iris/v1/apps/{id} (contentRightsDeclaration) |
 | 销售范围 | POST /iris/v2/appAvailabilities |
 | 截图 | POST /iris/v1/appScreenshotSets, POST /iris/v1/appScreenshots, 按 uploadOperations 上传, 再 PATCH uploaded 为 true |
-| 审核信息 | POST /iris/v1/appStoreReviewDetails (contactPhone 必填, 需带国家码) |
+| 审核信息 | POST 或 PATCH /iris/v1/appStoreReviewDetails (contactPhone 必填, 需带国家码) |
+| 提交审核 | 每个平台 POST /iris/v1/reviewSubmissions (platform 为 IOS, MAC_OS 或 TV_OS), POST /iris/v1/reviewSubmissionItems 关联版本, 再 PATCH reviewSubmissions 的 submitted 为 true |
 
 截图文件通过 claude-in-chrome 的 file_upload 放进页面中临时创建的 input, 再由脚本读取上传. App 隐私 (数据收集) 与价格在网页中点击完成
