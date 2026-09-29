@@ -77,8 +77,18 @@ cat > "$WORK/ExportOptions.plist" <<PLIST
 </dict>
 </plist>
 PLIST
-run xcodebuild -exportArchive -archivePath "$ARCHIVE" -exportOptionsPlist "$WORK/ExportOptions.plist" \
-  -exportPath "$WORK/upload" -allowProvisioningUpdates
+# 首次使用新能力 (如 App Group) 时, 云端签名偶尔返回空结果, 重试即可
+for attempt in {1..3}; do
+  if EXPORT_LOG=$(xcodebuild -exportArchive -archivePath "$ARCHIVE" -exportOptionsPlist "$WORK/ExportOptions.plist" \
+    -exportPath "$WORK/upload" -allowProvisioningUpdates 2>&1); then
+    break
+  fi
+  if (( attempt == 3 )); then
+    print -r -- "$EXPORT_LOG" | grep -E "error" || print -r -- "$EXPORT_LOG" | tail -20
+    fail "导出与上传公证失败"
+  fi
+  sleep 10
+done
 
 echo "4/6 等待公证结果"
 for attempt in {1..60}; do
