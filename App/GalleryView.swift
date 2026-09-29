@@ -186,6 +186,14 @@ private struct BirthdayForm: View {
             Text(title)
                 .font(.cute(20))
                 .foregroundStyle(palette.ink)
+            #if os(macOS)
+            // macOS 的日历无法快速跳转年月, 上方的日期输入框用于直接输入
+            DatePicker("宝宝的生日", selection: $date, in: ...Date.now, displayedComponents: .date)
+                .datePickerStyle(.stepperField)
+                .labelsHidden()
+                .environment(\.locale, Locale(identifier: "zh_Hans_CN"))
+                .environment(\.calendar, BabyAge.calendar)
+            #endif
             DatePicker("宝宝的生日", selection: $date, in: ...Date.now, displayedComponents: .date)
                 .datePickerStyle(.graphical)
                 .labelsHidden()
