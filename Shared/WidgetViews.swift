@@ -1,5 +1,7 @@
 import SwiftUI
+#if canImport(WidgetKit)
 import WidgetKit
+#endif
 
 /// 小组件尺寸, 与 WidgetFamily 的 systemSmall / systemMedium / systemLarge 对应
 enum WidgetSize: String, CaseIterable, Sendable {
@@ -144,7 +146,7 @@ struct SetupPrompt: View {
             .foregroundStyle(
                 LinearGradient(colors: [palette.heroTop, palette.heroBottom], startPoint: .top, endPoint: .bottom)
             )
-            .widgetAccentable()
+            .accentable()
     }
 
     private func texts(alignment: HorizontalAlignment) -> some View {
@@ -161,6 +163,18 @@ struct SetupPrompt: View {
 }
 
 // MARK: - 组件
+
+extension View {
+    /// 系统着色时归入强调色分组; tvOS 没有 WidgetKit, 原样返回
+    @ViewBuilder
+    func accentable() -> some View {
+        #if canImport(WidgetKit)
+        widgetAccentable()
+        #else
+        self
+        #endif
+    }
+}
 
 /// 标题行, 有新版本时右侧显示提示
 private struct CaptionRow: View {
@@ -201,7 +215,7 @@ struct UpdateBadge: View {
         .padding(.horizontal, 7)
         .padding(.vertical, 3)
         .background(Capsule().fill(palette.isMono ? Color.white.opacity(0.25) : palette.heroBottom))
-        .widgetAccentable()
+        .accentable()
     }
 }
 
@@ -221,7 +235,7 @@ struct HeroNumber: View {
                         LinearGradient(colors: [palette.heroTop, palette.heroBottom], startPoint: .top, endPoint: .bottom)
                     )
                     .shadow(color: palette.heroShadow, radius: 0, x: 0, y: size * 0.045)
-                    .widgetAccentable()
+                    .accentable()
                 Text(segment.unit)
                     .font(.cute(size * 0.4))
                     .foregroundStyle(palette.ink)
@@ -233,7 +247,7 @@ struct HeroNumber: View {
                         LinearGradient(colors: [palette.heroTop, palette.heroBottom], startPoint: .top, endPoint: .bottom)
                     )
                     .padding(.leading, size * 0.08)
-                    .widgetAccentable()
+                    .accentable()
             }
         }
         .lineLimit(1)
@@ -318,7 +332,7 @@ struct BirthdayCard: View {
                 .foregroundStyle(
                     LinearGradient(colors: [palette.heroTop, palette.heroBottom], startPoint: .top, endPoint: .bottom)
                 )
-                .widgetAccentable()
+                .accentable()
             Text(age.countdownTitle)
                 .font(.cute(12))
                 .foregroundStyle(palette.inkSoft)
@@ -360,7 +374,7 @@ struct ProgressTrack: View {
                         )
                     )
                     .frame(width: max(height, geo.size.width * progress))
-                    .widgetAccentable()
+                    .accentable()
             }
         }
         .frame(height: height)
@@ -370,10 +384,12 @@ struct ProgressTrack: View {
 /// 换个角度看年龄: 周龄, 已度过的小时数, 心跳次数估算
 struct FunFacts: View {
     let age: BabyAge
+    /// 字号与间距的整体缩放, Apple TV 上放大使用
+    var scale: CGFloat = 1
     @Environment(\.palette) private var palette
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 8 * scale) {
             tile(title: "周龄", segments: weekSegments)
             tile(title: "已经度过", segments: [(age.hoursText, "小时")])
             tile(title: "心跳约", segments: [age.heartbeats])
@@ -386,28 +402,28 @@ struct FunFacts: View {
     }
 
     private func tile(title: String, segments: [(value: String, unit: String)]) -> some View {
-        VStack(spacing: 3) {
+        VStack(spacing: 3 * scale) {
             Text(title)
-                .font(.cute(11))
+                .font(.cute(11 * scale))
                 .foregroundStyle(palette.inkSoft)
-            HStack(alignment: .firstTextBaseline, spacing: 1) {
+            HStack(alignment: .firstTextBaseline, spacing: 1 * scale) {
                 ForEach(Array(segments.enumerated()), id: \.offset) { _, segment in
                     Text(segment.value)
-                        .font(.hero(22))
+                        .font(.hero(22 * scale))
                         .foregroundStyle(palette.ink)
                     Text(segment.unit)
-                        .font(.cute(11))
+                        .font(.cute(11 * scale))
                         .foregroundStyle(palette.ink)
-                        .padding(.trailing, 2)
+                        .padding(.trailing, 2 * scale)
                 }
             }
             .lineLimit(1)
             .minimumScaleFactor(0.6)
         }
-        .padding(.vertical, 9)
-        .padding(.horizontal, 6)
+        .padding(.vertical, 9 * scale)
+        .padding(.horizontal, 6 * scale)
         .frame(maxWidth: .infinity)
-        .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(palette.chip))
+        .background(RoundedRectangle(cornerRadius: 14 * scale, style: .continuous).fill(palette.chip))
     }
 }
 

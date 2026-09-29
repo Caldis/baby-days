@@ -3,40 +3,81 @@ import Foundation
 import ImageIO
 import UniformTypeIdentifiers
 
-/// 彩色铅笔风格的布偶小蛇, 用于 App 图标; 画布 1024 × 1024, 坐标原点在左上角
+/// 彩色铅笔风格的布偶小蛇, 用于 App 图标与 Apple TV 素材; 小蛇在 1024 × 1024 的设计坐标中绘制, 原点在左上角
 enum PencilSnake {
     static let size = 1024
 
-    /// 小蛇图层, 透明背景
+    /// 画面组成部分, 各部分使用独立的随机种子, 组合方式不影响笔触
+    struct Parts: OptionSet {
+        let rawValue: Int
+        static let paper = Parts(rawValue: 1 << 0)
+        static let backdrop = Parts(rawValue: 1 << 1)
+        static let snake = Parts(rawValue: 1 << 2)
+    }
+
+    /// 纸张底色, 与 icon.json 的 fill 一致
+    static let paperColor = Color(0.98431, 0.96863, 0.91765)
+
+    /// iOS / macOS 图标的小蛇图层: 衬底圆 + 小蛇, 透明背景
     static func snakeLayer() -> CGImage {
-        draw { ctx, rng in
-            drawGroundShadow(ctx, &rng)
-            drawBody(ctx, &rng)
-            drawFace(ctx, &rng)
+        image(size: CGSize(width: 1024, height: 1024), parts: [.backdrop, .snake], snakeRect: CGRect(x: 0, y: 0, width: 1024, height: 1024))
+    }
+
+    /// iOS / macOS 图标的纸张纹理图层, 叠加在底色之上
+    static func paperLayer() -> CGImage {
+        draw(size: CGSize(width: 1024, height: 1024), scale: 1) { ctx, _ in
+            drawPaperGrain(ctx, size: CGSize(width: 1024, height: 1024))
         }
     }
 
-    /// 纸张纹理图层, 叠加在底色之上
-    static func paperLayer() -> CGImage {
-        draw { ctx, rng in
-            for _ in 0..<26000 {
-                let p = CGPoint(x: rng.next() * 1024, y: rng.next() * 1024)
-                let gray = 0.35 + rng.next() * 0.3
-                ctx.setFillColor(CGColor(srgbRed: gray, green: gray * 0.97, blue: gray * 0.85, alpha: 0.05 + rng.next() * 0.05))
-                let r = 0.6 + rng.next() * 1.2
-                ctx.fillEllipse(in: CGRect(x: p.x - r, y: p.y - r, width: 2 * r, height: 2 * r))
+    /// 任意尺寸的画面; snakeRect 为小蛇 1024 设计画布在目标画面中的位置 (单位为点)
+    static func image(size: CGSize, scale: CGFloat = 1, parts: Parts, snakeRect: CGRect) -> CGImage {
+        draw(size: size, scale: scale) { ctx, _ in
+            if parts.contains(.paper) {
+                ctx.setFillColor(paperColor.cg(1))
+                ctx.fill(CGRect(origin: .zero, size: size))
+                drawPaperGrain(ctx, size: size)
             }
-            for _ in 0..<420 {
-                let start = CGPoint(x: rng.next() * 1024, y: rng.next() * 1024)
-                let angle = rng.next() * .pi
-                let length = 10 + rng.next() * 26
-                let end = CGPoint(x: start.x + cos(angle) * length, y: start.y + sin(angle) * length)
-                ctx.setStrokeColor(CGColor(srgbRed: 0.55, green: 0.5, blue: 0.4, alpha: 0.05))
-                ctx.setLineWidth(0.8)
-                ctx.move(to: start)
-                ctx.addQuadCurve(to: end, control: CGPoint(x: (start.x + end.x) / 2 + rng.signed() * 5, y: (start.y + end.y) / 2 + rng.signed() * 5))
-                ctx.strokePath()
+            ctx.saveGState()
+            ctx.translateBy(x: snakeRect.minX, y: snakeRect.minY)
+            ctx.scaleBy(x: snakeRect.width / 1024, y: snakeRect.height / 1024)
+            if parts.contains(.snake) {
+                var rng = RNG(seed: 11)
+                drawGroundShadow(ctx, &rng)
             }
+            if parts.contains(.backdrop) {
+                var rng = RNG(seed: 23)
+                drawBackdrop(ctx, &rng)
+            }
+            if parts.contains(.snake) {
+                var rng = RNG(seed: 88172645)
+                drawBody(ctx, &rng)
+                drawFace(ctx, &rng)
+            }
+            ctx.restoreGState()
+        }
+    }
+
+    private static func drawPaperGrain(_ ctx: CGContext, size: CGSize) {
+        var rng = RNG(seed: 7)
+        let density = size.width * size.height / (1024 * 1024)
+        for _ in 0..<Int(26000 * density) {
+            let p = CGPoint(x: rng.next() * size.width, y: rng.next() * size.height)
+            let gray = 0.35 + rng.next() * 0.3
+            ctx.setFillColor(CGColor(srgbRed: gray, green: gray * 0.97, blue: gray * 0.85, alpha: 0.05 + rng.next() * 0.05))
+            let r = 0.6 + rng.next() * 1.2
+            ctx.fillEllipse(in: CGRect(x: p.x - r, y: p.y - r, width: 2 * r, height: 2 * r))
+        }
+        for _ in 0..<Int(420 * density) {
+            let start = CGPoint(x: rng.next() * size.width, y: rng.next() * size.height)
+            let angle = rng.next() * .pi
+            let length = 10 + rng.next() * 26
+            let end = CGPoint(x: start.x + cos(angle) * length, y: start.y + sin(angle) * length)
+            ctx.setStrokeColor(CGColor(srgbRed: 0.55, green: 0.5, blue: 0.4, alpha: 0.05))
+            ctx.setLineWidth(0.8)
+            ctx.move(to: start)
+            ctx.addQuadCurve(to: end, control: CGPoint(x: (start.x + end.x) / 2 + rng.signed() * 5, y: (start.y + end.y) / 2 + rng.signed() * 5))
+            ctx.strokePath()
         }
     }
 
@@ -107,10 +148,13 @@ enum PencilSnake {
         hatch(ctx, shadow, &rng, color: Color(0.55, 0.58, 0.45), angle: -0.5, spacing: 7, width: 2, alpha: 0.18)
     }
 
-    private static func drawBody(_ ctx: CGContext, _ rng: inout RNG) {
-        // 衬底
+    /// 身后的淡黄色衬底圆
+    private static func drawBackdrop(_ ctx: CGContext, _ rng: inout RNG) {
         hatch(ctx, backdropPath, &rng, color: Color(0.95, 0.90, 0.66), angle: -0.7, spacing: 5, width: 2.6, alpha: 0.36)
         sketchOutline(ctx, backdropPath, &rng, color: Color(0.86, 0.78, 0.48), alpha: 0.35, passes: 2, jitter: 3)
+    }
+
+    private static func drawBody(_ ctx: CGContext, _ rng: inout RNG) {
 
         // 身体与颈部
         let green = greenBodyPath
@@ -411,16 +455,15 @@ enum PencilSnake {
 
     // MARK: - 画布
 
-    private static func draw(_ body: (CGContext, inout RNG) -> Void) -> CGImage {
+    private static func draw(size: CGSize, scale: CGFloat, _ body: (CGContext, CGSize) -> Void) -> CGImage {
         let ctx = CGContext(
-            data: nil, width: size, height: size, bitsPerComponent: 8, bytesPerRow: 0,
+            data: nil, width: Int(size.width * scale), height: Int(size.height * scale), bitsPerComponent: 8, bytesPerRow: 0,
             space: CGColorSpace(name: CGColorSpace.sRGB)!,
             bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
         )!
-        ctx.translateBy(x: 0, y: CGFloat(size))
-        ctx.scaleBy(x: 1, y: -1)
-        var rng = RNG(seed: 88172645)
-        body(ctx, &rng)
+        ctx.translateBy(x: 0, y: size.height * scale)
+        ctx.scaleBy(x: scale, y: -scale)
+        body(ctx, size)
         return ctx.makeImage()!
     }
 

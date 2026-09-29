@@ -2,21 +2,25 @@
 
 ## 概览
 
-宝宝多大 (工程名 BabyDays) 是一组 iOS 与 macOS 桌面小组件, 显示宝宝从出生至今的年龄与下一个生日的倒计时. 出生日期在 App 中设置, 保存在 App Group 共享的 UserDefaults 中, 小组件读取同一份数据. 系统要求为 iOS 17 及以上与 macOS 14 及以上
+宝宝多大 (工程名 BabyDays) 是一组 iOS 与 macOS 桌面小组件, 以及一个 tvOS App, 显示宝宝从出生至今的年龄与下一个生日的倒计时. 出生日期在 App 中设置, 保存在 App Group 共享的 UserDefaults 中, 小组件与 tvOS 顶部栏扩展读取同一份数据. 系统要求为 iOS 17, macOS 14 与 tvOS 17 及以上. iOS 版本只支持 iPhone
 
 小组件使用 StaticConfiguration, kind 为 BabyDaysWidget, 名称为 "宝宝多大", 描述为 "看看宝宝今天多大啦", 支持 systemSmall, systemMedium, systemLarge 三种尺寸. App 的显示名在中文系统为 "宝宝多大", 其他语言为 "BabyDays", 两者分别写在 Resources/Localization 下 zh-Hans.lproj 与 en.lproj 的 InfoPlist.strings 中; macOS 的 Info.plist 另外声明 LSHasLocalizedDisplayName, Finder, 程序坞与启动台据此显示本地化名称. App 主界面 App/GalleryView.swift 显示标题, 出生日期, 当天三种尺寸的预览与 "放到桌面上" 三步说明, macOS 与 iOS 各有一套步骤文案. macOS App 启动时与 App 回到前台时调用 WidgetCenter.shared.reloadAllTimelines() 刷新全部小组件时间线, 更新安装后的首次启动因此清掉旧时间线中的 "有新版本" 提示
 
-代码分为 App, Widget, Shared, Tools Render 四个部分. App, Widget 与 Tools Render 都依赖 Shared, App 另外依赖 Widget
+代码分为 App, Widget, TV, TopShelf, TVShared, Shared, Tools Render 七个部分. 所有部分都依赖 Shared; TV 与 TopShelf 另外依赖 TVShared; App 内嵌 Widget, TV 内嵌 TopShelf
 
 ```mermaid
 flowchart LR
     APP[App] --> WIDGET[Widget]
     APP --> SHARED[Shared]
     WIDGET --> SHARED
-    TOOLS[Tools Render] --> SHARED
+    TV[TV] --> TOPSHELF[TopShelf]
+    TV --> TVSHARED[TVShared]
+    TOPSHELF --> TVSHARED
+    TVSHARED --> SHARED
+    TOOLS[Tools Render] --> TVSHARED
 ```
 
-图中箭头从依赖方指向所依赖的部分. App 与 Widget 在各自的 target 中编译 Shared 目录的源码, App target 依赖并内嵌小组件扩展. Tools/Render 是离线渲染工具, 位于 Xcode 工程之外, 只在 scripts/render.sh 中与 Shared 一起用 swiftc 编译
+图中箭头从依赖方指向所依赖的部分. 各 target 在自己的编译单元中编译 Shared 与 TVShared 的源码, 不使用 framework. Tools/Render 是离线渲染工具, 位于 Xcode 工程之外, 只在 scripts/render.sh 中与 Shared, TVShared 一起用 swiftc 编译. Shared 中的 WidgetKit 调用 (widgetAccentable) 经 accentable() 包装, 在没有 WidgetKit 的 tvOS 上原样返回
 
 ## 目录结构
 
@@ -151,7 +155,7 @@ Xcode 构建时, actool 从 .icon 生成 iOS 26 与 macOS 26 的 Liquid Glass �
 xcodegen generate
 ```
 
-工程包含 4 个 target. targetTemplates 中的 App 与 Widget 两个模板承载共用的源文件与构建设置, 各 target 只声明平台与平台专属的设置
+工程包含 6 个 target. iOS 与 macOS 的 4 个 target 通过 targetTemplates 中的 App 与 Widget 两个模板共享源文件与构建设置, 各 target 只声明平台与平台专属的设置; tvOS 的 2 个 target 单独定义
 
 | target | 类型 | 平台 | Bundle ID |
 |---|---|---|---|
@@ -159,6 +163,8 @@ xcodegen generate
 | BabyDays-macOS | App | macOS | com.caldis.babydays |
 | BabyDaysWidget-iOS | 小组件扩展 | iOS | com.caldis.babydays.widget |
 | BabyDaysWidget-macOS | 小组件扩展 | macOS | com.caldis.babydays.widget |
+| BabyDays-tvOS | App | tvOS | com.caldis.babydays |
+| BabyDaysTopShelf-tvOS | 顶部栏扩展 | tvOS | com.caldis.babydays.topshelf |
 
 签名方式为自动签名, 开发团队为 N7Z52F27XK. macOS 的两个 target 开启 App Sandbox 与 Hardened Runtime, 权限文件分别为 App/BabyDays.entitlements 与 Widget/BabyDaysWidget.entitlements
 
@@ -182,6 +188,21 @@ macOS 使用团队 ID 前缀的 App Group, 代码签名本身即可授权访问,
 GalleryView 用 @AppStorage 绑定同一个键. 未设置生日时显示欢迎页与 BirthdayForm (图形日历, 日期上限为当天); 设置后显示预览, 标题下方的 "修改生日" 按钮以 sheet 形式打开同一个 BirthdayForm. 保存后调用 WidgetCenter.shared.reloadAllTimelines()
 
 小组件的 AgeEntry.birth 为可选值. getTimeline 每次读取 BabyProfile.birthDate, 未设置时 BabyDaysWidgetView 显示 SetupPrompt ("打开 App 设置宝宝的生日"). placeholder 与小组件库预览 (getSnapshot) 在未设置时使用 BirthDate.sample(), 即当天往前 312 天
+
+## Apple TV
+
+tvOS 没有 WidgetKit. Apple TV 版由全屏 App 与顶部栏扩展组成, 两者共用 TVShared/TVAgeBoard.swift
+
+| 组件 | 位置 | 内容 |
+|---|---|---|
+| TVAgeBoard | TVShared/TVAgeBoard.swift | 左侧小蛇, 右侧标题, 主数字, 补充说明, 趣味换算与生日进度; fullScreen 样式为 1920 × 1080, banner 样式为 1940 × 692 并省去趣味换算 |
+| TVRootView | TV/TVApp.swift | 已设置生日时全屏显示 TVAgeBoard, 右下角 "修改生日" 按钮; 未设置时显示 TVSetupView |
+| TVSetupView | TV/TVApp.swift | Form 中的年, 月, 日三个 Picker (年份范围为近 18 年), 组合日期不晚于当天; tvOS 没有 DatePicker |
+| ContentProvider | TopShelf/ContentProvider.swift | TVTopShelfContentProvider. 已设置生日时返回一条 TVTopShelfInsetContent, 图片为 BannerRenderer 渲染的 1x 与 2x PNG; 未设置时返回 nil, 系统显示静态顶部栏图 |
+
+BannerRenderer 按当前深浅色选择配色, 把横幅写入 App Group 容器的 TopShelf 目录, 文件名包含累计天数与深浅色, 天数变化时 URL 随之变化. App 保存生日与回到前台时调用 TVTopShelfContentProvider.topShelfContentDidChange() 请求系统刷新顶部栏. 顶部栏条目的动作为 babydays://open, tvOS App 注册了 babydays URL scheme
+
+tvOS 图标使用 Resources/TVIcon.xcassets 中的 brandassets: App Icon (400 × 240, 1x 与 2x) 与 App Icon - App Store (1280 × 768) 各含 Front (小蛇) 与 Back (纸张与衬底圆) 两层, 聚焦时产生视差; Top Shelf Image (1920 × 720) 与 Top Shelf Image Wide (2320 × 720) 为左侧小蛇, 右侧 "宝宝多大" 与 "看看宝宝今天多大啦" 的静态图. App 与横幅中的小蛇来自 Resources/TVShared.xcassets 的 Snake 图片. 以上素材由 scripts/render.sh tv 生成
 
 ## 自动更新
 
@@ -286,6 +307,10 @@ xcodebuild -downloadPlatform iOS
 ### 生日保存在本机 App Group
 
 生日是 App 中唯一的设置项, 小组件只需要读取. App Group 中的 UserDefaults 是 App 与小组件扩展共享数据的最小方案, 不需要网络与账号. 每个小组件单独配置生日的 AppIntent 方案可以支持多个宝宝, 代价是每添加一个小组件都要重新选择日期, 当前留作备选
+
+### Apple TV 用全屏 App 与顶部栏替代小组件
+
+tvOS 没有 WidgetKit, 首页上最接近小组件的位置是 App 位于首行时的顶部栏. 顶部栏扩展只能提供图片, 横幅因此在扩展中用 ImageRenderer 渲染 TVAgeBoard 得到, 与全屏 App 共用同一个视图. 生日在 Apple TV 上单独设置, 跨设备同步需要 iCloud 能力, 会给 Developer ID 分发的 Mac 版带来描述文件依赖, 当前留作备选
 
 ### 平台拆成 4 个独立 target
 

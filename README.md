@@ -1,6 +1,6 @@
 # 宝宝多大
 
-宝宝多大是一组 iPhone 与 Mac 桌面小组件, 显示宝宝从出生至今的年龄, 以及距下一个生日的倒计时. 宝宝的生日在 App 中设置. 系统要求为 iOS 17 及以上与 macOS 14 及以上
+宝宝多大是一组 iPhone 与 Mac 桌面小组件, 另有 Apple TV 版本, 显示宝宝从出生至今的年龄, 以及距下一个生日的倒计时. 宝宝的生日在 App 中设置. 系统要求为 iOS 17, macOS 14 与 tvOS 17 及以上
 
 ![未满周岁时的白天配色](docs/images/widgets-infant.png)
 
@@ -89,9 +89,13 @@ xcodebuild -downloadPlatform iOS
 
 首次打开 App 时, 页面中央是一张生日日历, 选好日期后点 "开始" 即可. 设置完成后, 标题下方的 "修改生日" 按钮用于修改. 生日只保存在本机, App 与小组件通过 App Group 共享. 尚未设置生日时, 小组件显示 "打开 App 设置宝宝的生日", 点击小组件即打开 App
 
+## Apple TV
+
+Apple TV 版打开后全屏显示宝宝的年龄, 右下角的 "修改生日" 用于设置. 首次打开时用遥控器依次选择年, 月, 日并保存. 把 App 放在首页第一行时, 顶部栏显示一张实时的年龄横幅
+
 ## 分享给其他人
 
-Mac 用户可以直接下载 [GitHub Releases](https://github.com/Caldis/baby-days/releases/latest) 中公证后的 DMG, 装好后同样享有自动更新. iPhone 版目前以开发签名安装, 只能装在自己的设备上; 分享给其他 iPhone 用户需要走 TestFlight 或 App Store, 这两条路径尚未配置
+Mac 用户可以直接下载 [GitHub Releases](https://github.com/Caldis/baby-days/releases/latest) 中公证后的 DMG, 装好后同样享有自动更新. iPhone 与 Apple TV 版本通过 App Store 与 TestFlight 分发, 上架资料与流程见 docs/app-store.md
 
 ## 修改视觉
 

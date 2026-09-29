@@ -9,13 +9,15 @@ import UniformTypeIdentifiers
 /// 用法: render <仓库根目录> snapshots <输出目录>   全部场景 × 配色 × 尺寸的检查图
 ///      render <仓库根目录> docs <输出目录>        README 配图
 ///      render <仓库根目录> icon <AppIcon.icon 目录> 图标图层
+///      render <仓库根目录> tv <Resources 目录>       Apple TV 图标, 顶部栏静态图与小蛇图片
+///      render <仓库根目录> appstore <输出目录>     App Store 截图
 @main
 struct Render {
     @MainActor
     static func main() throws {
         let arguments = CommandLine.arguments
         guard arguments.count == 4 else {
-            print("usage: render <repo-root> snapshots|docs|icon <output-dir>")
+            print("usage: render <repo-root> snapshots|docs|icon|tv|appstore <output-dir>")
             exit(1)
         }
         let root = URL(fileURLWithPath: arguments[1])
@@ -29,6 +31,8 @@ struct Render {
         case "snapshots": try renderSnapshots(to: output)
         case "docs": try renderDocs(to: output)
         case "icon": try IconArtwork.render(to: output)
+        case "tv": try TVArtwork.render(to: output)
+        case "appstore": try AppStoreArt.render(to: output)
         default:
             print("unknown mode \(arguments[2])")
             exit(1)
@@ -78,6 +82,29 @@ struct Render {
             try write(setup, scale: 2, to: output.appendingPathComponent("setup-\(paletteName).png"))
         }
         try write(IconArtwork.Composite(), scale: 0.25, to: output.appendingPathComponent("icon.png"))
+        try renderTV(to: output)
+    }
+
+    /// Apple TV 全屏页面与顶部栏横幅
+    @MainActor
+    static func renderTV(to output: URL) throws {
+        let snake = Image(decorative: PencilSnake.image(
+            size: CGSize(width: 512, height: 512), scale: 2, parts: [.snake],
+            snakeRect: CGRect(x: 0, y: 0, width: 512, height: 512)
+        ), scale: 2)
+        for (paletteName, palette) in [("day", Palette.day), ("night", Palette.night)] {
+            for scenario in [scenarios[0], scenarios[4]] {
+                let board = TVAgeBoard(age: age(after: scenario.offset), snake: snake)
+                    .frame(width: 1920, height: 1080)
+                    .environment(\.palette, palette)
+                try write(board, scale: 1, to: output.appendingPathComponent("tv-\(scenario.name)-\(paletteName).png"))
+            }
+            let banner = TVAgeBoard(age: age(after: scenarios[0].offset), snake: snake, style: .banner)
+                .frame(width: 1940, height: 692)
+                .environment(\.palette, palette)
+            try write(banner, scale: 1, to: output.appendingPathComponent("tv-banner-\(paletteName).png"))
+        }
+        try write(TVArtwork.ShelfArt(size: CGSize(width: 1920, height: 720)), scale: 1, to: output.appendingPathComponent("tv-shelf.png"))
     }
 
     @MainActor
