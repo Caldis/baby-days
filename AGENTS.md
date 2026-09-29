@@ -8,7 +8,7 @@
 
 | 平台 | 形态 | 分发方式 |
 |---|---|---|
-| macOS 14+ | 桌面小组件 + 预览 App | Developer ID 签名, Apple 公证, GitHub Releases + Sparkle 自动更新 |
+| macOS 14+ | 桌面小组件 + 预览 App | 两个渠道: GitHub Releases (Developer ID, Sparkle 自动更新, target BabyDays-macOS) 与 Mac App Store (target BabyDays-macOS-AppStore, 编译条件 APP_STORE, 不含 Sparkle 与更新检查) |
 | iOS 17+ (仅 iPhone) | 主屏幕小组件 + 预览 App | App Store / TestFlight |
 | tvOS 17+ | 全屏 App + 顶部栏横幅 (Top Shelf) | App Store / TestFlight |
 
@@ -31,7 +31,7 @@
 
 ## 3. 工程与目录
 
-project.yml 是工程定义源头, 修改后执行 xcodegen generate, 生成的 BabyDays.xcodeproj 一并提交. 6 个 target: BabyDays-iOS, BabyDays-macOS, BabyDays-tvOS, BabyDaysWidget-iOS, BabyDaysWidget-macOS, BabyDaysTopShelf-tvOS
+project.yml 是工程定义源头, 修改后执行 xcodegen generate, 生成的 BabyDays.xcodeproj 一并提交. 8 个 target: BabyDays-iOS, BabyDays-macOS, BabyDays-macOS-AppStore, BabyDays-tvOS, BabyDaysWidget-iOS, BabyDaysWidget-macOS, BabyDaysWidget-macOS-AppStore, BabyDaysTopShelf-tvOS. 与 Sparkle 相关的代码 (Updater, 检查更新菜单与按钮, 小组件的更新提示) 包在 #if !APP_STORE 中
 
 | 目录 | 内容 |
 |---|---|
@@ -89,14 +89,14 @@ scripts/release-mac.sh 1.3.0 "- 更新说明第一条
 
 发布后在本机验证自动更新: 打开 babydays://update 弹出 Sparkle 窗口, 用辅助功能点击 "安装更新" 与 "安装并重启应用" (第 6 节), 再确认 /Applications/BabyDays.app 的 CFBundleShortVersionString
 
-### iOS 与 tvOS (App Store Connect)
+### iOS, tvOS 与 Mac App Store (App Store Connect)
 
 ```sh
-scripts/release-appstore.sh        # iOS 与 tvOS
-scripts/release-appstore.sh ios    # 只传 iOS
+scripts/release-appstore.sh          # iOS, tvOS 与 macOS
+scripts/release-appstore.sh macos    # 只传 Mac App Store 版本
 ```
 
-版本号沿用 project.yml 的 MARKETING_VERSION (三个平台共用一个版本号), 构建号取当前时间. 上传后的文案, 截图与提交步骤见 docs/app-store.md. tvOS 构建需要先在 App Store Connect 为该 App 添加 tvOS 平台. 提交审核, 回复审核意见, 修改价格等在 App Store Connect 网页中完成, 需要用户操作时说明具体页面与字段
+版本号沿用 project.yml 的 MARKETING_VERSION (所有平台共用一个版本号), 构建号取当前时间. 上传后在 App Store Connect 中把三个平台待提交版本的版本号改成同一值并选择构建. 文案, 截图与接口调用方法见 docs/app-store.md: 用户在 claude-in-chrome 控制的 Chrome 中登录后, 通过页面内 fetch 调用 /iris/v1 接口完成大部分填写, App 隐私与价格用网页点击完成. Apple 账号密码由用户本人输入
 
 ### 版本号规则
 
@@ -140,6 +140,7 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 ## 9. 当前状态
 
 - 已发布 macOS 1.2.1 (GitHub Releases), 用户的 Mac 已通过 Sparkle 更新到该版本
-- App Store Connect 已创建记录; 已上传 iOS 与 tvOS 的 1.2.1 构建, 尚未提交审核; 商店文案, 截图与提交步骤见 docs/app-store.md
+- App Store Connect: iOS, macOS, tvOS 的 1.2.1 均已选好构建, 填好文案, 截图, 分级, 类别, 隐私 (不收集数据), 价格 (免费) 与销售范围 (除中国大陆外); 等待用户填写审核联系电话后提交审核
+- 中国大陆区需要 ICP 备案号, 用户尚未办理; 备案完成后在 App 信息中填写备案号, 并在销售范围中加回中国大陆
 - tvOS 版只经过编译, 离线渲染与上传校验, 尚未在模拟器或真机上运行验证 (本机 tvOS 模拟器启动 App 卡住)
 - 用户的 iPhone 上仍是旧的开发签名版本, 需要用 Xcode 重装或等待 TestFlight

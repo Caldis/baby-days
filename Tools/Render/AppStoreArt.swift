@@ -14,6 +14,15 @@ enum AppStoreArt {
                 .environment(\.palette, palette)
             try Render.write(page, scale: 3, to: output.appendingPathComponent("\(name).png"))
         }
+        let macPages: [(String, String, String, DateComponents, Palette)] = [
+            ("mac-1", "Mac 桌面上的宝宝年龄", "小, 中, 大三种尺寸, 每天 0 点自动更新", Render.scenarios[0].offset, .day),
+            ("mac-2", "满周岁后显示几岁几个月", "深色模式下是林间夜空", Render.scenarios[4].offset, .night),
+        ]
+        for (name, title, subtitle, offset, palette) in macPages {
+            let page = MacPage(title: title, subtitle: subtitle, age: Render.age(after: offset))
+                .environment(\.palette, palette)
+            try Render.write(page, scale: 2, to: output.appendingPathComponent("\(name).png"))
+        }
         let snake = Image(decorative: PencilSnake.image(
             size: CGSize(width: 512, height: 512), scale: 2, parts: [.snake],
             snakeRect: CGRect(x: 0, y: 0, width: 512, height: 512)
@@ -27,6 +36,43 @@ enum AppStoreArt {
                 .frame(width: 1920, height: 1080)
                 .environment(\.palette, palette)
             try Render.write(board, scale: 1, to: output.appendingPathComponent("\(name).png"))
+        }
+    }
+
+    /// 一页 Mac 截图 (1440 × 900 点, 输出 2880 × 1800): 顶部标题, 下方为三种尺寸的小组件
+    private struct MacPage: View {
+        let title: String
+        let subtitle: String
+        let age: BabyAge
+        @Environment(\.palette) private var palette
+
+        var body: some View {
+            VStack(spacing: 40) {
+                VStack(spacing: 14) {
+                    Text(title)
+                        .font(.cute(52))
+                        .foregroundStyle(palette.ink)
+                    Text(subtitle)
+                        .font(.cute(24))
+                        .foregroundStyle(palette.inkSoft)
+                }
+                HStack(alignment: .top, spacing: 26) {
+                    VStack(alignment: .leading, spacing: 26) {
+                        card(.small)
+                        card(.medium)
+                    }
+                    card(.large)
+                }
+                .scaleEffect(1.3)
+                .frame(height: 500)
+            }
+            .frame(width: 1440, height: 900)
+            .background(TVBackground())
+        }
+
+        private func card(_ size: WidgetSize) -> some View {
+            WidgetCard(age: age, size: size)
+                .shadow(color: .black.opacity(palette.isNight ? 0.4 : 0.12), radius: 18, y: 10)
         }
     }
 
