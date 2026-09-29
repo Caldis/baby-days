@@ -683,6 +683,7 @@
 				CODE_SIGN_ENTITLEMENTS = TopShelf/BabyDaysTopShelf.entitlements;
 				INFOPLIST_FILE = TopShelf/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -813,6 +814,7 @@
 				CODE_SIGN_ENTITLEMENTS = TopShelf/BabyDaysTopShelf.entitlements;
 				INFOPLIST_FILE = TopShelf/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -861,6 +863,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -904,6 +907,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

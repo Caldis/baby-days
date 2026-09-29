@@ -144,6 +144,7 @@ targets:
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
         ASSETCATALOG_COMPILER_APPICON_NAME: App Icon & Top Shelf Image
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        INFOPLIST_KEY_UIRequiredDeviceCapabilities: arm64
         CODE_SIGN_ENTITLEMENTS: TV/BabyDays-tvOS.entitlements
         APP_GROUP_ID: group.com.caldis.babydays
         TARGETED_DEVICE_FAMILY: "3"
@@ -164,6 +165,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.caldis.babydays.topshelf
         INFOPLIST_FILE: TopShelf/Info.plist
         INFOPLIST_KEY_CFBundleDisplayName: 宝宝多大
+        INFOPLIST_KEY_UIRequiredDeviceCapabilities: arm64
         CODE_SIGN_ENTITLEMENTS: TopShelf/BabyDaysTopShelf.entitlements
         APP_GROUP_ID: group.com.caldis.babydays
         TARGETED_DEVICE_FAMILY: "3"
