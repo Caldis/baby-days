@@ -43,14 +43,36 @@ cat > "$WORK/ExportOptions.plist" <<PLIST
 </plist>
 PLIST
 
+# tvOS 归档用的临时权限文件: 团队中没有登记 Apple TV 设备, 无法生成 tvOS 开发描述文件,
+# 因此 tvOS 以不签名方式归档, 再用本文件做临时签名写入 App Group 权限, 导出时由云端证书重新签名并保留权限
+cat > "$WORK/tvos.entitlements" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.caldis.babydays</string>
+	</array>
+</dict>
+</plist>
+PLIST
+
 for PLATFORM in $PLATFORMS; do
   ARCHIVE=$WORK/$PLATFORM.xcarchive
+  SIGNING=(-allowProvisioningUpdates)
+  [[ $PLATFORM == tvOS ]] && SIGNING=(CODE_SIGNING_ALLOWED=NO)
   echo "归档 $PLATFORM $VERSION ($BUILD_NUMBER)"
   if ! LOG=$(xcodebuild archive -project BabyDays.xcodeproj -scheme "BabyDays-$PLATFORM" -configuration Release \
     -destination "generic/platform=$PLATFORM" -archivePath "$ARCHIVE" -derivedDataPath "$WORK/DerivedData" \
-    -allowProvisioningUpdates CURRENT_PROJECT_VERSION=$BUILD_NUMBER 2>&1); then
+    $SIGNING CURRENT_PROJECT_VERSION=$BUILD_NUMBER 2>&1); then
     print -r -- "$LOG" | grep -E "error" || print -r -- "$LOG" | tail -20
     fail "$PLATFORM 归档失败"
+  fi
+  if [[ $PLATFORM == tvOS ]]; then
+    APP=$ARCHIVE/Products/Applications/BabyDays.app
+    codesign -f -s - --entitlements "$WORK/tvos.entitlements" "$APP/PlugIns/BabyDaysTopShelf.appex"
+    codesign -f -s - --entitlements "$WORK/tvos.entitlements" "$APP"
   fi
 
   echo "上传 $PLATFORM 到 App Store Connect"
