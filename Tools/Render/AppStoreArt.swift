@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// App Store 截图: iPhone 1290 × 2796 (6.7 / 6.9 英寸), Apple TV 1920 × 1080
+/// App Store 截图: iPhone 1284 × 2778 (6.5 英寸栏位), Apple TV 1920 × 1080
 enum AppStoreArt {
     @MainActor
     static func render(to output: URL) throws {
@@ -38,13 +38,13 @@ enum AppStoreArt {
             ZStack {
                 LinearGradient(colors: [palette.skyTop, palette.skyBottom], startPoint: .top, endPoint: .bottom)
                 if palette.isNight {
-                    Crescent().fill(palette.sparkle).rotationEffect(.degrees(-20)).frame(width: 44, height: 44).position(x: 384, y: 56)
+                    Crescent().fill(palette.sparkle).rotationEffect(.degrees(-20)).frame(width: 44, height: 44).position(x: 382, y: 56)
                 } else {
-                    Cloud().fill(palette.cloud).frame(width: 150, height: 75).position(x: 400, y: 60)
+                    Cloud().fill(palette.cloud).frame(width: 150, height: 75).position(x: 398, y: 60)
                 }
-                Cloud().fill(palette.cloud).frame(width: 180, height: 90).position(x: 30, y: 890)
+                Cloud().fill(palette.cloud).frame(width: 180, height: 90).position(x: 30, y: 884)
                 Twinkle().fill(palette.sparkle).frame(width: 26, height: 26).position(x: 36, y: 70)
-                Twinkle().fill(palette.sparkleAlt).frame(width: 16, height: 16).position(x: 404, y: 470)
+                Twinkle().fill(palette.sparkleAlt).frame(width: 16, height: 16).position(x: 402, y: 470)
             }
         }
     }
@@ -74,7 +74,7 @@ enum AppStoreArt {
                 }
                 Spacer(minLength: 0)
             }
-            .frame(width: 430, height: 932)
+            .frame(width: 428, height: 926)
             .background(PhoneBackground())
         }
     }

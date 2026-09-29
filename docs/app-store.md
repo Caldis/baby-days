@@ -80,7 +80,7 @@ scripts/render.sh appstore
 
 | 文件 | 尺寸 | 上传位置 |
 |---|---|---|
-| iphone-1.png, iphone-2.png, iphone-3.png | 1290 × 2796 | iPhone 6.9 英寸显示屏 |
+| iphone-1.png, iphone-2.png, iphone-3.png | 1284 × 2778 | iPhone 6.5 英寸显示屏 |
 | tv-1.png, tv-2.png | 1920 × 1080 | Apple TV |
 
 ## 上传与提交
