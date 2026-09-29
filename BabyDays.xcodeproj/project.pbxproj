@@ -1,0 +1,874 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0114FE639981345F8C255595 /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
+		087C21614953E3550AFA5EAD /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
+		0C230769F509366AD8CF68D3 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 88D6A4AC13FCED85D5A1C9C9 /* AppIcon.icon */; };
+		163D85FBE7B705CB903F1B6F /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
+		19B036DBB1F7E2D279FCEEA8 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
+		1C1FA579E8D7392EBA8189FB /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
+		1F536F6CC8FC377333274442 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C421F113884D2FD2A73B5 /* Updater.swift */; };
+		2672869FA5261815AF0A8D81 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68CFCCA75FC5797CC4E247 /* GalleryView.swift */; };
+		2B4CB2C9081B7004C28DC16B /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 88D6A4AC13FCED85D5A1C9C9 /* AppIcon.icon */; };
+		30550F42538C5650948AD546 /* BabyDaysWidget-macOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C3D54712B8B857E06731C70F /* BabyDaysWidget-macOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3490386E310354D279FFF94A /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
+		35D28C6CE0A4CA7F61986889 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
+		443A315C5A73F7E8316DFB56 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68CFCCA75FC5797CC4E247 /* GalleryView.swift */; };
+		47FC756A10D8614C60ECDA5A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B81C9E4F6BC9C9063C685250 /* InfoPlist.strings */; };
+		4A28258B37CB00B9BA0133A3 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
+		4FD292BB1FC716D5B21CFC01 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0BEB119AC346575F294791 /* Theme.swift */; };
+		50FA9A869BB4309EEAB793BC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0BEB119AC346575F294791 /* Theme.swift */; };
+		5CBD383984F707CEB9ACBFB7 /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
+		5D01EE61320F6213E197DA3B /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C421F113884D2FD2A73B5 /* Updater.swift */; };
+		648762603AC801B2A79FB589 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
+		6806DADC6FAB14E3F68856B3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0BEB119AC346575F294791 /* Theme.swift */; };
+		6A20A6593BEA3C5B47930B6D /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 97DEF3B07E064FF3AA75D12A /* Sparkle */; };
+		6DB8F4CCA8B27D3022A2D356 /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
+		6E575C742F050C93D9365813 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0BEB119AC346575F294791 /* Theme.swift */; };
+		7776FF7325F403EF8FE2A8D8 /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
+		81124A6A54628D539119F77C /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
+		8B50C2723B2F171563D70AD2 /* BabyDaysApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810606B02BF8DCC10BCC53E9 /* BabyDaysApp.swift */; };
+		9ABC19ECB372FA6A0B4170B3 /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
+		9C342D26C68E5B1A6A0FF477 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6D39776A1F273D7F76662DC /* Assets.xcassets */; };
+		9FB693FD9EA27D0A1BE68DD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6D39776A1F273D7F76662DC /* Assets.xcassets */; };
+		A6D7AF87D52ADCFF015C67E2 /* BabyDaysWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4640FE427534B41F9E66EF30 /* BabyDaysWidget.swift */; };
+		A7B5774B9499A3E3D82492FF /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
+		B536F3D704D95169ABFC3EF7 /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
+		B59F671BF5E514E5D836E87B /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
+		BAE30CB8CC9B7951FD9B4362 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
+		BE293EA831EEA6CC1E94BBA0 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
+		CBCCB41004E8C2A5E311AB8C /* BabyDaysWidget-iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1549065F95E8F52F9DB2665 /* BabyDaysWidget-iOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D66DB3782CEF17B44CA2196A /* BabyDaysApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810606B02BF8DCC10BCC53E9 /* BabyDaysApp.swift */; };
+		D79D72EDB8A844C29F5C3CF4 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
+		E7B428748B102A1453B9D209 /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
+		EEB41A8279EF61742C23CBF8 /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
+		EFFDD959E70B70FBB3763662 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
+		F0863B8DAC4A6FC43E761805 /* BabyDaysWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4640FE427534B41F9E66EF30 /* BabyDaysWidget.swift */; };
+		F488ABFBC20501BA93B8C12F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B81C9E4F6BC9C9063C685250 /* InfoPlist.strings */; };
+		FE2C9F558545C75288AA2188 /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DE538F21111E23807921EC32 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3BE861DE2A9C7BFBCF860A92 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D66860E0E5D874FFD17D353;
+			remoteInfo = "BabyDaysWidget-iOS";
+		};
+		F97D279CF13B39C8763EBD67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3BE861DE2A9C7BFBCF860A92 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB5B9ABF3F7A389D1A0B4FBA;
+			remoteInfo = "BabyDaysWidget-macOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0124554321CCA1231337A284 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				30550F42538C5650948AD546 /* BabyDaysWidget-macOS.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		061B9A1EAA0278B7BFA175A3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CBCCB41004E8C2A5E311AB8C /* BabyDaysWidget-iOS.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		02F0CC5895A8039A7B190361 /* BabyDaysWidget-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BabyDaysWidget-iOS.entitlements"; sourceTree = "<group>"; };
+		0A060655FF92974CEE0CEF08 /* BabyDaysWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BabyDaysWidget.entitlements; sourceTree = "<group>"; };
+		1C68CFCCA75FC5797CC4E247 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
+		2723E15C85B14A587F1C93FD /* BabyAge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyAge.swift; sourceTree = "<group>"; };
+		30F711863769175BEFE4D2C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZCOOLKuaiLe-Regular.ttf"; sourceTree = "<group>"; };
+		4640FE427534B41F9E66EF30 /* BabyDaysWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyDaysWidget.swift; sourceTree = "<group>"; };
+		4FC992014CF0193F26FC50F8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		5EFBAC3B4932A25BC015745C /* BabyDays-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BabyDays-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyProfile.swift; sourceTree = "<group>"; };
+		810606B02BF8DCC10BCC53E9 /* BabyDaysApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyDaysApp.swift; sourceTree = "<group>"; };
+		88D6A4AC13FCED85D5A1C9C9 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		979C421F113884D2FD2A73B5 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		A1549065F95E8F52F9DB2665 /* BabyDaysWidget-iOS.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = "BabyDaysWidget-iOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA9C036A1F216B3025804F58 /* BabyDays.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BabyDays.entitlements; sourceTree = "<group>"; };
+		AB0BEB119AC346575F294791 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decorations.swift; sourceTree = "<group>"; };
+		BC836E52C76C8D0B3C8FC9B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BD0232CD3C8AE486D371C7CC /* BabyDays-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BabyDays-iOS.entitlements"; sourceTree = "<group>"; };
+		C3D54712B8B857E06731C70F /* BabyDaysWidget-macOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "BabyDaysWidget-macOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7290B862DB31AC443A2B318 /* WidgetViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetViews.swift; sourceTree = "<group>"; };
+		E6D39776A1F273D7F76662DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F351EE65939441A15140E046 /* BabyDays-iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "BabyDays-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFeed.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DB525026EA93EA55AA3DDD1C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A20A6593BEA3C5B47930B6D /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2664B18D80EAA0D5CF85B528 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				B81C9E4F6BC9C9063C685250 /* InfoPlist.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		27D76680F2FC9F26CE75EA55 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				88D6A4AC13FCED85D5A1C9C9 /* AppIcon.icon */,
+				E6D39776A1F273D7F76662DC /* Assets.xcassets */,
+				70233948CFD1366DB55425A3 /* Fonts */,
+				2664B18D80EAA0D5CF85B528 /* Localization */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		59C2F34094F6040A86615049 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				BD0232CD3C8AE486D371C7CC /* BabyDays-iOS.entitlements */,
+				AA9C036A1F216B3025804F58 /* BabyDays.entitlements */,
+				810606B02BF8DCC10BCC53E9 /* BabyDaysApp.swift */,
+				1C68CFCCA75FC5797CC4E247 /* GalleryView.swift */,
+				979C421F113884D2FD2A73B5 /* Updater.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5F7D025A15F12E05A01099C3 = {
+			isa = PBXGroup;
+			children = (
+				59C2F34094F6040A86615049 /* App */,
+				27D76680F2FC9F26CE75EA55 /* Resources */,
+				F5FBA8F2DCC604939E7466B1 /* Shared */,
+				DAFF86C3696353047AD7EE8A /* Widget */,
+				707F59585BF0B1D3C4CC9D55 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		70233948CFD1366DB55425A3 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		707F59585BF0B1D3C4CC9D55 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F351EE65939441A15140E046 /* BabyDays-iOS.app */,
+				5EFBAC3B4932A25BC015745C /* BabyDays-macOS.app */,
+				A1549065F95E8F52F9DB2665 /* BabyDaysWidget-iOS.appex */,
+				C3D54712B8B857E06731C70F /* BabyDaysWidget-macOS.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DAFF86C3696353047AD7EE8A /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				02F0CC5895A8039A7B190361 /* BabyDaysWidget-iOS.entitlements */,
+				0A060655FF92974CEE0CEF08 /* BabyDaysWidget.entitlements */,
+				4640FE427534B41F9E66EF30 /* BabyDaysWidget.swift */,
+				30F711863769175BEFE4D2C9 /* Info.plist */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		F5FBA8F2DCC604939E7466B1 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				2723E15C85B14A587F1C93FD /* BabyAge.swift */,
+				7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */,
+				B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */,
+				AB0BEB119AC346575F294791 /* Theme.swift */,
+				FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */,
+				C7290B862DB31AC443A2B318 /* WidgetViews.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4D66860E0E5D874FFD17D353 /* BabyDaysWidget-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 720C4EF524A833AA9E761768 /* Build configuration list for PBXNativeTarget "BabyDaysWidget-iOS" */;
+			buildPhases = (
+				2ECDFF9023FE86F8F630DEDF /* Sources */,
+				729D9971A698888C82875523 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BabyDaysWidget-iOS";
+			packageProductDependencies = (
+			);
+			productName = "BabyDaysWidget-iOS";
+			productReference = A1549065F95E8F52F9DB2665 /* BabyDaysWidget-iOS.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		B069D1490752D9C1A1692B62 /* BabyDays-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D83BB5260B57AAAA64851CEA /* Build configuration list for PBXNativeTarget "BabyDays-iOS" */;
+			buildPhases = (
+				EE98D5F7E626A74392B30778 /* Sources */,
+				F38EEEEA872043BB7EE34B71 /* Resources */,
+				061B9A1EAA0278B7BFA175A3 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B7644881DD045A68D5638D08 /* PBXTargetDependency */,
+			);
+			name = "BabyDays-iOS";
+			packageProductDependencies = (
+			);
+			productName = "BabyDays-iOS";
+			productReference = F351EE65939441A15140E046 /* BabyDays-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BB5B9ABF3F7A389D1A0B4FBA /* BabyDaysWidget-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 31895CCB6F80348898678C49 /* Build configuration list for PBXNativeTarget "BabyDaysWidget-macOS" */;
+			buildPhases = (
+				933B5E8B257EACD0B0F1DBD9 /* Sources */,
+				A42CB5CA8E06E46C4FDBFC2C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BabyDaysWidget-macOS";
+			packageProductDependencies = (
+			);
+			productName = "BabyDaysWidget-macOS";
+			productReference = C3D54712B8B857E06731C70F /* BabyDaysWidget-macOS.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		BC1F52B237183ECF887E0CD4 /* BabyDays-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66AC71482B8DDD3B40830494 /* Build configuration list for PBXNativeTarget "BabyDays-macOS" */;
+			buildPhases = (
+				5A015395480BC9FFD129199C /* Sources */,
+				9DC6B210CFCED6408042490C /* Resources */,
+				DB525026EA93EA55AA3DDD1C /* Frameworks */,
+				0124554321CCA1231337A284 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				40A62BE0357959BB870C9450 /* PBXTargetDependency */,
+			);
+			name = "BabyDays-macOS";
+			packageProductDependencies = (
+				97DEF3B07E064FF3AA75D12A /* Sparkle */,
+			);
+			productName = "BabyDays-macOS";
+			productReference = 5EFBAC3B4932A25BC015745C /* BabyDays-macOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3BE861DE2A9C7BFBCF860A92 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					4D66860E0E5D874FFD17D353 = {
+						DevelopmentTeam = N7Z52F27XK;
+						ProvisioningStyle = Automatic;
+					};
+					B069D1490752D9C1A1692B62 = {
+						DevelopmentTeam = N7Z52F27XK;
+						ProvisioningStyle = Automatic;
+					};
+					BB5B9ABF3F7A389D1A0B4FBA = {
+						DevelopmentTeam = N7Z52F27XK;
+						ProvisioningStyle = Automatic;
+					};
+					BC1F52B237183ECF887E0CD4 = {
+						DevelopmentTeam = N7Z52F27XK;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 13ED3FF9D07120EABEE61116 /* Build configuration list for PBXProject "BabyDays" */;
+			developmentRegion = "zh-Hans";
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				"zh-Hans",
+			);
+			mainGroup = 5F7D025A15F12E05A01099C3;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4116C4A0EA7E2F49F0371AC0 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 707F59585BF0B1D3C4CC9D55 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B069D1490752D9C1A1692B62 /* BabyDays-iOS */,
+				BC1F52B237183ECF887E0CD4 /* BabyDays-macOS */,
+				4D66860E0E5D874FFD17D353 /* BabyDaysWidget-iOS */,
+				BB5B9ABF3F7A389D1A0B4FBA /* BabyDaysWidget-macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		729D9971A698888C82875523 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9ABC19ECB372FA6A0B4170B3 /* ZCOOLKuaiLe-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DC6B210CFCED6408042490C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C230769F509366AD8CF68D3 /* AppIcon.icon in Resources */,
+				9C342D26C68E5B1A6A0FF477 /* Assets.xcassets in Resources */,
+				47FC756A10D8614C60ECDA5A /* InfoPlist.strings in Resources */,
+				3490386E310354D279FFF94A /* ZCOOLKuaiLe-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A42CB5CA8E06E46C4FDBFC2C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7B5774B9499A3E3D82492FF /* ZCOOLKuaiLe-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F38EEEEA872043BB7EE34B71 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B4CB2C9081B7004C28DC16B /* AppIcon.icon in Resources */,
+				9FB693FD9EA27D0A1BE68DD8 /* Assets.xcassets in Resources */,
+				F488ABFBC20501BA93B8C12F /* InfoPlist.strings in Resources */,
+				087C21614953E3550AFA5EAD /* ZCOOLKuaiLe-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2ECDFF9023FE86F8F630DEDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEB41A8279EF61742C23CBF8 /* BabyAge.swift in Sources */,
+				A6D7AF87D52ADCFF015C67E2 /* BabyDaysWidget.swift in Sources */,
+				BAE30CB8CC9B7951FD9B4362 /* BabyProfile.swift in Sources */,
+				163D85FBE7B705CB903F1B6F /* Decorations.swift in Sources */,
+				6806DADC6FAB14E3F68856B3 /* Theme.swift in Sources */,
+				6DB8F4CCA8B27D3022A2D356 /* UpdateFeed.swift in Sources */,
+				19B036DBB1F7E2D279FCEEA8 /* WidgetViews.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5A015395480BC9FFD129199C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B59F671BF5E514E5D836E87B /* BabyAge.swift in Sources */,
+				D66DB3782CEF17B44CA2196A /* BabyDaysApp.swift in Sources */,
+				D79D72EDB8A844C29F5C3CF4 /* BabyProfile.swift in Sources */,
+				E7B428748B102A1453B9D209 /* Decorations.swift in Sources */,
+				443A315C5A73F7E8316DFB56 /* GalleryView.swift in Sources */,
+				50FA9A869BB4309EEAB793BC /* Theme.swift in Sources */,
+				0114FE639981345F8C255595 /* UpdateFeed.swift in Sources */,
+				1F536F6CC8FC377333274442 /* Updater.swift in Sources */,
+				648762603AC801B2A79FB589 /* WidgetViews.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		933B5E8B257EACD0B0F1DBD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CBD383984F707CEB9ACBFB7 /* BabyAge.swift in Sources */,
+				F0863B8DAC4A6FC43E761805 /* BabyDaysWidget.swift in Sources */,
+				BE293EA831EEA6CC1E94BBA0 /* BabyProfile.swift in Sources */,
+				7776FF7325F403EF8FE2A8D8 /* Decorations.swift in Sources */,
+				6E575C742F050C93D9365813 /* Theme.swift in Sources */,
+				B536F3D704D95169ABFC3EF7 /* UpdateFeed.swift in Sources */,
+				EFFDD959E70B70FBB3763662 /* WidgetViews.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE98D5F7E626A74392B30778 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C1FA579E8D7392EBA8189FB /* BabyAge.swift in Sources */,
+				8B50C2723B2F171563D70AD2 /* BabyDaysApp.swift in Sources */,
+				35D28C6CE0A4CA7F61986889 /* BabyProfile.swift in Sources */,
+				FE2C9F558545C75288AA2188 /* Decorations.swift in Sources */,
+				2672869FA5261815AF0A8D81 /* GalleryView.swift in Sources */,
+				4FD292BB1FC716D5B21CFC01 /* Theme.swift in Sources */,
+				81124A6A54628D539119F77C /* UpdateFeed.swift in Sources */,
+				5D01EE61320F6213E197DA3B /* Updater.swift in Sources */,
+				4A28258B37CB00B9BA0133A3 /* WidgetViews.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		40A62BE0357959BB870C9450 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB5B9ABF3F7A389D1A0B4FBA /* BabyDaysWidget-macOS */;
+			targetProxy = F97D279CF13B39C8763EBD67 /* PBXContainerItemProxy */;
+		};
+		B7644881DD045A68D5638D08 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D66860E0E5D874FFD17D353 /* BabyDaysWidget-iOS */;
+			targetProxy = DE538F21111E23807921EC32 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B81C9E4F6BC9C9063C685250 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BC836E52C76C8D0B3C8FC9B1 /* en */,
+				4FC992014CF0193F26FC50F8 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		298E93DEDB512E0C03DB130F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_GROUP_ID = N7Z52F27XK.com.caldis.babydays;
+				CODE_SIGN_ENTITLEMENTS = Widget/BabyDaysWidget.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays.widget;
+				PRODUCT_NAME = BabyDaysWidget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		31374ADADBBBDD0A480A38D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_GROUP_ID = group.com.caldis.babydays;
+				CODE_SIGN_ENTITLEMENTS = "Widget/BabyDaysWidget-iOS.entitlements";
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays.widget;
+				PRODUCT_NAME = BabyDaysWidget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		47E0E927E2EA1A43EF688DBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_GROUP_ID = N7Z52F27XK.com.caldis.babydays;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App/BabyDays.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "App/Info-macOS.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays;
+				PRODUCT_NAME = BabyDays;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		6D25AB6337DEE48C78DC93F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_GROUP_ID = group.com.caldis.babydays;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "App/BabyDays-iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "App/Info-iOS.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays;
+				PRODUCT_NAME = BabyDays;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7E97310B8AD5C33687282EB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_GROUP_ID = N7Z52F27XK.com.caldis.babydays;
+				CODE_SIGN_ENTITLEMENTS = Widget/BabyDaysWidget.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays.widget;
+				PRODUCT_NAME = BabyDaysWidget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		96D3DEFE001C041FA27F0682 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_GROUP_ID = N7Z52F27XK.com.caldis.babydays;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App/BabyDays.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "App/Info-macOS.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays;
+				PRODUCT_NAME = BabyDays;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C38F8DE7781A5E25AFDC7BD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_GROUP_ID = group.com.caldis.babydays;
+				CODE_SIGN_ENTITLEMENTS = "Widget/BabyDaysWidget-iOS.entitlements";
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays.widget;
+				PRODUCT_NAME = BabyDaysWidget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E4DA8898FCF92B322C14D88E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_GROUP_ID = group.com.caldis.babydays;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "App/BabyDays-iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "App/Info-iOS.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "宝宝多大";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays;
+				PRODUCT_NAME = BabyDays;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EA6FFC5C6B6C30432B8D179A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = N7Z52F27XK;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.1.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPARKLE_PUBLIC_KEY = "/AXBxGAnAkyLah+yTAUTMQ1a+c1Xz3t2/w/S34405Gs=";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				UPDATE_FEED_URL = "https://github.com/Caldis/baby-days/releases/latest/download/appcast.xml";
+			};
+			name = Debug;
+		};
+		ECAA8CAD90A4EB03E52BF395 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = N7Z52F27XK;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.1.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPARKLE_PUBLIC_KEY = "/AXBxGAnAkyLah+yTAUTMQ1a+c1Xz3t2/w/S34405Gs=";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				UPDATE_FEED_URL = "https://github.com/Caldis/baby-days/releases/latest/download/appcast.xml";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		13ED3FF9D07120EABEE61116 /* Build configuration list for PBXProject "BabyDays" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA6FFC5C6B6C30432B8D179A /* Debug */,
+				ECAA8CAD90A4EB03E52BF395 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		31895CCB6F80348898678C49 /* Build configuration list for PBXNativeTarget "BabyDaysWidget-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				298E93DEDB512E0C03DB130F /* Debug */,
+				7E97310B8AD5C33687282EB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		66AC71482B8DDD3B40830494 /* Build configuration list for PBXNativeTarget "BabyDays-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96D3DEFE001C041FA27F0682 /* Debug */,
+				47E0E927E2EA1A43EF688DBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		720C4EF524A833AA9E761768 /* Build configuration list for PBXNativeTarget "BabyDaysWidget-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				31374ADADBBBDD0A480A38D1 /* Debug */,
+				C38F8DE7781A5E25AFDC7BD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D83BB5260B57AAAA64851CEA /* Build configuration list for PBXNativeTarget "BabyDays-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D25AB6337DEE48C78DC93F6 /* Debug */,
+				E4DA8898FCF92B322C14D88E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4116C4A0EA7E2F49F0371AC0 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		97DEF3B07E064FF3AA75D12A /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4116C4A0EA7E2F49F0371AC0 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 3BE861DE2A9C7BFBCF860A92 /* Project object */;
+}
