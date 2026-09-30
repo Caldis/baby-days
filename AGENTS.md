@@ -127,6 +127,7 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 | 访达仍显示 BabyDays.app | 用户开启了显示扩展名, 且访达缓存了名称. LaunchServices 中已是 "宝宝多大", 重启访达后生效 |
 | 模块名 Sparkle 与同名类型冲突 | 四角星图形已命名为 Twinkle, 新增类型避免与 Sparkle, WidgetKit 等模块同名 |
 | SourceKit 报找不到类型 | 单文件诊断的噪音, 以 xcodebuild 或 swiftc 的结果为准 |
+| 小组件库侧栏中的宝宝多大显示旧图标与名称 BabyDays | 系统小组件服务缓存了首次安装时的图标与名称, 安装包内的图标与本地化名称正确 (用 NSWorkspace 渲染可确认). killall chronod 或重启后刷新, 与构建无关 |
 | GitHub 上旧提交仍可按 SHA 访问 | 历史已强推重写, 旧对象需要删除并重建仓库 (需 gh auth refresh -s delete_repo) 或联系 GitHub Support 清理 |
 
 ## 8. 协作约定
@@ -142,7 +143,8 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 ## 9. 当前状态
 
 - 已发布 macOS 1.2.1 (GitHub Releases), 用户的 Mac 已通过 Sparkle 更新到该版本
-- App Store Connect: iOS, macOS, tvOS 的 1.2.1 已于 2026-09-29 提交审核, 状态为等待审核, 发布方式为审核通过后自动发布. 审核联系人信息已在 App Store Connect 中填写, 不写入仓库
+- App Store Connect: iOS, macOS, tvOS 的 1.2.1 已于 2026-09-29 提交审核, 发布方式为审核通过后自动发布. Mac 版于 2026-09-30 因 Guideline 2.1 Information Needed 被拒, 当天回复审核并附上用户录制的视频后重新提交, 三个平台均为等待审核. 审核联系人信息已在 App Store Connect 中填写, 不写入仓库
+- 用户 Mac 的 /Applications 中目前是 App Store 版的开发签名构建 (为审核录屏安装, 不含 Sparkle). Mac App Store 版上架后由用户从商店安装; 如需换回 Developer ID 版, 先告知用户桌面小组件会被移除
 - 中国大陆: 首次提交未包含中国大陆, 避免没有 ICP 备案号拖住其他地区的审核. 三个 App Store 版本都不访问网络, 属于可能豁免备案的离线应用, 但 Apple 未公布豁免清单. 审核通过后先在销售范围中加回中国大陆 (POST /iris/v2/appAvailabilities, CHN 设为 available); 若被要求备案号, 联系 Apple Developer Support 说明离线, 或由用户办理 ICP 备案后在 App 信息中填写
 - 仓库需保持公开: App Store 的隐私政策, 技术支持与营销网址, 以及 Mac 版 Sparkle 的更新清单和安装包都指向本仓库. 如需改为私有, 先新建公开仓库承接这些内容, 发布一版 Mac 更新把 UPDATE_FEED_URL 切过去, 在下一个 App Store 版本中更换网址, 最后再改私有
 - tvOS 版只经过编译, 离线渲染与上传校验, 尚未在模拟器或真机上运行验证 (本机 tvOS 模拟器启动 App 卡住)

@@ -122,5 +122,15 @@ scripts/release-appstore.sh ios      # 只上传 iOS
 | 截图 | POST /iris/v1/appScreenshotSets, POST /iris/v1/appScreenshots, 按 uploadOperations 上传, 再 PATCH uploaded 为 true |
 | 审核信息 | POST 或 PATCH /iris/v1/appStoreReviewDetails (contactPhone 必填, 需带国家码) |
 | 提交审核 | 每个平台 POST /iris/v1/reviewSubmissions (platform 为 IOS, MAC_OS 或 TV_OS), POST /iris/v1/reviewSubmissionItems 关联版本, 再 PATCH reviewSubmissions 的 submitted 为 true |
+| 被拒后重新提交 | 先 PATCH /iris/v1/reviewSubmissionItems/{id} 的 resolved 为 true (状态变为 READY_FOR_REVIEW), 再 PATCH reviewSubmissions 的 submitted 为 true; 网页上的 "Resubmit to App Review" 按钮在条目仍为 REJECTED 时不可点 |
 
 截图文件通过 claude-in-chrome 的 file_upload 放进页面中临时创建的 input, 再由脚本读取上传. App 隐私 (数据收集) 与价格在网页中点击完成
+
+## 审核被拒的处理
+
+新账号首次提交可能收到 Guideline 2.1 Information Needed, 要求在真机上录屏 (从启动 App 开始, 展示主要流程) 并回答用途, 使用方法, 外部服务, 地区差异与资质五项. 处理步骤:
+
+1. 用户本人在真机上录屏, 录屏文件用 ffmpeg 压缩到 1080p MP4 (file_upload 单次上限 10 MB)
+2. 在提交详情页点 "Reply to App Review", 回复框填写五项说明; 页面自带的 input[type=file] 先加上 aria-label, 再用 find 取得引用并通过 file_upload 附上视频, 最后点 Reply
+3. 同样的说明写入该平台 appStoreReviewDetails 的 notes, 供以后提交参考
+4. 按上表 "被拒后重新提交" 的两步接口重新提交
