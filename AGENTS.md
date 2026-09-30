@@ -135,6 +135,8 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 - 提交信息使用中文, 末尾附上当前会话提供的 Co-Authored-By 与 Claude-Session 行
 - 用户已授权: 直接推送 main, 必要时强推覆盖历史, 在 GitHub Releases 与 App Store Connect 上传构建. 删除仓库, 修改价格或提交审核前先确认
 - 视觉改动先出离线渲染图自查, 再构建真机或模拟器; 涉及用户桌面时截取小组件窗口验证
+- App Review 要求的真机屏幕录制由用户本人录制. Agent 负责给出演示步骤, 在 App Store Connect 中回复审核并附上视频, 然后重新提交; 不用脚本模拟鼠标代录, 也不改动用户的台前调度, 桌面图标等系统设置
+- 替换 /Applications/BabyDays.app (例如在 Developer ID 版与 App Store 版之间切换) 会让系统移除用户桌面上已添加的宝宝多大小组件, 替换前告知用户
 - 新写整篇面向人阅读的文档时, 走 prose-polish skill 的写作流水线; 局部修订直接改, 改完用 slop-score 自查
 
 ## 9. 当前状态
