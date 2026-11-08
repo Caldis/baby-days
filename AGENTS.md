@@ -133,6 +133,7 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 | iOS 26.5 模拟器中选了宝宝, 小组件仍显示默认宝宝 | AppEntity 在本地签名模拟器中可能无法注册, linkd 报 Unable to get teamId, 参数被还原为 nil. 小组件现使用原生字符串 babyID + BabyOptionsProvider 动态选项, 已实测同屏两个小组件独立显示宝宝与配色; 不要改回依赖实体注册的配置 |
 | 图标模式点击后回跳, 关闭重开才更新 | 保存时重新创建 UserDefaults(suiteName:) 会让 AppStorage 观察不同实例. BabyProfile.defaults 必须保持进程内单例, 不要改回计算属性; 验证需使用真实持久化路径, 内存 preview 不能覆盖此问题 |
 | asc auth status 能看到 profile, API 命令却报 credentials not found | status 与 doctor 可能只读到钥匙串元数据. SSH 与桌面会话的钥匙串访问上下文不同, 桌面解锁后 SSH 仍可能读不到; 可在用户已解锁的 gui/UID 会话用一次性 launchd 任务运行官方 auth export-to-config, 完成后移除任务. 不改变钥匙串访问控制; 始终用实际 API 请求验证 |
+| Codex 沙盒中的 asc auth status 报钥匙串参数错误 -50 | 已实测同一默认凭据在正常本机会话中验证成功, 并能读取 BabyDays. 通过正常审批的宿主执行路径重试相同的只读验证, 不把沙盒访问限制当作凭据缺失, 不要求重建密钥 |
 | asc 导出成功却仍引用空 .p8 | 5.14.1 在原文件存在时不会检查其内容, 因而可能继续引用 0 字节占位文件. 先确认字节数, 仅临时移开空占位文件并以 EXIT trap 恢复, 再用 private-key-dir 导出钥匙串内嵌密钥. 不删除原机 profile, 不把空文件或元数据列表当作可用凭据 |
 | iPad 上应用四周出现黑边 | App 和 Widget 的 TARGETED_DEVICE_FAMILY 都需为 1,2, 并声明 iPad 四个方向与 UIRequiresFullScreen=NO, 否则系统以 iPhone 兼容模式运行 |
 | install-mac.sh 构建后一直不安装 | pgrep -x BabyDays 会匹配正在运行的 iPhone 或 Apple TV 模拟器进程. 脚本现仅退出并等待 /Applications/BabyDays.app 的进程, 不影响模拟器 |

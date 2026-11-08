@@ -101,6 +101,8 @@ iPad 图片从 docs/images/ipad-portrait.png 与 ipad-landscape.png 原尺寸导
 
 Mac mini 的默认 profile 为 caldis-appstore, 已在项目之外的新终端通过普通 asc auth status --validate 与真实 App 查询验证. 非空备份按 AuthKey_*.p8 标准命名保存在 ~/.config/baby-days, 权限为 0600. 发布无需再连接 MacBook 或重新创建密钥
 
+Codex 受限沙盒内的钥匙串查询可能返回参数错误 -50. 本机已实测同一命令在正常本机会话中验证成功, 并能读取 BabyDays; 遇到该错误时通过正常审批的宿主执行路径重试只读核验, 不据此断言凭据缺失
+
 先查询 United Memory 中的 App Store 发布记录, 确认凭据所在主机, 再执行 scripts/asc.sh auth status. 历史流程已使用 asc 的系统钥匙串, 原始 .p8 可以不在磁盘上; 当前主机未找到文件不代表用户没有凭据, 不重复要求创建 API Key. 新增配置仅在确实缺少可复用授权时进行, 不把私钥或 Apple 账号密码写入文档与仓库
 
 status 与 doctor 可以仅凭钥匙串条目元数据列出 profile, 仍需用实际 API 请求验证. SSH 与桌面会话的访问上下文不同, 在桌面解锁后 SSH 仍可能报 credentials not found. 已验证可在用户已解锁的 gui/UID 会话中通过一次性 launchd 任务运行官方 auth export-to-config, 不改变钥匙串访问控制; 完成传输后移除任务和临时文件, 保留原机 profile
