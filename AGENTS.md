@@ -132,6 +132,7 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 | 模块名 Sparkle 与同名类型冲突 | 四角星图形已命名为 Twinkle, 新增类型避免与 Sparkle, WidgetKit 等模块同名 |
 | iOS 26.5 模拟器中选了宝宝, 小组件仍显示默认宝宝 | AppEntity 在本地签名模拟器中可能无法注册, linkd 报 Unable to get teamId, 参数被还原为 nil. 小组件现使用原生字符串 babyID + BabyOptionsProvider 动态选项, 已实测同屏两个小组件独立显示宝宝与配色; 不要改回依赖实体注册的配置 |
 | 图标模式点击后回跳, 关闭重开才更新 | 保存时重新创建 UserDefaults(suiteName:) 会让 AppStorage 观察不同实例. BabyProfile.defaults 必须保持进程内单例, 不要改回计算属性; 验证需使用真实持久化路径, 内存 preview 不能覆盖此问题 |
+| asc auth status 能看到 profile, API 命令却报 credentials not found | status 与 doctor 可能只读到钥匙串元数据. 先检查执行主机和钥匙串是否解锁, 再实际验证 API 访问. SSH 中登录钥匙串锁定时, 读取私钥会被 macOS 拒绝; 原始 AuthKey_*.p8 也要先检查字节数, 不能只看文件名是否存在 |
 | iPad 上应用四周出现黑边 | App 和 Widget 的 TARGETED_DEVICE_FAMILY 都需为 1,2, 并声明 iPad 四个方向与 UIRequiresFullScreen=NO, 否则系统以 iPhone 兼容模式运行 |
 | install-mac.sh 构建后一直不安装 | pgrep -x BabyDays 会匹配正在运行的 iPhone 或 Apple TV 模拟器进程. 脚本现仅退出并等待 /Applications/BabyDays.app 的进程, 不影响模拟器 |
 | SourceKit 报找不到类型 | 单文件诊断的噪音, 以 xcodebuild 或 swiftc 的结果为准 |
@@ -170,5 +171,6 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 - 已在真实持久化路径复现并修复图标模式回跳: 修复前点击后立即回默认, 重启才看到保存值; 修复后隔离应用与 /Applications 安装版均验证默认, 跟随宝宝和自选即时切换, 关闭重开和重启保留偏好. 实际用户的原默认模式已恢复
 - iPad Pro 13-inch (M5) / iPadOS 26.5 模拟器已验证原生全屏, 横竖屏, 深色模式和拖动窗口至约 375 pt 后纵向重排. App 与 Widget 的成品 UIDeviceFamily 均为 [1,2], iPad 备选图标 11 个, 原生设置已实测切换并由系统确认自动图标
 - 本轮最终 /Applications 构建号为 202611082143. 已验证实际安装版图标三种模式切换并恢复原默认, iPhone 模拟器完成回归. 当前没有可直接安装的实体 iPad, iPad 支持尚需用户设备安装新构建才会生效, 未上传 TestFlight 或 App Store
-- 1.3.0 发布准备中. 三个平台的简体中文资料分别存于 metadata/ios, metadata/macos, metadata/tvos, CLI 离线校验通过. App Store 渲染新增 iPad 原生横竖屏截图, 所有商店截图统一导出无 alpha 的 sRGB PNG
+- 1.3.0 (202611082247) 已于 2026-11-08 经 release-appstore.sh 成功上传 iOS / iPadOS, tvOS 与 Mac App Store, 尚未绑定商店版本或提交审核. 源码与资料已推送到 main 的 01f341a. 三个平台的简体中文资料分别存于 metadata/ios, metadata/macos, metadata/tvos, CLI 离线校验通过. 9 张商店截图已逐张查看并校验尺寸, 全部为无 alpha 的 sRGB PNG, 包含原生 iPad 横竖屏
+- 已核实历史 App Store 凭据在 MacBook 的标准 asc 系统钥匙串中, 原始 Downloads/AuthKey_*.p8 已是 0 字节. 用户已明确授权复制到 Mac mini, 迁移需先解锁 MacBook 的登录钥匙串. 不再要求用户重复创建 API Key, 不把文件名存在或 auth status 的元数据列表当作可用性证明
 - 已安装 asc-cli-usage, asc-release-flow, asc-submission-health, asc-xcode-build, asc-metadata-sync, asc-shots-pipeline, asc-screenshot-resize, asc-build-lifecycle 与 asc-whats-new-writer, 来源固定为 rorkai/app-store-connect-cli-skills 的 266d7ad357acd3a1c437668b0e77021bb0ff2f02

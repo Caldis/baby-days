@@ -101,6 +101,10 @@ iPad 图片从 docs/images/ipad-portrait.png 与 ipad-landscape.png 原尺寸导
 
 先查询 United Memory 中的 App Store 发布记录, 确认凭据所在主机, 再执行 scripts/asc.sh auth status. 历史流程已使用 asc 的系统钥匙串, 原始 .p8 可以不在磁盘上; 当前主机未找到文件不代表用户没有凭据, 不重复要求创建 API Key. 新增配置仅在确实缺少可复用授权时进行, 不把私钥或 Apple 账号密码写入文档与仓库
 
+status 与 doctor 可以仅凭钥匙串条目元数据列出 profile, 仍需用实际 API 请求验证. SSH 会话中的登录钥匙串锁定时, 可能报 credentials not found 或 no keychain credentials found. 先解锁原主机钥匙串, 再用 auth export-to-config 导出到私有临时目录并传输, 不使用 remove-keychain, 保留原机凭据. 使用原始 .p8 前先确认它非空, 不能仅凭标准文件名判断完整性
+
+2026-11-08 已上传三平台 1.3.0 (202611082247), 上传日志保存在 ~/Library/Caches/baby-days/appstore-1.3.0-upload.log. 当前尚未绑定商店版本和提交审核
+
 1. 确认 project.yml 的 MARKETING_VERSION 为本次要提交的版本号, App Store Connect 中待提交版本的版本号与之一致
 2. 运行上传脚本, 默认同时上传 iOS, tvOS 与 Mac App Store 版本
 
