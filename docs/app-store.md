@@ -109,7 +109,23 @@ status 与 doctor 可以仅凭钥匙串条目元数据列出 profile, 仍需用�
 
 使用原始 .p8 前先确认它非空. asc 5.14.1 导出时会继续引用已存在的 0 字节原文件; 此时仅临时移开已核实为空的占位文件, 用 EXIT trap 恢复原件, 再由官方命令导出钥匙串内嵌密钥. 本轮迁移和临时文件清理均已完成, 详细核验记录在 UM 的 20261108-asc-credential-discovery
 
-2026-11-08 已上传三平台 1.3.0 (202611082247), 上传日志保存在 ~/Library/Caches/baby-days/appstore-1.3.0-upload.log. 构建均为 VALID, 已绑定三平台草稿. 9 张截图已完成服务器处理, 版本文案和审核说明已更新, 原联系人不变. 三平台预检均为 0 errors / 0 warnings, 提交 dry run 均为 wouldSubmit=true. 发布方式为审核通过后自动发布, 当前等待最终提交确认
+2026-11-08 已上传三平台 1.3.0 (202611082247), 上传日志保存在 ~/Library/Caches/baby-days/appstore-1.3.0-upload.log. 构建均为 VALID, 9 张截图已完成服务器处理, 版本文案和审核说明已更新, 原联系人不变. 三平台预检均为 0 errors / 0 warnings, 提交 dry run 均为 wouldSubmit=true
+
+2026-11-09 用户确认送审并自动发布后, 已通过 asc review submit 分别提交三个平台. 随后独立查询审核状态与版本设置, 三平台均为 WAITING_FOR_REVIEW, 构建号均为 202611082247, releaseType 均为 AFTER_APPROVAL. 当前等待 Apple 审核, 通过后自动发布
+
+| 平台 | 审核提交编号 |
+|---|---|
+| iOS / iPadOS | 5c01bb65-5951-47ca-b3fd-145098c00aed |
+| macOS | 3d843162-4039-4b13-82eb-707038cd1554 |
+| tvOS | 874e12b3-656b-4824-b457-b79e0d1d3c65 |
+
+查询本次审核状态:
+
+```sh
+zsh scripts/asc.sh review status --app 6817262216 --version 1.3.0 --platform IOS --output table
+zsh scripts/asc.sh review status --app 6817262216 --version 1.3.0 --platform MAC_OS --output table
+zsh scripts/asc.sh review status --app 6817262216 --version 1.3.0 --platform TV_OS --output table
+```
 
 1. 确认 project.yml 的 MARKETING_VERSION 为本次要提交的版本号, App Store Connect 中待提交版本的版本号与之一致
 2. 运行上传脚本, 默认同时上传 iOS, tvOS 与 Mac App Store 版本
