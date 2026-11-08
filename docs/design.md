@@ -2,9 +2,9 @@
 
 ## 概览
 
-宝宝多大 (工程名 BabyDays) 是一组 iOS 与 macOS 桌面小组件, 以及一个 tvOS App, 显示宝宝从出生至今的年龄与下一个生日的倒计时. 出生日期在 App 中设置, 保存在 App Group 共享的 UserDefaults 中, 小组件与 tvOS 顶部栏扩展读取同一份数据. 系统要求为 iOS 17, macOS 14 与 tvOS 17 及以上. iOS 版本只支持 iPhone
+宝宝多大 (工程名 BabyDays) 是一组 iOS 与 macOS 桌面小组件, 以及一个 tvOS App, 显示宝宝从出生至今的年龄与下一个生日的倒计时. 出生日期在 App 中设置, 保存在 App Group 共享的 UserDefaults 中, 小组件与 tvOS 顶部栏扩展读取同一份数据. 系统要求为 iOS 17, macOS 14 与 tvOS 17 及以上. iOS 版本同时支持 iPhone 与 iPad
 
-小组件使用 StaticConfiguration, kind 为 BabyDaysWidget, 名称为 "宝宝多大", 描述为 "看看宝宝今天多大啦", 支持 systemSmall, systemMedium, systemLarge 三种尺寸. App 的显示名在中文系统为 "宝宝多大", 其他语言为 "BabyDays", 两者分别写在 Resources/Localization 下 zh-Hans.lproj 与 en.lproj 的 InfoPlist.strings 中; macOS 的 Info.plist 另外声明 LSHasLocalizedDisplayName, Finder, 程序坞与启动台据此显示本地化名称. App 主界面 App/GalleryView.swift 显示标题, 出生日期, 当天三种尺寸的预览与 "放到桌面上" 三步说明, macOS 与 iOS 各有一套步骤文案. macOS App 启动时与 App 回到前台时调用 WidgetCenter.shared.reloadAllTimelines() 刷新全部小组件时间线, 更新安装后的首次启动因此清掉旧时间线中的 "有新版本" 提示
+小组件使用 AppIntentConfiguration, kind 为 BabyDaysWidget, 名称为 "宝宝多大", 描述为 "看看宝宝今天多大啦", 支持 systemSmall, systemMedium, systemLarge 三种尺寸. App 的显示名在中文系统为 "宝宝多大", 其他语言为 "BabyDays", 两者分别写在 Resources/Localization 下 zh-Hans.lproj 与 en.lproj 的 InfoPlist.strings 中; macOS 的 Info.plist 另外声明 LSHasLocalizedDisplayName, Finder, 程序坞与启动台据此显示本地化名称. App 主界面 App/GalleryView.swift 通过头像切换宝宝, 在生日旁直接编辑或删除, 下方显示三种尺寸的预览. 添加小组件的步骤由按钮打开, macOS 与 iOS 各有一套步骤文案. macOS App 启动时与 App 回到前台时调用 WidgetCenter.shared.reloadAllTimelines() 刷新全部小组件时间线, 更新安装后的首次启动因此清掉旧时间线中的 "有新版本" 提示
 
 代码分为 App, Widget, TV, TopShelf, TVShared, Shared, Tools Render 七个部分. 所有部分都依赖 Shared; TV 与 TopShelf 另外依赖 TVShared; App 内嵌 Widget, TV 内嵌 TopShelf
 
@@ -32,7 +32,7 @@ flowchart LR
 | Widget/ | 小组件入口与时间线 BabyDaysWidget.swift, Info.plist, BabyDaysWidget.entitlements |
 | Shared/ | 年龄计算与文案 BabyAge.swift, 配色与字体 Theme.swift, 装饰图形 Decorations.swift, 小组件视图 WidgetViews.swift |
 | Resources/ | Assets.xcassets (AccentColor, LaunchBackground), 图标 AppIcon.icon, 字体目录 Fonts |
-| Tools/Render/ | 离线渲染工具 Render.swift, 图标图层 IconArtwork.swift, 铅笔风格小蛇 PencilSnake.swift |
+| Tools/Render/ | 离线渲染工具 Render.swift, 图标与小蛇素材入口 IconArtwork.swift, tvOS 素材 TVArtwork.swift |
 | scripts/ | 离线渲染脚本 render.sh, macOS 构建安装脚本 install-mac.sh, macOS 发布脚本 release-mac.sh |
 | docs/images/ | README 配图 |
 
@@ -40,16 +40,16 @@ flowchart LR
 
 | 修改内容 | 位置 |
 |---|---|
-| 出生日期的存储与读取 | Shared/BabyProfile.swift 的 BirthDate 与 BabyProfile |
-| 生日设置界面 | App/GalleryView.swift 的 welcome, BirthdayForm 与 "修改生日" 按钮 |
+| 出生日期的存储与读取 | Shared/BabyProfile.swift 的 BirthDate, Baby, BabyCollection 与 BabyProfile |
+| 生日设置界面 | App/GalleryView.swift, App/BabyEditor.swift, App/IconSettings.swift |
 | 标题, 主数字, 补充说明, 倒计时文案 | Shared/BabyAge.swift 的文案扩展 |
 | 三种尺寸的布局与组件 | Shared/WidgetViews.swift 的 SmallLayout, MediumLayout, LargeLayout 及其组件 |
 | 背景装饰物位置 | Shared/WidgetViews.swift 的 Decor.layout(for:) |
-| 配色与字体 | Shared/Theme.swift 的 Palette 与 Font 扩展 |
+| 配色与字体 | Shared/Zodiac.swift, Shared/Theme.swift 的 Palette 与 Font 扩展 |
 | 云, 四角星, 弯月的形状 | Shared/Decorations.swift |
 | 渲染模式到配色的换算 | Widget/BabyDaysWidget.swift 的 BabyDaysWidgetView |
 | 时间线 | Widget/BabyDaysWidget.swift 的 AgeProvider |
-| 图标 | Tools/Render/PencilSnake.swift, Tools/Render/IconArtwork.swift, Resources/AppIcon.icon/icon.json |
+| 图标 | Resources/Artwork/, Tools/Render/IconArtwork.swift, Resources/AppIcon.icon/icon.json |
 | 自动更新 | App/Updater.swift, Shared/UpdateFeed.swift, project.yml 的 UPDATE_FEED_URL 与 SPARKLE_PUBLIC_KEY |
 | 离线渲染的日期场景与尺寸 | Tools/Render/Render.swift |
 
@@ -90,9 +90,9 @@ Shared/WidgetViews.swift 中的 BabyWidgetContent 按 WidgetSize 选择 SmallLay
 
 | 尺寸 | 布局 | 内容 |
 |---|---|---|
-| 小 | SmallLayout | 标题, 主数字 HeroNumber, 补充说明胶囊 Chip |
-| 中 | MediumLayout | 左侧与小号相同; 右侧为 118 pt 宽的生日倒计时卡片 BirthdayCard, 含蛋糕图标, 剩余天数与进度条 |
-| 大 | LargeLayout | 顶部为标题, 出生日期与右上角的日期星期徽章 DateBadge; 中部为主数字与补充说明, 满周岁后多一个 totalDaysNote 胶囊; 底部为趣味换算 FunFacts 与生日倒计时 BirthdayProgress |
+| 小 | SmallLayout | 标题与 28 pt 无日历生肖, 主数字 HeroNumber, 补充说明胶囊 Chip; 更新提示出现时让出生肖位置 |
+| 中 | MediumLayout | 左侧与小号相同; 右侧为 118 pt 宽的生日倒计时卡片 BirthdayCard, 含 40 pt 无日历生肖, 剩余天数与进度条 |
+| 大 | LargeLayout | 顶部为标题, 出生日期, 44 pt 无日历生肖与右上角的日期星期徽章 DateBadge; 中部为主数字与补充说明, 满周岁后多一个 totalDaysNote 胶囊; 底部为趣味换算 FunFacts 与生日倒计时 BirthdayProgress |
 
 HeroNumber 用 SF Rounded Black 渲染数字, 数字填充为纵向渐变, 单位使用中文字体. 生日当天 HeroNumber 在数字右侧追加 birthday.cake.fill 蛋糕图标. 进度条统一使用 ProgressTrack, BirthdayCard 与 BirthdayProgress 共用同一个 birthdayProgress 比例
 
@@ -100,11 +100,11 @@ FunFacts 是三格等宽卡片, 标题依次为 "周龄", "已经度过", "心�
 
 SkyBackground 先绘制渐变天空, 再按 Decor.layout(for:) 摆放装饰物. 每个尺寸有独立的装饰物列表, 坐标 x, y 为容器宽高的比例, size 为容器短边的比例, 云朵的高度为宽度的一半. 装饰物的 time 字段取 always, day 或 night: day 类出现在白天与单色配色下, night 类只出现在夜晚配色下. 白天配色因此显示白云与星光, 夜晚配色显示弯月, 星星与另一组位置的云
 
-App 预览与离线渲染使用 WidgetCard 模拟小组件外观. WidgetCard 给内容加 16 pt 边距, 以 SkyBackground 为背景, 裁成 24 pt 圆角矩形, 默认尺寸为 430 pt 宽 iPhone (Plus 与 Pro Max) 的 170×170, 364×170 与 364×382. 小组件与 App 界面只包含数字, 文案, 图标与装饰图形, 布偶小蛇只出现在 App 图标上
+App 预览与离线渲染使用 WidgetCard 模拟小组件外观. WidgetCard 给内容加 16 pt 边距, 以 SkyBackground 为背景, 裁成 24 pt 圆角矩形, 默认尺寸为 430 pt 宽 iPhone (Plus 与 Pro Max) 的 170×170, 364×170 与 364×382. 小组件在固定位置显示对应宝宝的无日历生肖, 年龄数字仍是主要信息. Shared/ZodiacMascot.swift 统一加载图片并适配单色模式
 
 ## 配色与渲染模式
 
-配色定义在 Shared/Theme.swift 的 Palette 中, 共 day, night, mono 三套. Shared 目录中的视图只从 Environment 的 palette 读取颜色, 渲染模式的换算集中在入口. 小组件入口 BabyDaysWidgetView 读取 widgetRenderingMode, showsWidgetContainerBackground 与 colorScheme, 选定配色后注入 Environment. App 主界面按系统外观注入 Palette.for(colorScheme), 离线渲染工具直接指定配色. Environment 中 palette 的默认值为 Palette.day
+配色定义在 Shared/Theme.swift 的 Palette 中, 12 个生肖各有浅色与深色主题, 系统着色时使用统一 mono 配色. Shared/Zodiac.swift 保存生肖顺序, 名称与主题色, Palette.for 按生肖和系统外观生成配色, 默认蛇保留原来的嫩绿主题. Shared 目录中的视图只从 Environment 的 palette 读取颜色, 渲染模式的换算集中在入口. 小组件入口 BabyDaysWidgetView 读取 widgetRenderingMode, showsWidgetContainerBackground 与 colorScheme, 选定配色后注入 Environment. App 主界面按系统外观注入 Palette.for(colorScheme), 离线渲染工具直接指定配色. Environment 中 palette 的默认值为 Palette.day
 
 BabyDaysWidgetView 依次按渲染模式, 背景显示状态, 系统外观选定配色
 
@@ -130,18 +130,9 @@ AgeEntry 只保存日期, 读取 age 属性时按该日期计算 BabyAge, 视图
 
 ## 图标流水线
 
-App 图标使用 Xcode 26 Icon Composer 格式, 源文件为 Resources/AppIcon.icon 文件包. 文件包中的 icon.json 定义底色与图层, Assets 目录存放 2 个 1024×1024 的透明 PNG 图层. 底色为纸张米白 (#FBF7EA), 深色外观为略暗的米色 (#E1DCC9), 图层均关闭 Liquid Glass 的玻璃与半透明效果, 保留彩铅质感
+App 图标使用 Xcode 26 Icon Composer 格式, 源文件为 Resources/AppIcon.icon 文件包. 正式画稿为 Resources/Artwork/app-icon.png, 1024 × 1024 不透明 PNG, 主体为大头, 短脖子与厚盘圈的嫩绿软陶小蛇, 日历靠在前方并由盘圈托住, 奶白背景. icon.json 使用单个 Artwork 图层, 关闭玻璃, 半透明与附加阴影, 保留画稿的光照与完整构图. 系统负责裁切圆角
 
-| 图层 | 文件 | 层级 | 深色外观 |
-|---|---|---|---|
-| Snake | Assets/snake.png | 前景, 带 0.25 中性阴影 | 与浅色外观相同 |
-| Paper | Assets/paper.png | 背景, 纸张颗粒与纤维 | 与浅色外观相同 |
-
-图标主体是彩色铅笔风格的布偶小蛇, 绘制代码位于 Tools/Render/PencilSnake.swift, 使用 Core Graphics 逐笔绘制. 轮廓由多遍带低频抖动的描线构成; 填色由淡色打底, 断续的平行排线, 背光侧的交叉排线三层叠加; 布偶质感来自形状内随机分布的小线圈与沿轮廓向外的短毛. 随机数使用固定种子, 每次渲染结果一致. 修改后执行下面的命令重新生成图层, 再执行 scripts/render.sh docs 更新 docs/images/icon.png
-
-```sh
-scripts/render.sh icon
-```
+源画稿按用途分为 Resources/Artwork/Zodiac/calendar 与 mascots, 每个目录各 12 张透明 PNG. IconArtwork 加载时只裁去透明外边距, 导出图标时统一留出 8% 安全边距. scripts/render.sh zodiac 生成 1024 px 不透明图标, 512 px App 图片与 192 px 小组件图片, 同时更新默认蛇的 Artwork/app-icon.png. 随后执行 icon, tv, docs, snapshots 与 appstore 更新所有派生素材. tvOS 分层图标使用日历版, 页面与顶部栏使用无日历版
 
 Xcode 构建时, actool 从 .icon 生成 iOS 26 与 macOS 26 的 Liquid Glass 图标, 同时为旧系统生成回退图标, macOS 的回退图标为 AppIcon.icns. 在 macOS 26.1 上, 系统以标准圆角矩形显示该图标
 
@@ -174,20 +165,23 @@ xcodegen generate
 
 iPhone 安装使用 Xcode: 打开 BabyDays.xcodeproj, 选择 BabyDays-iOS scheme 与连接的 iPhone, 然后运行. 真机使用开发签名, 付费开发者账号的开发描述文件有效期为一年, 到期后需要重新用 Xcode 安装一次. Xcode 26 的 iOS 构建依赖模拟器运行时, 处理方式见已知问题一节. 已验证的构建环境为 macOS 26.1 与 Xcode 26.3, iOS 模拟器为 iOS 26.3 与 iPhone 17 Pro
 
-## 出生日期设置
+## iPad 与可调整窗口
 
-出生日期使用 Shared/BabyProfile.swift 中的 BirthDate 表示, 只保存公历年月日, 存储值为 "2025-01-01" 形式的字符串, 与时区无关. BabyProfile.birthDate 读写 App Group 中 UserDefaults 的 birthDate 键, App Group 标识取自 Info.plist 的 BabyDaysAppGroup, 该值来自 project.yml 中各 target 的 APP_GROUP_ID
+App 与 Widget 的 TARGETED_DEVICE_FAMILY 均为 1,2. Info-iOS.plist 的 UISupportedInterfaceOrientations~ipad 声明四个方向, UIRequiresFullScreen 为 NO, iPad 原生运行并支持多任务窗口. iPhone 保持竖屏
 
-| 平台 | APP_GROUP_ID | 权限文件 |
-|---|---|---|
-| iOS | group.com.caldis.babydays | App/BabyDays-iOS.entitlements, Widget/BabyDaysWidget-iOS.entitlements |
-| macOS | N7Z52F27XK.com.caldis.babydays | App/BabyDays.entitlements, Widget/BabyDaysWidget.entitlements |
+GalleryView 依据窗口内的实际可用宽度排版. 780 pt 及以上时, 左栏为小号与中号预览, 右栏为大号预览; 554–779 pt 时为两行布局; 更窄时纵向排列并按可用宽度缩放预览. 横竖屏与分屏共用这一套规则, 标题, 宝宝选择与预览区域对齐
 
-macOS 使用团队 ID 前缀的 App Group, 代码签名本身即可授权访问, 无需描述文件; iOS 的 App Group 由 Xcode 自动签名在开发者账号中注册
+## 多宝宝, 生肖与应用图标
 
-GalleryView 用 @AppStorage 绑定同一个键. 未设置生日时显示欢迎页与 BirthdayForm (图形日历, 日期上限为当天); 设置后显示预览, 标题下方的 "修改生日" 按钮以 sheet 形式打开同一个 BirthdayForm. 保存后调用 WidgetCenter.shared.reloadAllTimelines()
+BirthDate 只保存公历年月日, 例如示例 2025-01-01. Baby 保存稳定 UUID, 称呼, 生日和可选 revision; BabyCollection 保存宝宝列表, 当前选中的 ID, 图标模式和图标跟随的宝宝 ID. App Group UserDefaults 的 babyCollection.v1 键以 JSON Data 原子保存整份集合. 首次读取时将旧 birthDate 迁移为第一位宝宝, UUID 只生成一次, 后续清空列表也不会重新导入旧日期. 每次保存同步旧 birthDate 键, 兼容尚未退出的旧扩展
 
-小组件的 AgeEntry.birth 为可选值. getTimeline 每次读取 BabyProfile.birthDate, 未设置时 BabyDaysWidgetView 显示 SetupPrompt ("打开 App 设置宝宝的生日"). placeholder 与小组件库预览 (getSnapshot) 在未设置时使用 BirthDate.sample(), 即当天往前 312 天
+BabyProfile.defaults 是进程内唯一的 UserDefaults 实例, 保存与 @AppStorage 监听必须共用这个对象, 避免已保存的修改无法刷新界面. GalleryView 使用 @AppStorage 监听集合, 头像列表负责选择宝宝, 加号添加, 当前宝宝的生日旁直接显示铅笔与垃圾桶. BabyEditor 只编辑称呼与公历生日, 日期范围为 1900 年起至当天, 头像随日期自动变化, 未修改时完成按钮禁用. 删除经确认后执行, 不放入更多菜单. 图标设置用分段选项切换默认, 跟随宝宝和自选, 自选图片本身就是可点选项. 保存, 切换和移除宝宝后调用 WidgetCenter.shared.reloadAllTimelines(). 小组件通过 SelectBabyIntent 的原生字符串 babyID 参数选择宝宝, BabyOptionsProvider 以动态选项显示称呼, 每个实例保存自己的稳定 ID. timeline 每次用 ID 读取最新生日和称呼, 保持原有 7 天时间线. 宝宝已移除时显示重新选择提示, 不回退到其他宝宝. 未配置 ID 的旧小组件使用当前默认宝宝, 保留 BabyDaysWidget kind
+
+Zodiac 使用 Foundation 中国历的循环年份计算生肖, 以中国时区的出生日期中午计算, 在农历新年当天换年. 不能用公历年份直接取模. 应用, WidgetKit 入口与 tvOS 顶部栏均从同一 Zodiac 读取主题, 小组件系统着色模式仍由系统接管
+
+12 个生肖逐个独立生成无日历版, 再以各自形象为参照单独生成日历版. designs-v2.json 保存角色, 配色与动作设定, generation-v2.json 保存 24 张成稿的完整提示词与修订记录. calendar 用于 App 图标, mascots 用于主界面, 小组件与 tvOS 页面. Zodiac.xcassets 包含 App 形象和图标预览, 小蛇最新比例与生成修订记录见 snake-rounded-v3.json. ZodiacWidgets.xcassets 只含 192 px 无日历缩略图, 防止小组件加载整套高分辨率图标. zodiac 渲染同时生成 iOS 的 11 个 AlternateIcons/*.icon 和双版本生肖总览图, tv 渲染生成 tvOS 分层图标与顶部栏静态图
+
+图标模式为 default, automatic 或生肖 rawValue, 默认蛇. automatic 可跟随当前选中宝宝或固定某个宝宝, 图标偏好与小组件主题独立. iOS 和 tvOS 使用 UIApplication.setAlternateIconName, 相同图标不重复请求, 系统失败时显示错误并允许重试. macOS 使用 NSApplication.applicationIconImage 切换运行中的程序坞图标, Finder 安装图标仍为默认蛇, 不改写已签名 App 包
 
 ## Apple TV
 
@@ -195,14 +189,16 @@ tvOS 没有 WidgetKit. Apple TV 版由全屏 App 与顶部栏扩展组成, 两�
 
 | 组件 | 位置 | 内容 |
 |---|---|---|
-| TVAgeBoard | TVShared/TVAgeBoard.swift | 左侧小蛇, 右侧标题, 主数字, 补充说明, 趣味换算与生日进度; fullScreen 样式为 1920 × 1080, banner 样式为 1940 × 692 并省去趣味换算 |
-| TVRootView | TV/TVApp.swift | 已设置生日时全屏显示 TVAgeBoard, 右下角 "修改生日" 按钮; 未设置时显示 TVSetupView |
-| TVSetupView | TV/TVApp.swift | Form 中的年, 月, 日三个 Picker (年份范围为近 18 年), 组合日期不晚于当天; tvOS 没有 DatePicker |
+| TVAgeBoard | TVShared/TVAgeBoard.swift | 左侧对应宝宝的无日历生肖, 右侧标题, 主数字, 补充说明, 趣味换算与生日进度; fullScreen 样式为 1920 × 1080, banner 样式为 1940 × 692 并省去趣味换算 |
+| TVRootView | TV/TVApp.swift | 已设置生日时全屏显示 TVAgeBoard, 底部宝宝选择, 修改, 添加与图标设置按钮; 未设置时显示 TVSetupView |
+| TVSetupView | TV/TVApp.swift | Form 中的年, 月, 日三个 Picker (年份范围为 1900 年至当年), 组合日期不晚于当天; tvOS 没有 DatePicker |
 | ContentProvider | TopShelf/ContentProvider.swift | TVTopShelfContentProvider. 已设置生日时返回一条 TVTopShelfInsetContent, 图片为 BannerRenderer 渲染的 1x 与 2x PNG; 未设置时返回 nil, 系统显示静态顶部栏图 |
 
-BannerRenderer 按当前深浅色选择配色, 把横幅写入 App Group 容器的 TopShelf 目录, 文件名包含累计天数与深浅色, 天数变化时 URL 随之变化. App 保存生日与回到前台时调用 TVTopShelfContentProvider.topShelfContentDidChange() 请求系统刷新顶部栏. 顶部栏条目的动作为 babydays://open, tvOS App 注册了 babydays URL scheme
+BannerRenderer 按当前深浅色选择配色, 把横幅写入 App Group 容器的 TopShelf 目录, 文件名包含构建号, 宝宝 ID, revision, 生肖, 累计天数与深浅色, 天数变化时 URL 随之变化. App 保存生日与回到前台时调用 TVTopShelfContentProvider.topShelfContentDidChange() 请求系统刷新顶部栏. 顶部栏条目的动作为 babydays://open, tvOS App 注册了 babydays URL scheme
 
-tvOS 图标使用 Resources/TVIcon.xcassets 中的 brandassets: App Icon (400 × 240, 1x 与 2x) 与 App Icon - App Store (1280 × 768) 各含 Front (小蛇) 与 Back (纸张与衬底圆) 两层, 聚焦时产生视差; Top Shelf Image (1920 × 720) 与 Top Shelf Image Wide (2320 × 720) 为左侧小蛇, 右侧 "宝宝多大" 与 "看看宝宝今天多大啦" 的静态图. App 与横幅中的小蛇来自 Resources/TVShared.xcassets 的 Snake 图片. 以上素材由 scripts/render.sh tv 生成
+tvOS 底部操作直接显示编辑, 添加, 图标与删除. 按钮以明确前景色和焦点背景保持对比度, 不依赖系统填充按钮的主题 tint. TVSetupView 按当前日期约束年, 月, 日列表, 称呼与生日分组显示, 添加宝宝也可取消
+
+tvOS 图标使用 Resources/TVIcon.xcassets 中的 brandassets: App Icon (400 × 240, 1x 与 2x) 与 App Icon - App Store (1280 × 768) 各含 Front (小蛇) 与 Back (奶白底色) 两层, 聚焦时产生视差; Top Shelf Image (1920 × 720) 与 Top Shelf Image Wide (2320 × 720) 为左侧小蛇, 右侧 "宝宝多大" 与 "看看宝宝今天多大啦" 的静态图. App 与横幅中的形象来自 Zodiac.xcassets 的 Zodiac-* 图片. 以上素材由 scripts/render.sh tv 生成
 
 ## 自动更新
 
@@ -306,7 +302,7 @@ xcodebuild -downloadPlatform iOS
 
 ### 生日保存在本机 App Group
 
-生日是 App 中唯一的设置项, 小组件只需要读取. App Group 中的 UserDefaults 是 App 与小组件扩展共享数据的最小方案, 不需要网络与账号. 每个小组件单独配置生日的 AppIntent 方案可以支持多个宝宝, 代价是每添加一个小组件都要重新选择日期, 当前留作备选
+宝宝列表与图标偏好保存在 App Group UserDefaults, 不需要网络与账号. 小组件使用 AppIntent 选择已保存宝宝的 ID, 避免在每个小组件内重复填写生日, 也避免修改姓名后丢失关联
 
 ### Apple TV 用全屏 App 与顶部栏替代小组件
 
@@ -336,9 +332,9 @@ Shared 视图只从 Environment 读取 palette, WidgetKit 渲染模式到配色�
 
 大号底部曾显示 12 颗按月点亮的星星, 它表达的月数与补充说明中的 "M 个月", 以及生日进度条表达的一岁进度重复. 周龄, 小时数与心跳估算三项换算提供主数字之外的新信息, 每天随累计天数变化, 符合小组件每天刷新一次的节奏. 心跳是估算值, 标题中的 "约" 字标明了这一点
 
-### 小组件界面只保留数字与文案
+### 小组件以年龄为主, 生肖使用固定位置
 
-小尺寸内信息密度优先. 头像占位会压缩主数字的空间, 形象元素因此只用于 App 图标
+无日历生肖在小号标题旁, 中号倒计时卡片内与大号日期旁各出现一次, 不占用主数字区域. 小号出现更新提示时隐藏生肖, 单色模式以模板图形显示. 日期与图标自动表达的主题信息不再重复写成说明
 
 ### 自动更新由小组件提示, App 负责安装
 
@@ -346,7 +342,7 @@ Sparkle 只在 App 运行时工作, 而这个 App 平时只以小组件的形式
 
 ### 更新包托管在公开仓库的 Releases
 
-Sparkle 需要匿名可访问的更新清单与安装包, 私有仓库的 Release 附件需要登录才能下载. 仓库因此设为公开, 更新清单固定使用 releases/latest/download/appcast.xml 地址, 每次发布只需上传新的 appcast.xml. 公开的安装包中包含写死的出生日期
+Sparkle 需要匿名可访问的更新清单与安装包, 私有仓库的 Release 附件需要登录才能下载. 仓库因此设为公开, 更新清单固定使用 releases/latest/download/appcast.xml 地址, 每次发布只需上传新的 appcast.xml. 出生日期只保存在用户本机 App Group, 不写入公开安装包
 
 ### 时间线一次排 7 天, 0 点切换
 

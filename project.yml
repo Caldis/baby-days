@@ -22,7 +22,7 @@ settings:
   base:
     DEVELOPMENT_TEAM: N7Z52F27XK
     CODE_SIGN_STYLE: Automatic
-    MARKETING_VERSION: "1.2.1"
+    MARKETING_VERSION: "1.3.0"
     CURRENT_PROJECT_VERSION: "2"
     SWIFT_VERSION: "5.0"
     GENERATE_INFOPLIST_FILE: YES
@@ -44,6 +44,8 @@ targetTemplates:
       - path: Resources/Fonts/ZCOOLKuaiLe-Regular.ttf
         buildPhase: resources
       - path: Resources/Assets.xcassets
+      - path: Resources/Zodiac.xcassets
+      - path: Resources/ZodiacWidgets.xcassets
       - path: Resources/AppIcon.icon
         buildPhase: resources
       # 系统语言为中文时显示 "宝宝多大", 其余语言显示 "BabyDays"
@@ -63,6 +65,7 @@ targetTemplates:
     sources:
       - path: Widget
       - path: Shared
+      - path: Resources/ZodiacWidgets.xcassets
       - path: Resources/Fonts/ZCOOLKuaiLe-Regular.ttf
         buildPhase: resources
     settings:
@@ -77,16 +80,21 @@ targets:
   BabyDays-iOS:
     templates: [App]
     platform: iOS
+    sources:
+      - path: Resources/AlternateIcons
+        buildPhase: resources
     dependencies:
       - target: BabyDaysWidget-iOS
     settings:
       base:
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ZodiacIcon-rat ZodiacIcon-ox ZodiacIcon-tiger ZodiacIcon-rabbit ZodiacIcon-dragon ZodiacIcon-horse ZodiacIcon-goat ZodiacIcon-monkey ZodiacIcon-rooster ZodiacIcon-dog ZodiacIcon-pig"
         INFOPLIST_FILE: App/Info-iOS.plist
         CODE_SIGN_ENTITLEMENTS: App/BabyDays-iOS.entitlements
         APP_GROUP_ID: group.com.caldis.babydays
-        TARGETED_DEVICE_FAMILY: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UIRequiresFullScreen: NO
 
   BabyDays-macOS:
     templates: [App]
@@ -131,7 +139,7 @@ targets:
     platform: iOS
     settings:
       base:
-        TARGETED_DEVICE_FAMILY: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
         CODE_SIGN_ENTITLEMENTS: Widget/BabyDaysWidget-iOS.entitlements
         APP_GROUP_ID: group.com.caldis.babydays
 
@@ -149,11 +157,13 @@ targets:
     platform: tvOS
     sources:
       - path: TV
+      - path: App/IconAppearance.swift
       - path: TVShared
       - path: Shared
       - path: Resources/Fonts/ZCOOLKuaiLe-Regular.ttf
         buildPhase: resources
       - path: Resources/Assets.xcassets
+      - path: Resources/Zodiac.xcassets
       - path: Resources/TVIcon.xcassets
       - path: Resources/TVShared.xcassets
       - path: Resources/Localization
@@ -184,6 +194,7 @@ targets:
       - path: Resources/Fonts/ZCOOLKuaiLe-Regular.ttf
         buildPhase: resources
       - path: Resources/TVShared.xcassets
+      - path: Resources/Zodiac.xcassets
     settings:
       base:
         PRODUCT_NAME: BabyDaysTopShelf

@@ -6,15 +6,15 @@ import UIKit
 final class ContentProvider: TVTopShelfContentProvider {
     override func loadTopShelfContent(completionHandler: @escaping (TVTopShelfContent?) -> Void) {
         // 未设置生日时交回 nil, 系统显示静态顶部栏图
-        guard let birth = BabyProfile.birthDate else {
+        guard let baby = BabyProfile.load().selected else {
             completionHandler(nil)
             return
         }
         DispatchQueue.main.async {
-            let age = BabyAge(birth: birth)
-            let item = TVTopShelfItem(identifier: "age-\(age.totalDays)")
+            let age = BabyAge(birth: baby.birth)
+            let item = TVTopShelfItem(identifier: "age-\(baby.id)-\(age.totalDays)")
             for (scale, trait) in [(1, TVTopShelfItem.ImageTraits.screenScale1x), (2, .screenScale2x)] {
-                if let url = BannerRenderer.render(age: age, scale: CGFloat(scale)) {
+                if let url = BannerRenderer.render(age: age, baby: baby, scale: CGFloat(scale)) {
                     item.setImageURL(url, for: trait)
                 }
             }
@@ -31,11 +31,12 @@ final class ContentProvider: TVTopShelfContentProvider {
 enum BannerRenderer {
     static let size = CGSize(width: 1940, height: 692)
 
-    static func render(age: BabyAge, scale: CGFloat) -> URL? {
+    static func render(age: BabyAge, baby: Baby, scale: CGFloat) -> URL? {
         let dark = UIScreen.main.traitCollection.userInterfaceStyle == .dark
-        let banner = TVAgeBoard(age: age, snake: Image("Snake"), style: .banner)
+        let banner = TVAgeBoard(age: age, snake: Image(baby.zodiac.assetName), style: .banner)
             .frame(width: size.width, height: size.height)
-            .environment(\.palette, dark ? .night : .day)
+            .environment(\.palette, Palette.for(dark ? .dark : .light, zodiac: baby.zodiac))
+            .environment(\.babyName, baby.displayName)
         let renderer = ImageRenderer(content: banner)
         renderer.scale = scale
         guard let data = renderer.uiImage?.pngData(),
@@ -44,8 +45,9 @@ enum BannerRenderer {
         else { return nil }
         let folder = container.appendingPathComponent("TopShelf", isDirectory: true)
         try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-        // 文件名带上天数与深浅色, 系统按 URL 缓存图片
-        let url = folder.appendingPathComponent("banner-\(age.totalDays)-\(dark ? "dark" : "light")@\(Int(scale))x.png")
+        // 系统按 URL 缓存图片, 构建号保证升级素材后能立即刷新
+        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0"
+        let url = folder.appendingPathComponent("banner-\(build)-\(baby.id)-\(baby.revision ?? "initial")-\(baby.zodiac.rawValue)-\(age.totalDays)-\(dark ? "dark" : "light")@\(Int(scale))x.png")
         do {
             try data.write(to: url, options: .atomic)
             return url

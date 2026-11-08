@@ -18,8 +18,8 @@ if ! LOG=$(xcodebuild -project BabyDays.xcodeproj -scheme BabyDays-macOS -config
   exit 1
 fi
 APP=$DERIVED/Build/Products/Release/BabyDays.app
-osascript -e 'quit app "BabyDays"' 2>/dev/null || true
-while pgrep -x BabyDays >/dev/null; do sleep 0.5; done
+osascript -e 'tell application "/Applications/BabyDays.app" to quit' 2>/dev/null || true
+while pgrep -f '^/Applications/BabyDays[.]app/Contents/MacOS/BabyDays($| )' >/dev/null; do sleep 0.5; done
 rm -rf /Applications/BabyDays.app
 cp -R "$APP" /Applications/
 # 构建目录中的同 ID 副本会被系统选作小组件扩展并在启动时崩溃, 安装后注销并删除该副本

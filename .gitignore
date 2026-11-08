@@ -4,3 +4,6 @@ DerivedData/
 xcuserdata/
 *.xcuserstate
 .claude/agent-memory/
+.asc/config.json
+*.p8
+*.p12

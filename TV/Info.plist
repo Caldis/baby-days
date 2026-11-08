@@ -19,5 +19,22 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundleAlternateIcons</key>
+		<array>
+			<string>ZodiacTV-rat</string>
+			<string>ZodiacTV-ox</string>
+			<string>ZodiacTV-tiger</string>
+			<string>ZodiacTV-rabbit</string>
+			<string>ZodiacTV-dragon</string>
+			<string>ZodiacTV-horse</string>
+			<string>ZodiacTV-goat</string>
+			<string>ZodiacTV-monkey</string>
+			<string>ZodiacTV-rooster</string>
+			<string>ZodiacTV-dog</string>
+			<string>ZodiacTV-pig</string>
+		</array>
+	</dict>
 </dict>
 </plist>

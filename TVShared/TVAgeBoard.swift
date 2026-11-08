@@ -2,6 +2,7 @@ import SwiftUI
 
 /// Apple TV 上的年龄展示: 全屏页面与顶部栏横幅共用
 struct TVAgeBoard: View {
+    @Environment(\.babyName) private var babyName
     enum Style {
         /// App 全屏, 1920 × 1080
         case fullScreen
@@ -24,7 +25,7 @@ struct TVAgeBoard: View {
                 .aspectRatio(1, contentMode: .fit)
                 .frame(width: isBanner ? 540 : 620)
             VStack(alignment: .leading, spacing: isBanner ? 14 : 26) {
-                Text(age.caption)
+                Text(age.caption.replacingOccurrences(of: "宝宝", with: babyName))
                     .font(.cute(isBanner ? 40 : 52))
                     .foregroundStyle(palette.inkSoft)
                 HeroNumber(age: age, size: isBanner ? 150 : 200)

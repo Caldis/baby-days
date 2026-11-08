@@ -1,41 +1,48 @@
 import SwiftUI
 
-/// App Store 截图: iPhone 1284 × 2778 (6.5 英寸栏位), Apple TV 1920 × 1080
+/// App Store 截图使用无透明通道的 PNG, iPad 使用已验证的原生模拟器画面
 enum AppStoreArt {
     @MainActor
-    static func render(to output: URL) throws {
+    static func render(root: URL, to output: URL) throws {
         let pages: [(String, String, String, DateComponents, Palette, [WidgetSize])] = [
-            ("iphone-1", "一眼看见宝宝多大", "桌面小组件每天 0 点自动更新", Render.scenarios[0].offset, .day, [.medium, .large]),
-            ("iphone-2", "满周岁后显示几岁几个月", "还有生日倒计时与趣味换算", Render.scenarios[4].offset, .day, [.small, .large]),
-            ("iphone-3", "深色模式下是林间夜空", "小, 中, 大三种尺寸随心摆放", Render.scenarios[0].offset, .night, [.medium, .large]),
+            ("iphone-1", "一眼看见宝宝多大", "桌面小组件每天 0 点自动更新", Render.scenarios[0].offset, .for(.light, zodiac: Zodiac(birth: Render.sampleBirth)), [.medium, .large]),
+            ("iphone-2", "满周岁后显示几岁几个月", "还有生日倒计时与趣味换算", Render.scenarios[4].offset, .for(.light, zodiac: Zodiac(birth: Render.sampleBirth)), [.small, .large]),
+            ("iphone-3", "深色模式下是林间夜空", "小, 中, 大三种尺寸随心摆放", Render.scenarios[0].offset, .for(.dark, zodiac: Zodiac(birth: Render.sampleBirth)), [.medium, .large]),
         ]
         for (name, title, subtitle, offset, palette, sizes) in pages {
             let page = PhonePage(title: title, subtitle: subtitle, age: Render.age(after: offset), sizes: sizes)
                 .environment(\.palette, palette)
-            try Render.write(page, scale: 3, to: output.appendingPathComponent("\(name).png"))
+            try Render.write(page, scale: 3, to: output.appendingPathComponent("\(name).png"), opaque: true)
         }
         let macPages: [(String, String, String, DateComponents, Palette)] = [
-            ("mac-1", "Mac 桌面上的宝宝年龄", "小, 中, 大三种尺寸, 每天 0 点自动更新", Render.scenarios[0].offset, .day),
-            ("mac-2", "满周岁后显示几岁几个月", "深色模式下是林间夜空", Render.scenarios[4].offset, .night),
+            ("mac-1", "Mac 桌面上的宝宝年龄", "小, 中, 大三种尺寸, 每天 0 点自动更新", Render.scenarios[0].offset, .for(.light, zodiac: Zodiac(birth: Render.sampleBirth))),
+            ("mac-2", "满周岁后显示几岁几个月", "深色模式下是林间夜空", Render.scenarios[4].offset, .for(.dark, zodiac: Zodiac(birth: Render.sampleBirth))),
         ]
         for (name, title, subtitle, offset, palette) in macPages {
             let page = MacPage(title: title, subtitle: subtitle, age: Render.age(after: offset))
                 .environment(\.palette, palette)
-            try Render.write(page, scale: 2, to: output.appendingPathComponent("\(name).png"))
+            try Render.write(page, scale: 2, to: output.appendingPathComponent("\(name).png"), opaque: true)
         }
-        let snake = Image(decorative: PencilSnake.image(
-            size: CGSize(width: 512, height: 512), scale: 2, parts: [.snake],
-            snakeRect: CGRect(x: 0, y: 0, width: 512, height: 512)
-        ), scale: 2)
+        let snake = IconArtwork.mascotImage(Zodiac(birth: Render.sampleBirth))
         let tvPages: [(String, DateComponents, Palette)] = [
-            ("tv-1", Render.scenarios[0].offset, .day),
-            ("tv-2", Render.scenarios[4].offset, .night),
+            ("tv-1", Render.scenarios[0].offset, .for(.light, zodiac: Zodiac(birth: Render.sampleBirth))),
+            ("tv-2", Render.scenarios[4].offset, .for(.dark, zodiac: Zodiac(birth: Render.sampleBirth))),
         ]
         for (name, offset, palette) in tvPages {
             let board = TVAgeBoard(age: Render.age(after: offset), snake: snake)
                 .frame(width: 1920, height: 1080)
                 .environment(\.palette, palette)
-            try Render.write(board, scale: 1, to: output.appendingPathComponent("\(name).png"))
+            try Render.write(board, scale: 1, to: output.appendingPathComponent("\(name).png"), opaque: true)
+        }
+        for (name, source) in [("ipad-1", "ipad-portrait"), ("ipad-2", "ipad-landscape")] {
+            let url = root.appendingPathComponent("docs/images/\(source).png")
+            guard let image = NSImage(contentsOf: url),
+                  let cg = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+                throw Render.RenderError.emptyImage
+            }
+            let page = Image(nsImage: image).resizable()
+                .frame(width: CGFloat(cg.width), height: CGFloat(cg.height))
+            try Render.write(page, scale: 1, to: output.appendingPathComponent("\(name).png"), opaque: true)
         }
     }
 

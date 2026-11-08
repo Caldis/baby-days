@@ -9,12 +9,14 @@ set -euo pipefail
 ROOT=${0:A:h:h}
 mkdir -p "$ROOT/.build"
 swiftc -O -parse-as-library -swift-version 5 -target arm64-apple-macos14 \
+  -module-cache-path "$HOME/Library/Caches/baby-days/ModuleCache" \
   "$ROOT"/Shared/*.swift "$ROOT"/TVShared/*.swift "$ROOT"/Tools/Render/*.swift \
   -o "$ROOT/.build/render"
 MODE=${1:-snapshots}
 case $MODE in
   icon) OUT=${2:-$ROOT/Resources/AppIcon.icon} ;;
   docs) OUT=${2:-$ROOT/docs/images} ;;
+  zodiac) OUT=${2:-$ROOT/Resources} ;;
   tv) OUT=${2:-$ROOT/Resources} ;;
   appstore) OUT=${2:-$ROOT/.build/app-store} ;;
   *) OUT=${2:-$ROOT/.build/snapshots} ;;

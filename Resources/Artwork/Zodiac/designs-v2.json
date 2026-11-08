@@ -1,0 +1,126 @@
+{
+  "style": "Single original BabyDays zodiac mascot, a premium soft 3D matte clay sculpture for a gentle baby-age app. Cohesive collection rules: rounded hand-sculpted volumes, large head but species-accurate body construction, simple deep warm charcoal dot eyes and a small curved smile unless specified otherwise, restrained cream secondary areas, broad soft upper-left studio light, smooth matte satin surface, no fur strands, no skin pores, no gloss, no pencil strokes, no heavy outlines. One full-body character only, square 1024x1024 composition, 78-82% total canvas occupancy, 10% clear safety margin around critical ears/horns/paws/tail. Crisp readable silhouette at 32 pixels, quiet simple shapes and no tiny decoration. Real fully transparent background with clean alpha, no floor, no detached cast shadow, no colored tile, no border, no corner mask, no scene, no lettering, no dates, no numbers, no watermarks, no existing characters or brand imitation.",
+  "designs": [
+    {
+      "key": "rat",
+      "name": "鼠",
+      "theme": "雾紫",
+      "hex": "#8173C9",
+      "identity": "a small lavender-gray baby mouse with a pointed pear-shaped muzzle, two large circular ears with dusty pink interiors, a pear-shaped upright torso, four distinct small paws and a thin lavender tail curving behind it, not wrapped around its body",
+      "bare": "tiptoeing toward the viewer's right, one hind foot lifted, one front paw near its cheek and the other held out in a curious greeting; a slight head tilt gives it alert curiosity",
+      "calendar": "carry a compact portrait calendar diagonally tucked under its left arm at its side, while the right paw points to the day mark; the calendar is off-center, not centered over the belly",
+      "calendarColor": "dusty violet #8173C9"
+    },
+    {
+      "key": "ox",
+      "name": "牛",
+      "theme": "麦田",
+      "hex": "#B98B48",
+      "identity": "a honey-ochre baby ox with a broad cream muzzle, two short cream horns curving gently outward, small oval ears, a stocky horizontal quadruped body with four separate cloven hooves, and a short tufted tail",
+      "bare": "a patient seated kneeling pose with hind legs folded under its stocky body, both forehooves planted, broad head turned slightly left and a calm dependable smile; clearly a baby bovine, not an upright snake",
+      "calendar": "sitting upright on its folded hind legs, support a large low landscape calendar from below with both forehooves, presenting it forward like a sturdy tray; cream muzzle above it, hooves visibly supporting the lower corners",
+      "calendarColor": "wheat ochre #B98B48"
+    },
+    {
+      "key": "tiger",
+      "name": "虎",
+      "theme": "杏橙",
+      "hex": "#D97732",
+      "identity": "an apricot-orange tiger cub with cream cheeks and chin, two rounded ears, broad dark cinnamon forehead and cheek stripes, four large rounded cat paws and a short raised striped tail",
+      "bare": "a playful forward pouncing stretch, front paws wide on the ground, hindquarters slightly raised, head low but facing the viewer with a bold delighted grin; a cub's compact feline anatomy, not a coiled body",
+      "calendar": "crouch behind a low upright portrait calendar and rest both broad striped front paws over its top corners, peeking over the calendar with a cheeky tiger face; the tail curls upward behind one shoulder",
+      "calendarColor": "burnt apricot #D97732"
+    },
+    {
+      "key": "rabbit",
+      "name": "兔",
+      "theme": "蔷薇",
+      "hex": "#C46C8C",
+      "identity": "a rose-pink baby rabbit with a cream muzzle and belly, one tall rounded ear and one gently folded ear, a small oval body, two little front paws, two oversized oval hind feet and a small round cottontail",
+      "bare": "caught in a gentle little hop with one large hind foot forward and the other tucked back, front paws open as if balancing, head tilted slightly right with a shy happy smile",
+      "calendar": "stand on its large hind feet and extend both front paws sideways to offer a tall slender rose calendar like a gift; calendar on the viewer's right, leaning slightly outward, rabbit's face and asymmetrical ears clearly separated from it",
+      "calendarColor": "rose pink #C46C8C"
+    },
+    {
+      "key": "dragon",
+      "name": "龙",
+      "theme": "青玉",
+      "hex": "#2E948F",
+      "identity": "an original jade-teal baby Chinese dragon with two short cream branching antlers, a rounded broad cream muzzle, two short smooth whiskers, a softly segmented cream underside, four small distinct clawed limbs and a broad soft flame-shaped tail tuft; no wings",
+      "bare": "floating in an open ascending S-curve, front claws spread in welcome and rear feet dangling, head turned back toward the viewer; a buoyant lively posture with lots of open negative space instead of a closed coil",
+      "calendar": "use its two front claws to raise a compact landscape calendar above and slightly beside its head like a little celebration banner, while its open S-shaped body and two rear feet float below; keep the jade calendar face pointed toward the viewer and antlers clear",
+      "calendarColor": "jade teal #2E948F"
+    },
+    {
+      "key": "snake",
+      "name": "蛇",
+      "theme": "嫩绿",
+      "hex": "#A3C752",
+      "identity": "a fresh leaf-green baby snake with a smooth small rounded head, gentle dark olive dot eyes, a cream underside, one continuous naturally tapering limbless body and a narrow rounded tail tip; no arms, legs, mammal ears or horns",
+      "bare": "an elegant upright open S-shaped neck rising from one low soft ground loop, tail tip lifted to one side in a friendly wave, head slightly tilted with a curious smile; preserve a clear snake silhouette",
+      "calendar": "balance a small leaf-green portrait calendar on the upturned tail tip beside the raised head; the tail gently curls around the bottom edge of the calendar to hold it securely, with the snake's body forming an open S, no invented hands and no belly hug",
+      "calendarColor": "leaf green #A3C752"
+    },
+    {
+      "key": "horse",
+      "name": "马",
+      "theme": "陶土",
+      "hex": "#B3654F",
+      "identity": "a terracotta chestnut baby horse with a long rounded cream-blazed muzzle, two upright pointed ears, a short broad dark chestnut mane, a compact horizontal equine body, four slender but chunky distinct legs ending in rounded dark hooves and a full short tail",
+      "bare": "trotting lightly toward the viewer's left in a three-quarter view, one front hoof lifted and the opposite hind leg stepping forward, head turned toward the viewer with cheerful confidence; unmistakable horse proportions, no coils",
+      "calendar": "rear gently on its two hind hooves and hold a tilted copper calendar beside its chest, one front hoof under the bottom edge and the other steadying its side; keep muzzle, ears, mane and hooves clearly visible",
+      "calendarColor": "terracotta copper #B3654F"
+    },
+    {
+      "key": "goat",
+      "name": "羊",
+      "theme": "鼠尾草",
+      "hex": "#7C9470",
+      "identity": "a sage-green baby goat with a cream rounded muzzle, two small backward-curving cream horns, long drooping ears, a tiny cream chin tuft, a short textured-by-shape forelock, a compact small torso and four separate dark sage cloven hooves",
+      "bare": "sit with hind legs neatly folded, body turned three-quarter to the right and one little front hoof raised in a gentle wave, head lowered slightly in a serene thoughtful nod; soft rounded sculpted forms, not realistic fur",
+      "calendar": "hold a sage-colored calendar diagonally upright beside its cheek with both forehooves, leaning its cheek affectionately against the upper corner as if cuddling a book; horns and drooping ears above, folded hind hooves below",
+      "calendarColor": "sage green #7C9470"
+    },
+    {
+      "key": "monkey",
+      "name": "猴",
+      "theme": "琥珀",
+      "hex": "#B58A25",
+      "identity": "a warm golden-amber baby monkey with a cream heart-shaped face patch, circular side ears, a short muzzle, a small rounded torso, two long expressive arms, two bent legs with rounded feet and a long tail making a single loose curl behind it",
+      "bare": "perch in an off-center squat with one knee raised, one hand waving high and the other resting on its knee, gaze playful and slightly sideways; face and expressive asymmetry are the focus",
+      "calendar": "stand in a jaunty squat and dangle a small amber calendar from one chunky binding loop held by its raised left hand, like carrying a little satchel, while the right hand waves; the calendar hangs beside the body, not over the belly",
+      "calendarColor": "golden amber #B58A25"
+    },
+    {
+      "key": "rooster",
+      "name": "鸡",
+      "theme": "莓红",
+      "hex": "#BC5362",
+      "identity": "a berry-red baby rooster with a single broad three-lobed crimson comb, a small warm amber beak, cream chest patch, two rounded feather-shaped wings, two sturdy short ochre bird legs and a fan of three broad curved berry tail feathers",
+      "bare": "a proud jaunty strut in three-quarter profile, chest puffed, one foot lifted and one wing half-open in greeting, head turned toward the viewer with a bright confident smile; unmistakable bird silhouette, no mammal paws",
+      "calendar": "stand firmly on both bird feet and cradle a berry-red calendar horizontally on one outstretched wing, using the other wingtip to steady its far corner; hold it beside the cream chest like serving a little tray, beak and comb unobstructed",
+      "calendarColor": "berry red #BC5362"
+    },
+    {
+      "key": "dog",
+      "name": "狗",
+      "theme": "晴蓝",
+      "hex": "#4F83B4",
+      "identity": "a denim-blue baby puppy with a cream rounded muzzle and chest, one floppy ear and one semi-perked ear, a round black nose, a compact quadruped body with four clearly separate rounded paws and an upward wagging short tail",
+      "bare": "stand with one front paw extended toward the viewer in an eager greeting, the other three paws grounded, head tilted in the opposite direction to the perked ear; an alert affectionate puppy, not a coiled body",
+      "calendar": "sit on its hind paws and gently carry a small blue calendar by one thick binding loop in its mouth; the calendar hangs just below and to the side of the muzzle, leaving its eyes and one cheek visible, forepaws planted proudly in front",
+      "calendarColor": "denim blue #4F83B4"
+    },
+    {
+      "key": "pig",
+      "name": "猪",
+      "theme": "蜜桃",
+      "hex": "#C78678",
+      "identity": "a peach-coral baby pig with a broad round pink snout with two simple nostrils, small floppy triangular ears, a plump horizontal oval body, four short separate cloven trotters, a cream belly and a tiny curled corkscrew tail",
+      "bare": "lounge contentedly on its belly with front trotters stacked under its chin, hind feet relaxed to one side, one eye softly winking and a small smile; a low wide resting silhouette",
+      "calendar": "lie on its side and cuddle a peach-coral calendar like a pillow, both front trotters wrapped around its sides and one cheek resting on the top corner; calendar rotated about 20 degrees, soft plump body and relaxed hind trotters visible beside it",
+      "calendarColor": "peach coral #C78678"
+    }
+  ],
+  "workflow": "One image at a time; independent mascot generation, then a separate calendar pose derived from that mascot. Inspect each before continuing."
+}

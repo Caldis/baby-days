@@ -87,9 +87,38 @@ struct Palette: Sendable {
         accents: Array(repeating: .white, count: 3)
     )
 
-    static func `for`(_ scheme: ColorScheme) -> Palette {
-        scheme == .dark ? .night : .day
+    static func `for`(_ scheme: ColorScheme, zodiac: Zodiac = .snake) -> Palette {
+        if zodiac == .snake { return scheme == .dark ? .night : .day }
+        let dark = scheme == .dark
+        let hue = zodiac.colorHex
+        let ink = mix(hue, with: 0x101820, amount: dark ? 0.0 : 0.72)
+        let text = dark ? mix(hue, with: 0xFFFDF4, amount: 0.88) : ink
+        let primary = dark ? mix(hue, with: 0xFFFDF4, amount: 0.55) : mix(hue, with: 0x101820, amount: 0.22)
+        return Palette(
+            kind: dark ? .night : .day,
+            skyTop: Color(hex: mix(hue, with: dark ? 0x101820 : 0xFFFDF4, amount: dark ? 0.85 : 0.93)),
+            skyBottom: Color(hex: mix(hue, with: dark ? 0x101820 : 0xFFFDF4, amount: dark ? 0.70 : 0.77)),
+            ink: Color(hex: text), inkSoft: Color(hex: text).opacity(0.78),
+            heroTop: Color(hex: primary), heroBottom: Color(hex: dark ? mix(hue, with: 0xFFFDF4, amount: 0.25) : mix(hue, with: 0x101820, amount: 0.44)),
+            heroShadow: Color(hex: ink).opacity(0.22),
+            chip: dark ? Color.white.opacity(0.12) : Color(hex: 0xFFFDF4).opacity(0.85),
+            chipInk: Color(hex: text), cloud: Color.white.opacity(dark ? 0.08 : 0.85),
+            sparkle: Color(hex: dark ? 0xF4E3A0 : 0xB98725), sparkleAlt: Color(hex: primary),
+            track: Color.white.opacity(dark ? 0.15 : 0.75),
+            trackFillStart: Color(hex: primary), trackFillEnd: Color(hex: hue),
+            accents: [Color(hex: primary), Color(hex: 0xB98725), Color(hex: primary)]
+        )
     }
+
+    static func mix(_ lhs: UInt32, with rhs: UInt32, amount: Double) -> UInt32 {
+        var result: UInt32 = 0
+        for shift in [16, 8, 0] {
+            let a = Double((lhs >> shift) & 255), b = Double((rhs >> shift) & 255)
+            result |= UInt32((a * (1 - amount) + b * amount).rounded()) << shift
+        }
+        return result
+    }
+
 }
 
 // MARK: - Environment
@@ -140,5 +169,15 @@ extension Color {
             blue: Double(hex & 0xFF) / 255,
             opacity: alpha
         )
+    }
+}
+
+private struct BabyNameKey: EnvironmentKey {
+    static let defaultValue = "宝宝"
+}
+extension EnvironmentValues {
+    var babyName: String {
+        get { self[BabyNameKey.self] }
+        set { self[BabyNameKey.self] = newValue }
     }
 }

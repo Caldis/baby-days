@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 /// Apple TV 素材: 分层 App 图标, 顶部栏静态图, 以及 App 与顶部栏横幅使用的小蛇图片
 enum TVArtwork {
@@ -12,14 +13,17 @@ enum TVArtwork {
         try writeShelf(at: brand.appendingPathComponent("Top Shelf Image.imageset"), size: CGSize(width: 1920, height: 720))
         try writeShelf(at: brand.appendingPathComponent("Top Shelf Image Wide.imageset"), size: CGSize(width: 2320, height: 720))
 
+        for zodiac in Zodiac.allCases where zodiac != .snake {
+            try writeStack(at: resources.appendingPathComponent("TVIcon.xcassets/ZodiacTV-\(zodiac.rawValue).imagestack"),
+                           size: CGSize(width: 400, height: 240), scales: [1, 2], zodiac: zodiac, resources: resources)
+        }
         let shared = resources.appendingPathComponent("TVShared.xcassets")
         try writeCatalogRoot(shared)
         let snake = shared.appendingPathComponent("Snake.imageset")
         try FileManager.default.createDirectory(at: snake, withIntermediateDirectories: true)
-        let full = CGRect(x: 0, y: 0, width: 512, height: 512)
         for scale in [1, 2] {
-            let image = PencilSnake.image(size: full.size, scale: CGFloat(scale), parts: [.snake], snakeRect: full)
-            try PencilSnake.write(image, to: snake.appendingPathComponent("snake@\(scale)x.png"))
+            try Render.write(IconArtwork.snakeImage.resizable().scaledToFit().frame(width: 512, height: 512),
+                             scale: CGFloat(scale), to: snake.appendingPathComponent("snake@\(scale)x.png"))
         }
         try writeJSON(imageSetContents(["snake@1x.png", "snake@2x.png"]), to: snake.appendingPathComponent("Contents.json"))
     }
@@ -31,13 +35,12 @@ enum TVArtwork {
         var body: some View {
             let side = size.height * 0.96
             ZStack(alignment: .leading) {
-                Image(
-                    decorative: PencilSnake.image(
-                        size: size, scale: 2, parts: [.paper, .backdrop, .snake],
-                        snakeRect: CGRect(x: size.width * 0.12, y: (size.height - side) / 2, width: side, height: side)
-                    ),
-                    scale: 2
-                )
+                IconArtwork.paper
+                IconArtwork.snakeImage
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: side, height: side)
+                    .padding(.leading, size.width * 0.12)
                 VStack(alignment: .leading, spacing: 18) {
                     Text("宝宝多大")
                         .font(.cute(128))
@@ -55,28 +58,33 @@ enum TVArtwork {
     // MARK: - 写入
 
     @MainActor
-    private static func writeStack(at directory: URL, size: CGSize, scales: [Int]) throws {
-        let side = size.height * 0.98
-        let rect = CGRect(x: (size.width - side) / 2, y: (size.height - side) / 2, width: side, height: side)
-        let layers: [(String, PencilSnake.Parts)] = [("Front", [.snake]), ("Back", [.paper, .backdrop])]
-        for (name, parts) in layers {
+    private static func writeStack(at directory: URL, size: CGSize, scales: [Int], zodiac: Zodiac = .snake, resources: URL? = nil) throws {
+        let side = size.height * 0.84
+        let layers = ["Front", "Back"]
+        for name in layers {
             let layer = directory.appendingPathComponent("\(name).imagestacklayer")
             let content = layer.appendingPathComponent("Content.imageset")
             try FileManager.default.createDirectory(at: content, withIntermediateDirectories: true)
             var files: [String] = []
             for scale in scales {
                 let file = "\(name.lowercased())@\(scale)x.png"
-                try PencilSnake.write(
-                    PencilSnake.image(size: size, scale: CGFloat(scale), parts: parts, snakeRect: rect),
-                    to: content.appendingPathComponent(file)
-                )
+                let artwork = ZStack {
+                    if name == "Back" {
+                        Palette.for(.light, zodiac: zodiac).skyTop
+                    } else {
+                        IconArtwork.calendarImage(zodiac).resizable().scaledToFit()
+                            .frame(width: side, height: side)
+                    }
+                }
+                .frame(width: size.width, height: size.height)
+                try Render.write(artwork, scale: CGFloat(scale), to: content.appendingPathComponent(file), opaque: name == "Back")
                 files.append(file)
             }
             try writeJSON(infoOnly, to: layer.appendingPathComponent("Contents.json"))
             try writeJSON(imageSetContents(files), to: content.appendingPathComponent("Contents.json"))
         }
         try writeJSON(
-            ["info": info, "layers": layers.map { ["filename": "\($0.0).imagestacklayer"] }],
+            ["info": info, "layers": layers.map { ["filename": "\($0).imagestacklayer"] }],
             to: directory.appendingPathComponent("Contents.json")
         )
     }
@@ -87,7 +95,7 @@ enum TVArtwork {
         var files: [String] = []
         for scale in [1, 2] {
             let file = "shelf@\(scale)x.png"
-            try Render.write(ShelfArt(size: size), scale: CGFloat(scale), to: directory.appendingPathComponent(file))
+            try Render.write(ShelfArt(size: size), scale: CGFloat(scale), to: directory.appendingPathComponent(file), opaque: true)
             files.append(file)
         }
         try writeJSON(imageSetContents(files), to: directory.appendingPathComponent("Contents.json"))

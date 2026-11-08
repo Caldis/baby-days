@@ -21,6 +21,7 @@ struct Render {
             exit(1)
         }
         let root = URL(fileURLWithPath: arguments[1])
+        try IconArtwork.load(from: root)
         let output = URL(fileURLWithPath: arguments[3])
         try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
 
@@ -31,8 +32,9 @@ struct Render {
         case "snapshots": try renderSnapshots(to: output)
         case "docs": try renderDocs(to: output)
         case "icon": try IconArtwork.render(to: output)
+        case "zodiac": try ZodiacArtwork.render(root: root)
         case "tv": try TVArtwork.render(to: output)
-        case "appstore": try AppStoreArt.render(to: output)
+        case "appstore": try AppStoreArt.render(root: root, to: output)
         default:
             print("unknown mode \(arguments[2])")
             exit(1)
@@ -59,8 +61,8 @@ struct Render {
     @MainActor
     static func renderSnapshots(to output: URL) throws {
         let palettes: [(String, Palette, ColorScheme)] = [
-            ("day", .day, .light),
-            ("night", .night, .dark),
+            ("day", .for(.light, zodiac: Zodiac(birth: sampleBirth)), .light),
+            ("night", .for(.dark, zodiac: Zodiac(birth: sampleBirth)), .dark),
             ("mono", .mono, .dark),
         ]
         for scenario in scenarios {
@@ -72,7 +74,7 @@ struct Render {
             }
         }
         let updateSheet = SnapshotSheet(age: age(after: scenarios[0].offset), mono: false)
-            .environment(\.palette, .day)
+            .environment(\.palette, .for(.light, zodiac: Zodiac(birth: sampleBirth)))
             .environment(\.updateAvailable, true)
         try write(updateSheet, scale: 2, to: output.appendingPathComponent("update-available-day.png"))
         for (paletteName, palette, scheme) in palettes {
@@ -81,6 +83,20 @@ struct Render {
                 .environment(\.colorScheme, scheme)
             try write(setup, scale: 2, to: output.appendingPathComponent("setup-\(paletteName).png"))
         }
+        try write(SnapshotSheet(age: age(after: scenarios[0].offset), mono: false)
+            .environment(\.palette, Palette.for(.light, zodiac: .dragon))
+            .environment(\.babyName, String(repeating: "示例", count: 10)),
+            scale: 1, to: output.appendingPathComponent("long-name.png"))
+        for zodiac in Zodiac.allCases {
+            for scheme in [ColorScheme.light, .dark] {
+                let sheet = SnapshotSheet(age: age(after: scenarios[0].offset), mono: false)
+                    .environment(\.palette, Palette.for(scheme, zodiac: zodiac))
+                    .environment(\.colorScheme, scheme)
+                    .environment(\.babyName, "示例宝宝")
+                    .environment(\.zodiacOverride, zodiac)
+                try write(sheet, scale: 1, to: output.appendingPathComponent("zodiac-\(zodiac.rawValue)-\(scheme == .dark ? "dark" : "light").png"))
+            }
+        }
         try write(IconArtwork.Composite(), scale: 0.25, to: output.appendingPathComponent("icon.png"))
         try renderTV(to: output)
     }
@@ -88,11 +104,8 @@ struct Render {
     /// Apple TV 全屏页面与顶部栏横幅
     @MainActor
     static func renderTV(to output: URL) throws {
-        let snake = Image(decorative: PencilSnake.image(
-            size: CGSize(width: 512, height: 512), scale: 2, parts: [.snake],
-            snakeRect: CGRect(x: 0, y: 0, width: 512, height: 512)
-        ), scale: 2)
-        for (paletteName, palette) in [("day", Palette.day), ("night", Palette.night)] {
+        let snake = IconArtwork.mascotImage(Zodiac(birth: sampleBirth))
+        for (paletteName, palette) in [("day", Palette.for(.light, zodiac: Zodiac(birth: sampleBirth))), ("night", Palette.for(.dark, zodiac: Zodiac(birth: sampleBirth)))] {
             for scenario in [scenarios[0], scenarios[4]] {
                 let board = TVAgeBoard(age: age(after: scenario.offset), snake: snake)
                     .frame(width: 1920, height: 1080)
@@ -110,10 +123,10 @@ struct Render {
     @MainActor
     static func renderDocs(to output: URL) throws {
         let pages: [(String, DateComponents, Palette, ColorScheme)] = [
-            ("widgets-infant", scenarios[0].offset, .day, .light),
-            ("widgets-night", scenarios[0].offset, .night, .dark),
-            ("widgets-toddler", scenarios[4].offset, .day, .light),
-            ("widgets-birthday", scenarios[3].offset, .night, .dark),
+            ("widgets-infant", scenarios[0].offset, .for(.light, zodiac: Zodiac(birth: sampleBirth)), .light),
+            ("widgets-night", scenarios[0].offset, .for(.dark, zodiac: Zodiac(birth: sampleBirth)), .dark),
+            ("widgets-toddler", scenarios[4].offset, .for(.light, zodiac: Zodiac(birth: sampleBirth)), .light),
+            ("widgets-birthday", scenarios[3].offset, .for(.dark, zodiac: Zodiac(birth: sampleBirth)), .dark),
         ]
         for (name, offset, palette, scheme) in pages {
             let sheet = DocSheet(age: age(after: offset))
@@ -125,10 +138,26 @@ struct Render {
     }
 
     @MainActor
-    static func write<V: View>(_ view: V, scale: CGFloat, to url: URL) throws {
-        let renderer = ImageRenderer(content: view)
+    static func write<V: View>(_ view: V, scale: CGFloat, to url: URL, opaque: Bool = false) throws {
+        let renderer = ImageRenderer(content: view.environment(\.zodiacImageProvider) { IconArtwork.mascotImage($0) })
         renderer.scale = scale
-        guard let image = renderer.cgImage else { throw RenderError.emptyImage }
+        renderer.isOpaque = opaque
+        guard let rendered = renderer.cgImage else { throw RenderError.emptyImage }
+        let image: CGImage
+        if opaque {
+            // 导入的模拟器图片可能仍带 alpha, 即使 ImageRenderer 已设为不透明
+            guard let context = CGContext(data: nil, width: rendered.width, height: rendered.height,
+                                          bitsPerComponent: 8, bytesPerRow: rendered.width * 4,
+                                          space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                          bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue) else {
+                throw RenderError.emptyImage
+            }
+            context.setFillColor(CGColor(gray: 1, alpha: 1))
+            context.fill(CGRect(x: 0, y: 0, width: rendered.width, height: rendered.height))
+            context.draw(rendered, in: CGRect(x: 0, y: 0, width: rendered.width, height: rendered.height))
+            guard let flattened = context.makeImage() else { throw RenderError.emptyImage }
+            image = flattened
+        } else { image = rendered }
         guard let destination = CGImageDestinationCreateWithURL(url as CFURL, UTType.png.identifier as CFString, 1, nil) else {
             throw RenderError.writeFailed
         }

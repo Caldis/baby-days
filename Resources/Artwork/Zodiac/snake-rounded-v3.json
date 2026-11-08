@@ -1,0 +1,32 @@
+{
+  "revision": "rounder-snake-v3",
+  "lane": "soft_3d_object_character",
+  "goal": "Restore the approved round baby proportions, preserve calendar and no-calendar usage",
+  "mascot": {
+    "file": "mascots/snake.png",
+    "prompt": "Use case: precise-object-edit. Asset: BabyDays no-calendar baby-snake mascot for the app and widgets, square transparent PNG. Image 1 is the EDIT TARGET, the current thin tall green snake. Image 2 is our previously approved original BabyDays icon and the reference for the much rounder, cuddly proportions and sweet expression. Redesign image 1 toward that compact baby character: greatly enlarge the softly rounded head to about 55 percent of the total character height, shorten the neck by half, make the continuous snake body much thicker and marshmallow-plump, sitting in one broad low rounded coil with a tiny soft upturned tail at the side. A relaxed very gentle curve rather than a long vertical S. Keep a true limbless snake with no arms, hands, legs, ears or horns. Use the earlier icon's small warm dark dot eyes, tiny curved smile and rounded cheeks, fresh apple/leaf green clay, warm cream chin and belly. Preserve the established soft matte 3D clay material and soft upper-left lighting from both images, never glossy. NO calendar, no props, no accessories. Character full body centered, about 80 percent of the square, complete head and tail inside generous safe margins. Background must be fully transparent with clean alpha, no fog, no glow, no floor or detached shadow. At 32 pixels it must read as a very round baby snake with a large friendly face, not a slender adult snake.",
+    "generation": "Generated images are saved to /Users/caldis/.codex/generated_images/01a1b6bf-3e52-7783-8d6a-faccc6aef5f7 as /Users/caldis/.codex/generated_images/01a1b6bf-3e52-7783-8d6a-faccc6aef5f7/exec-2ba9e40f-1ea0-44b8-85e1-c7037dd23ce4.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  "calendar": {
+    "file": "calendar/snake.png",
+    "prompt": "Use case: precise-object-edit. Asset: BabyDays calendar icon foreground, a square transparent PNG. Image 1 is the exact newly approved round baby-snake mascot to preserve: large rounded head, short neck, very plump low coil, leaf-green matte clay, warm cream chin/belly, dark dot eyes and tiny sweet smile. Image 2 is our original approved icon and the reference for the intimate calendar-cuddling composition. Make the CALENDAR VERSION of image 1. Keep the big baby head and squat compact body proportions exactly. Add a small warm-ivory tear-off calendar nestled against the front of the lower body, slightly right of center, held securely by the snake's thick lower coil wrapping beneath and gently around its bottom edge. One continuous anatomically limbless body and tail; NO arms, hands or legs. No long thin S-neck and no long thin raised tail pedestal. The calendar has a fresh leaf-green header, two thick green binding loops, and ONE bold filled green day circle on its ivory page, like image 2. The entire smiling face stays visible, with a soft affectionate head tilt toward the calendar. Calendar only 30-35 percent of the complete character height. One complete compact character centered, about 80-84 percent square occupancy, clear safe margins all around. Same premium soft matte clay and gentle upper-left studio light as our established collection. Fully transparent background with a clean cutout edge, no glow, no white fog, no floor, no detached shadow, no tile, no text, no dates or numbers, no corner mask.",
+    "repairPrompt": "Precise transparency repair only. Preserve this exact finished round green baby snake and small calendar, all shape proportions, face, colors, matte-clay material and pose. Remove the entire yellow/green/gray halo and all residual background pixels surrounding the head and coil. Only the physical snake and calendar should remain opaque. Everything outside the clean antialiased silhouette, including around the head and the bottom edge, must be fully transparent. No glow, no fog, no floor, no shadow, no new artwork. Keep the whole character centered at about 80 percent occupancy in a square canvas with clear transparent margins. Do not shrink the head, lengthen the neck, change the smile or remove any calendar part.",
+    "generation": "Generated images are saved to /Users/caldis/.codex/generated_images/01a1b6bf-3e52-7783-8d6a-faccc6aef5f7 as /Users/caldis/.codex/generated_images/01a1b6bf-3e52-7783-8d6a-faccc6aef5f7/exec-ab5df96d-c0e1-4262-9140-974a3eff68c9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  "review": {
+    "sizes": [
+      1024,
+      180,
+      60,
+      32
+    ],
+    "score": 89,
+    "smallSize": "Large face, thick coil and single calendar day circle remain distinct at 32 px",
+    "palette": {
+      "dominant": "#A3C752",
+      "cream": "#F3F6E4",
+      "ink": "#46551F"
+    },
+    "production": "Opaque square icon exports, transparent mascot exports, no baked icon mask"
+  }
+}

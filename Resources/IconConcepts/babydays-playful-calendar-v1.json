@@ -1,0 +1,15 @@
+{
+  "generator": "built-in image_gen",
+  "skill": "chunkithwang/design-playful-app-icons",
+  "lane": "soft_3d_object_character",
+  "prompt": "Use case: stylized-concept. Create one original square iOS/macOS app icon, 1024 x 1024, for BabyDays, a warm baby-age and birthday-countdown widget app. Product metaphor: a young green snake tenderly embracing a single calendar leaf, celebrating a child's daily growth. One dominant mascot and only one supporting prop. Soft 3D object-character lane: construct the snake from three broad rounded clay forms, an oversized gently oval head, one thick softly curled compact body/tail, and one cream belly. Frontal slight three-quarter view, calm curious paired dark dot eyes looking slightly down toward the calendar and one short curved smile. Single signature hook: the curled tail cradles a chunky cream tear-off calendar leaf against the belly. Calendar has two broad grass-green binding tabs, a thick grass-green top bar, and one large simple recessed circular day mark, no numbers, no letters, no grid of tiny marks. Subject occupies 78 percent of width and height; protect face and calendar within a 12 percent safe margin. Compact, readable silhouette, no thin limbs. Custom brand palette: dominant grass green #A3C752 with volume shading toward #5E8F2F, warm cream #FFFDF4 for belly/calendar and quiet edge-to-edge background #F3F6E4, dark olive #3A4722 for facial marks. Keep subject visibly darker than background in grayscale. One coherent smooth matte clay material, broad soft upper-left light, restrained occlusion at overlaps, short soft contact shadow. Playful and tender but clean and iconic, no fur, pencil hatching, paper grain or photographic texture. Clear eyes, silhouette and calendar at 32px. Full-bleed opaque square sRGB artwork with straight square canvas edges; no rounded-corner mask, no border, no outer icon tile, no mockup, no surrounding scene, no typography, no dates, no stars, no sparkles, no extra props, no watermark, no existing logo, no known character, no artist imitation.",
+  "negative_constraints": "No text, dates, watermark, existing characters, rounded corner mask or transparency",
+  "palette": [
+    "#A3C752",
+    "#5E8F2F",
+    "#FFFDF4",
+    "#F3F6E4",
+    "#3A4722"
+  ],
+  "status": "approved; installed in Resources/AppIcon.icon via Resources/Artwork/app-icon.png"
+}

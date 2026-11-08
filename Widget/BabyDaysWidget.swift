@@ -1,51 +1,61 @@
 import SwiftUI
 import WidgetKit
+import AppIntents
 
 struct AgeEntry: TimelineEntry {
     let date: Date
     /// nil 表示尚未在 App 中设置生日
     var birth: BirthDate?
     var updateAvailable = false
+    var babyID: String?
+    var babyName: String = "宝宝"
+    var missingBaby = false
 
     var age: BabyAge? { birth.map { BabyAge(birth: $0, on: date) } }
 }
 
 /// 每天 0 点切换一条记录, 一次排好未来 7 天, 并在次日 0 点后重新请求时间线
-struct AgeProvider: TimelineProvider {
+struct AgeProvider: AppIntentTimelineProvider {
+    typealias Intent = SelectBabyIntent
     func placeholder(in context: Context) -> AgeEntry {
         AgeEntry(date: .now, birth: .sample())
     }
 
-    /// 小组件库预览: 未设置生日时使用示例生日
-    func getSnapshot(in context: Context, completion: @escaping (AgeEntry) -> Void) {
-        completion(AgeEntry(date: .now, birth: BabyProfile.birthDate ?? .sample()))
+    func snapshot(for configuration: SelectBabyIntent, in context: Context) async -> AgeEntry {
+        let baby = BabyProfile.baby(id: configuration.babyID)
+        if let baby { return entry(baby, date: .now) }
+        if context.isPreview && configuration.babyID == nil { return AgeEntry(date: .now, birth: .sample()) }
+        return AgeEntry(date: .now, missingBaby: configuration.babyID != nil)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<AgeEntry>) -> Void) {
+    func timeline(for configuration: SelectBabyIntent, in context: Context) async -> Timeline<AgeEntry> {
         #if os(macOS)
         if UpdateFeed.isStaleProcess {
-            // 旧版本进程交回一条 1 分钟后过期的时间线后退出, 系统下次请求时启动新版本扩展
-            completion(Timeline(entries: [AgeEntry(date: .now)], policy: .after(.now.addingTimeInterval(60))))
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { exit(0) }
-            return
+            return Timeline(entries: [AgeEntry(date: .now)], policy: .after(.now.addingTimeInterval(60)))
         }
         #endif
-        Task {
-            #if os(macOS) && !APP_STORE
-            let updateAvailable = await UpdateFeed.isUpdateAvailable()
-            #else
-            let updateAvailable = false
-            #endif
-            let birth = BabyProfile.birthDate
-            let calendar = BabyAge.calendar
-            let today = calendar.startOfDay(for: .now)
-            let upcoming = (1...7).compactMap { calendar.date(byAdding: .day, value: $0, to: today) }
-            let entries = ([Date.now] + upcoming).map {
-                AgeEntry(date: $0, birth: birth, updateAvailable: updateAvailable)
-            }
-            completion(Timeline(entries: entries, policy: .after(upcoming[0])))
+        #if os(macOS) && !APP_STORE
+        let update = await UpdateFeed.isUpdateAvailable()
+        #else
+        let update = false
+        #endif
+        let baby = BabyProfile.baby(id: configuration.babyID)
+        let calendar = BabyAge.calendar
+        let today = calendar.startOfDay(for: .now)
+        let upcoming = (1...7).compactMap { calendar.date(byAdding: .day, value: $0, to: today) }
+        let entries = ([Date.now] + upcoming).map { date -> AgeEntry in
+            guard let baby else { return AgeEntry(date: date, missingBaby: configuration.babyID != nil) }
+            var result = entry(baby, date: date)
+            result.updateAvailable = update
+            return result
         }
+        return Timeline(entries: entries, policy: .after(upcoming[0]))
     }
+    private func entry(_ baby: Baby, date: Date) -> AgeEntry {
+        AgeEntry(date: date, birth: baby.birth, babyID: baby.id, babyName: baby.displayName)
+    }
+
 }
 
 struct BabyDaysWidgetView: View {
@@ -59,7 +69,8 @@ struct BabyDaysWidgetView: View {
         content
             .environment(\.palette, palette)
             .environment(\.updateAvailable, entry.updateAvailable)
-            .widgetURL(entry.updateAvailable ? URL(string: "babydays://update") : nil)
+            .environment(\.babyName, entry.babyName)
+            .widgetURL(entry.updateAvailable ? URL(string: "babydays://update") : entry.babyID.flatMap { URL(string: "babydays://baby/\($0)") })
             .containerBackground(for: .widget) {
                 SkyBackground(size: size)
                     .environment(\.palette, palette)
@@ -70,6 +81,13 @@ struct BabyDaysWidgetView: View {
     private var content: some View {
         if let age = entry.age {
             BabyWidgetContent(age: age, size: size)
+        } else if entry.missingBaby {
+            VStack(spacing: 8) {
+                Image(systemName: "person.crop.circle.badge.questionmark").font(.title)
+                Text("宝宝已移除").font(.cute(16))
+                Text("编辑小组件, 重新选择宝宝").font(.cute(12)).multilineTextAlignment(.center)
+            }
+            .foregroundStyle(palette.ink)
         } else {
             SetupPrompt(size: size)
         }
@@ -78,7 +96,7 @@ struct BabyDaysWidgetView: View {
     /// 系统着色时用单色; 背景被移除 (如 StandBy) 时内容直接落在黑底上, 改用夜间配色
     private var palette: Palette {
         guard renderingMode == .fullColor else { return .mono }
-        return showsBackground ? Palette.for(colorScheme) : .night
+        return Palette.for(showsBackground ? colorScheme : .dark, zodiac: entry.birth.map(Zodiac.init(birth:)) ?? .snake)
     }
 
     private var size: WidgetSize {
@@ -93,11 +111,11 @@ struct BabyDaysWidgetView: View {
 @main
 struct BabyDaysWidget: Widget {
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: "BabyDaysWidget", provider: AgeProvider()) { entry in
+        AppIntentConfiguration(kind: "BabyDaysWidget", intent: SelectBabyIntent.self, provider: AgeProvider()) { entry in
             BabyDaysWidgetView(entry: entry)
         }
         .configurationDisplayName("宝宝多大")
-        .description("看看宝宝今天多大啦")
+        .description("选择一位宝宝, 看看今天多大啦")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }

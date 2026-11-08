@@ -78,6 +78,7 @@ private struct MediumLayout: View {
 }
 
 private struct LargeLayout: View {
+    @Environment(\.babyName) private var babyName
     let age: BabyAge
     @Environment(\.palette) private var palette
     @Environment(\.updateAvailable) private var updateAvailable
@@ -87,7 +88,7 @@ private struct LargeLayout: View {
             HStack(alignment: .top, spacing: 10) {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 6) {
-                        Text(age.caption)
+                        Text(age.caption.replacingOccurrences(of: "宝宝", with: babyName))
                             .font(.cute(18))
                             .foregroundStyle(palette.ink)
                         if updateAvailable { UpdateBadge() }
@@ -99,6 +100,8 @@ private struct LargeLayout: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
                 Spacer(minLength: 0)
+                ZodiacMascot(birth: age.birth)
+                    .frame(width: 44, height: 44)
                 DateBadge(age: age)
             }
             Spacer(minLength: 0)
@@ -178,6 +181,7 @@ extension View {
 
 /// 标题行, 有新版本时右侧显示提示
 private struct CaptionRow: View {
+    @Environment(\.babyName) private var babyName
     let age: BabyAge
     var compactBadge = false
     @Environment(\.palette) private var palette
@@ -185,13 +189,18 @@ private struct CaptionRow: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            Text(age.caption)
+            Text(age.caption.replacingOccurrences(of: "宝宝", with: babyName))
                 .font(.cute(15))
                 .foregroundStyle(palette.inkSoft)
                 .lineLimit(1)
-                .fixedSize()
+                .minimumScaleFactor(0.6)
+                .accessibilityLabel(age.caption.replacingOccurrences(of: "宝宝", with: babyName))
             Spacer(minLength: 0)
             if updateAvailable { UpdateBadge(compact: compactBadge) }
+            else if compactBadge {
+                ZodiacMascot(birth: age.birth)
+                    .frame(width: 28, height: 28)
+            }
         }
     }
 }
@@ -327,12 +336,8 @@ struct BirthdayCard: View {
 
     var body: some View {
         VStack(spacing: 5) {
-            Image(systemName: "birthday.cake.fill")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(
-                    LinearGradient(colors: [palette.heroTop, palette.heroBottom], startPoint: .top, endPoint: .bottom)
-                )
-                .accentable()
+            ZodiacMascot(birth: age.birth)
+                .frame(width: 40, height: 40)
             Text(age.countdownTitle)
                 .font(.cute(12))
                 .foregroundStyle(palette.inkSoft)
@@ -491,9 +496,6 @@ struct Decor {
         switch size {
         case .small:
             [
-                Decor(kind: .moon, x: 0.88, y: 0.13, size: 0.17, time: .night),
-                Decor(kind: .cloud, x: 0.99, y: 0.12, size: 0.36, time: .day),
-                Decor(kind: .cloud, x: 1.0, y: 0.24, size: 0.26, time: .night),
                 Decor(kind: .cloud, x: 0.92, y: 0.95, size: 0.54),
                 Decor(kind: .sparkle, x: 0.86, y: 0.36, size: 0.09),
                 Decor(kind: .sparkleAlt, x: 0.95, y: 0.47, size: 0.055),

@@ -17,9 +17,11 @@
 | 价格 | 免费 |
 | 开发团队 | BIAO CHEN (N7Z52F27XK), 个人账号 |
 
-iOS 版本只支持 iPhone (TARGETED_DEVICE_FAMILY 为 1), 因此只需提供 iPhone 截图. tvOS 版本与 iOS 版本使用同一个套装 ID, 在 App Store 中合并为同一个 App (通用购买)
+iOS 版本同时支持 iPhone 与 iPad (App 与 Widget 的 TARGETED_DEVICE_FAMILY 均为 1,2). 上传通用构建时同时提供 iPhone 与 iPad 截图, iPad 使用原生模拟器和示例生日 2025-01-01. tvOS 版本与 iOS 版本使用同一个套装 ID, 在 App Store 中合并为同一个 App (通用购买)
 
 ## 商店文案
+
+1.3.0 的正式字段分别保存在 metadata/ios, metadata/macos 与 metadata/tvos, 每个平台的 version/1.3.0/zh-Hans.json 包含描述, 关键词, 推广文本与更新说明. 上传以这些文件为准, 修改现有版本前先拉取商店当前资料并检查 dry run, 保留未指定的字段和其他语言. 下文为旧版通用文案参考
 
 副标题 (30 字以内)
 
@@ -40,7 +42,7 @@ iOS 版本只支持 iPhone (TARGETED_DEVICE_FAMILY 为 1), 因此只需提供 iP
 
 未满周岁时显示出生天数与几个月几天, 满周岁后显示几岁几个月, 生日当天换上蛋糕与祝福. 大号小组件还会显示周龄, 已经度过的小时数, 心跳估算与生日倒计时
 
-· 小, 中, 大三种尺寸, iPhone 主屏幕与 Mac 桌面都能放
+· 小, 中, 大三种尺寸, iPhone, iPad 主屏幕与 Mac 桌面都能放
 · 浅色为草地晴空, 深色为林间夜空, 也支持主屏幕的着色与透明样式
 · 首次打开时设置宝宝的生日, 之后无需再打开 App
 · 不需要账号, 不访问网络, 生日只保存在本机
@@ -73,7 +75,7 @@ iOS 版本只支持 iPhone (TARGETED_DEVICE_FAMILY 为 1), 因此只需提供 iP
 审核备注
 
 ```
-宝宝多大是主屏幕小组件 App. 首次打开 App 时在日历中选择宝宝的生日并点 "开始", 之后长按主屏幕空白处, 点左上角 "编辑" → "添加小组件", 搜索 "宝宝多大" 即可添加小, 中, 大三种尺寸. App 无需登录, 不访问网络. Apple TV 版打开后用遥控器选择年, 月, 日并保存, 即可全屏显示年龄
+宝宝多大无需登录, 不访问网络, 宝宝资料只保存在本机. 首次打开时点 "添加宝宝", 填写称呼和生日后点 "完成". 顶部头像切换宝宝, 加号添加宝宝, 生日旁的铅笔和垃圾桶分别用于编辑和删除. 添加主屏幕小组件后, 长按小组件并选择 "编辑小组件", 可独立选择对应宝宝. 设置页可选择默认蛇图标, 跟随宝宝生肖或自选生肖. 测试可使用示例生日 2025-01-01
 ```
 
 ## 截图
@@ -87,10 +89,17 @@ scripts/render.sh appstore
 | 文件 | 尺寸 | 上传位置 |
 |---|---|---|
 | iphone-1.png, iphone-2.png, iphone-3.png | 1284 × 2778 | iPhone 6.5 英寸显示屏 |
+| ipad-1.png, ipad-2.png | 2064 × 2752, 2752 × 2064 | iPad 13 英寸显示屏 |
 | tv-1.png, tv-2.png | 1920 × 1080 | Apple TV |
 | mac-1.png, mac-2.png | 2880 × 1800 | Mac |
 
+iPad 图片从 docs/images/ipad-portrait.png 与 ipad-landscape.png 原尺寸导出. 全部上架图片为无透明通道的 sRGB PNG, 原始文档图片不改动. 尺寸用 scripts/asc.sh screenshots sizes --all 与 screenshots validate 核对, 透明通道用 sips -g hasAlpha 单独检查
+
 ## 上传与提交
+
+本机通过 Homebrew 官方源安装 asc, 配套发布 skills 来自 rorkai/app-store-connect-cli-skills. 所有项目命令使用 scripts/asc.sh, 该入口将配置放在 ~/.config/baby-days/asc.json, 网页会话缓存放在 ~/Library/Caches/baby-days/asc-web, 私钥使用系统钥匙串
+
+先查询 United Memory 中的 App Store 发布记录, 确认凭据所在主机, 再执行 scripts/asc.sh auth status. 历史流程已使用 asc 的系统钥匙串, 原始 .p8 可以不在磁盘上; 当前主机未找到文件不代表用户没有凭据, 不重复要求创建 API Key. 新增配置仅在确实缺少可复用授权时进行, 不把私钥或 Apple 账号密码写入文档与仓库
 
 1. 确认 project.yml 的 MARKETING_VERSION 为本次要提交的版本号, App Store Connect 中待提交版本的版本号与之一致
 2. 运行上传脚本, 默认同时上传 iOS, tvOS 与 Mac App Store 版本
@@ -101,13 +110,13 @@ scripts/release-appstore.sh ios      # 只上传 iOS
 ```
 
 3. 等待 App Store Connect 处理构建 (通常 10 到 30 分钟), 在 TestFlight 中可见后, 于版本页面的 "构建版本" 中选择该构建
-4. 填写上文的文案, 截图与其他字段, 提交审核
+4. 用 asc 拉取并预览 metadata/<平台> 的资料变更, 上传经校验的截图, 绑定本次构建. 先运行 validate 和 review submit --dry-run, 确认具体版本后再提交审核
 
 构建号取上传时刻 (年月日时分), 每次上传自动递增. 同一版本号可以多次上传构建; 版本上架后, 下一次提交需要更高的版本号
 
 ## 通过网页会话调用 App Store Connect 接口
 
-本机没有 App Store Connect API 密钥. 用户在 claude-in-chrome 控制的 Chrome 中登录 App Store Connect 后, 在页面中执行 fetch 调用 /iris/v1 接口即可读写, 请求沿用网页登录态, 无需额外请求头. 接口结构与公开的 App Store Connect API 相同, 已验证可用的操作:
+正常发布优先使用 asc 的公开 API 命令. 以下网页会话方法保留为 API 未覆盖字段的备用入口. 用户在浏览器中登录 App Store Connect 后, 在页面中执行 fetch 调用 /iris/v1 接口即可读写, 请求沿用网页登录态, 无需额外请求头. 接口结构与公开的 App Store Connect API 相同, 已验证可用的操作:
 
 | 操作 | 接口 |
 |---|---|

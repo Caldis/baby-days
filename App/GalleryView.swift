@@ -1,129 +1,221 @@
 import SwiftUI
 import WidgetKit
 
-/// App 主界面: 未设置生日时引导设置, 设置后展示三种尺寸的小组件效果与添加方法
+/// 每个宝宝有独立的生日与生肖主题, 主界面可随时切换预览
 struct GalleryView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.scenePhase) private var scenePhase
-    @AppStorage(BabyProfile.birthDateKey, store: BabyProfile.defaults) private var birthValue = ""
+    @AppStorage(BabyProfile.recordsKey, store: BabyProfile.defaults) private var records = Data()
+    @State private var preview: BabyCollection?
+    init(preview: BabyCollection? = nil) { _preview = State(initialValue: preview) }
     @State private var today = Date.now
-    @State private var width: CGFloat = 0
-    @State private var editingBirthday = false
-
+    @State private var editor: Baby?
+    @State private var settings = false
+    @State private var widgetHelp = false
+    @State private var deleting: Baby?
+    @State private var iconError: String?
     private let spacing: CGFloat = 20
-    private let wideLayoutWidth: CGFloat = 170 + 364 + 20
+    private var collection: BabyCollection { preview ?? BabyProfile.decode(records) ?? BabyProfile.load() }
+    private var selected: Baby? { collection.selected }
+    private var palette: Palette { Palette.for(colorScheme, zodiac: selected?.zodiac ?? .snake) }
+    private func contentWidth(for width: CGFloat) -> CGFloat { min(width, width >= 780 ? 748 : 554) }
 
     var body: some View {
-        let palette = Palette.for(colorScheme)
-        ScrollView {
-            VStack(spacing: 32) {
-                if let birth = BirthDate(storageValue: birthValue) {
-                    let age = BabyAge(birth: birth, on: today)
-                    header(age)
-                    if width >= wideLayoutWidth {
-                        wideGallery(age)
+        GeometryReader { geometry in
+            let width = max(0, geometry.size.width - spacing * 2)
+            ScrollView {
+                VStack(spacing: 28) {
+                    toolbar(availableWidth: width)
+                    if let baby = selected {
+                        header(baby, availableWidth: width)
+                        let age = BabyAge(birth: baby.birth, on: today)
+                        if width >= 780 { expandedGallery(age) }
+                        else if width >= 554 { wideGallery(age) }
+                        else { narrowGallery(age, availableWidth: width) }
+                        Button { widgetHelp = true } label: {
+                            Label("添加小组件", systemImage: "plus.rectangle.on.rectangle")
+                        }
+                        .buttonStyle(.bordered)
+                        .font(.system(size: 14))
                     } else {
-                        narrowGallery(age)
+                        VStack(spacing: 20) {
+                            Image(Zodiac.snake.assetName).resizable().scaledToFit().frame(height: 180)
+                            Button("添加宝宝") { editor = Baby(name: "", birth: BirthDate(date: .now)) }
+                                .buttonStyle(.borderedProminent)
+                        }
+                        .padding(.vertical, 40)
                     }
-                    GuideCard()
-                } else {
-                    welcome
+                    #if os(macOS) && !APP_STORE
+                    UpdateFooter()
+                    #endif
                 }
-                #if os(macOS) && !APP_STORE
-                UpdateFooter()
-                #endif
+                .foregroundStyle(palette.ink)
+                .padding(.horizontal, spacing).padding(.vertical, 28)
+                .frame(maxWidth: .infinity)
             }
-            .padding(.horizontal, spacing)
-            .padding(.vertical, 36)
-            .frame(maxWidth: .infinity)
-            .onGeometryChange(for: CGFloat.self) { $0.size.width - spacing * 2 } action: { width = $0 }
         }
         .scrollIndicators(.never)
         .background(AppBackground().ignoresSafeArea())
+        .tint(palette.heroBottom)
         .environment(\.palette, palette)
-        .sheet(isPresented: $editingBirthday) {
-            BirthdayForm(
-                title: "修改宝宝的生日",
-                actionTitle: "保存",
-                initial: BirthDate(storageValue: birthValue)?.date() ?? .now,
-                onSave: { save($0); editingBirthday = false },
-                onCancel: { editingBirthday = false }
-            )
+        .environment(\.babyName, selected?.displayName ?? "宝宝")
+        .sheet(item: $editor) { baby in
+            BabyEditor(baby: baby, isExisting: collection.babies.contains { $0.id == baby.id }) { value in
+                var state = collection
+                state.upsert(value)
+                state.selectedID = value.id
+                commit(state)
+                editor = nil
+            } onCancel: { editor = nil }
             .environment(\.palette, palette)
-            .presentationBackground(palette.skyTop)
         }
+        .sheet(isPresented: $settings) {
+            IconSettings(collection: collection, onChange: commit)
+                .environment(\.palette, palette)
+        }
+        .sheet(isPresented: $widgetHelp) {
+            WidgetHelpView().environment(\.palette, palette)
+        }
+        .alert("删除\(deleting?.displayName ?? "宝宝")?", isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } })) {
+            Button("取消", role: .cancel) { deleting = nil }
+            Button("删除", role: .destructive) {
+                if let baby = deleting {
+                    var state = collection
+                    state.remove(id: baby.id)
+                    commit(state)
+                }
+                deleting = nil
+            }
+        } message: {
+            Text("此宝宝的小组件需要重新选择宝宝")
+        }
+        .alert("图标暂未更换", isPresented: Binding(get: { iconError != nil }, set: { if !$0 { iconError = nil } })) {
+            Button("好", role: .cancel) { iconError = nil }
+        } message: { Text(iconError ?? "") }
+        .onAppear { if preview == nil { _ = BabyProfile.load(); applyIcon() } }
+        .onChange(of: collection.iconZodiac) { _, _ in applyIcon() }
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
             today = .now
+            applyIcon()
             WidgetCenter.shared.reloadAllTimelines()
+        }
+        .onOpenURL { url in
+            if url.host == "baby", let id = url.pathComponents.last,
+               collection.babies.contains(where: { $0.id == id }) {
+                var state = collection; state.selectedID = id; commit(state)
+            }
+            #if os(macOS) && !APP_STORE
+            if url.host == "update" { Updater.shared.checkForUpdates() }
+            #endif
         }
         #if os(macOS)
         .frame(minWidth: 640, minHeight: 600)
-        #if !APP_STORE
-        .onOpenURL { url in
-            // 小组件在有新版本时跳转 babydays://update
-            if url.host == "update" { Updater.shared.checkForUpdates() }
-        }
-        #endif
         #endif
     }
 
-    private var title: some View {
-        let palette = Palette.for(colorScheme)
-        return HStack(spacing: 12) {
-            Twinkle().fill(palette.sparkle).frame(width: 24, height: 24)
-            Text("宝宝多大")
-                .font(.cute(36))
-                .foregroundStyle(palette.ink)
-            Twinkle().fill(palette.sparkleAlt).frame(width: 16, height: 16)
+    private func toolbar(availableWidth: CGFloat) -> some View {
+        HStack {
+            Text("宝宝多大").font(.cute(28))
+            Spacer()
+            Button { settings = true } label: { Label("设置", systemImage: "gearshape") }
+                .labelStyle(.iconOnly)
+                .buttonStyle(.bordered)
+                .accessibilityIdentifier("settings")
+                .accessibilityLabel("应用图标")
+                .help("应用图标")
         }
+        .frame(maxWidth: contentWidth(for: availableWidth))
     }
 
-    private var welcome: some View {
-        let palette = Palette.for(colorScheme)
-        return VStack(spacing: 24) {
-            VStack(spacing: 12) {
-                title
-                Text("设置宝宝的生日, 桌面小组件每天告诉你宝宝多大啦")
-                    .font(.cute(14))
-                    .foregroundStyle(palette.inkSoft)
-                    .multilineTextAlignment(.center)
-            }
-            .padding(.top, 24)
-            BirthdayForm(title: "宝宝的生日", actionTitle: "开始", initial: .now, onSave: save)
-        }
-    }
-
-    private func header(_ age: BabyAge) -> some View {
-        let palette = Palette.for(colorScheme)
-        return VStack(spacing: 12) {
-            title
-            HStack(spacing: 10) {
-                Text("\(age.birthDateText) 出生 · 每天醒来都长大一点点")
-                    .font(.cute(14))
-                    .foregroundStyle(palette.inkSoft)
-                Button {
-                    editingBirthday = true
-                } label: {
-                    Label("修改生日", systemImage: "pencil")
-                        .font(.cute(12))
-                        .foregroundStyle(palette.chipInk)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(Capsule().fill(palette.chip))
+    private func header(_ baby: Baby, availableWidth: CGFloat) -> some View {
+        VStack(spacing: 14) {
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal) {
+                    HStack(alignment: .top, spacing: 16) {
+                        ForEach(collection.babies) { item in
+                            let active = item.id == baby.id
+                            Button {
+                                var state = collection
+                                state.selectedID = item.id
+                                commit(state)
+                            } label: {
+                                VStack(spacing: 8) {
+                                    Image(item.zodiac.assetName).resizable().scaledToFit()
+                                        .frame(width: 64, height: 64).padding(8)
+                                        .background(Circle().fill(active ? palette.chip : .clear))
+                                        .overlay(Circle().strokeBorder(active ? palette.heroBottom : .clear, lineWidth: 2))
+                                    Text(item.displayName)
+                                        .font(.system(size: 14, weight: active ? .semibold : .regular))
+                                        .lineLimit(1).minimumScaleFactor(0.75)
+                                        .frame(width: 84)
+                                }
+                            }
+                            .id(item.id)
+                            .buttonStyle(.plain)
+                            .accessibilityLabel("\(item.displayName), 属\(item.zodiac.name)")
+                            .accessibilityAddTraits(.isButton)
+                            .accessibilityValue(active ? "已选择" : "")
+                            .accessibilityAddTraits(active ? [.isSelected] : [])
+                            .accessibilityIdentifier("baby-\(item.id)")
+                        }
+                        Button { editor = newBaby } label: {
+                            Image(systemName: "plus")
+                                .font(.system(size: 24, weight: .medium))
+                                .frame(width: 64, height: 64).padding(8)
+                                .background(Circle().fill(palette.chip))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("添加宝宝")
+                        .accessibilityIdentifier("add-baby")
+                    }
+                    .padding(.horizontal, 2).padding(.vertical, 4)
                 }
-                .buttonStyle(.plain)
+                .scrollIndicators(.hidden)
+                .onChange(of: selected?.id) { _, id in
+                    if let id { proxy.scrollTo(id, anchor: .center) }
+                }
             }
+            HStack(spacing: 14) {
+                Label(baby.birth.displayText, systemImage: "birthday.cake")
+                    .font(.system(size: 14)).foregroundStyle(palette.inkSoft)
+                Spacer()
+                Button { editor = baby } label: { Label("编辑宝宝", systemImage: "pencil") }
+                    .labelStyle(.iconOnly)
+                    .accessibilityIdentifier("edit-baby")
+                    .accessibilityLabel("编辑宝宝")
+                    .help("编辑宝宝")
+                Button(role: .destructive) { deleting = baby } label: { Label("删除宝宝", systemImage: "trash") }
+                    .labelStyle(.iconOnly)
+                    .foregroundStyle(.red)
+                    .tint(.red)
+                    .accessibilityIdentifier("delete-baby")
+                    .accessibilityLabel("删除宝宝")
+                    .help("删除宝宝")
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.large)
         }
-        .padding(.top, 24)
+        .frame(maxWidth: contentWidth(for: availableWidth))
     }
 
-    private func save(_ date: Date) {
-        birthValue = BirthDate(date: date).storageValue
+    private var newBaby: Baby {
+        let names = Set(collection.babies.map(\.displayName))
+        var name = "宝宝"
+        var number = 2
+        while names.contains(name) { name = "宝宝 \(number)"; number += 1 }
+        return Baby(name: name, birth: BirthDate(date: .now))
+    }
+
+    private func commit(_ state: BabyCollection) {
+        if preview != nil { preview = state } else { BabyProfile.save(state) }
         today = .now
         WidgetCenter.shared.reloadAllTimelines()
     }
-
+    private func applyIcon() {
+        guard preview == nil else { return }
+        IconAppearance.apply(collection.iconZodiac) { error in iconError = error }
+    }
     private func wideGallery(_ age: BabyAge) -> some View {
         VStack(spacing: spacing) {
             HStack(alignment: .top, spacing: spacing) {
@@ -133,9 +225,17 @@ struct GalleryView: View {
             PreviewItem(age: age, size: .large, scale: 1)
         }
     }
-
-    private func narrowGallery(_ age: BabyAge) -> some View {
-        let scale = min(1, max(width, 1) / WidgetSize.medium.previewDimensions.width)
+    private func expandedGallery(_ age: BabyAge) -> some View {
+        HStack(alignment: .top, spacing: spacing) {
+            VStack(alignment: .leading, spacing: spacing) {
+                PreviewItem(age: age, size: .small, scale: 1)
+                PreviewItem(age: age, size: .medium, scale: 1)
+            }
+            PreviewItem(age: age, size: .large, scale: 1)
+        }
+    }
+    private func narrowGallery(_ age: BabyAge, availableWidth: CGFloat) -> some View {
+        let scale = min(1, max(availableWidth, 1) / WidgetSize.medium.previewDimensions.width)
         return VStack(alignment: .leading, spacing: spacing) {
             PreviewItem(age: age, size: .small, scale: scale)
             PreviewItem(age: age, size: .medium, scale: scale)
@@ -144,7 +244,7 @@ struct GalleryView: View {
     }
 }
 
-/// 带尺寸标签的小组件预览
+/// 按真实比例显示的小组件预览
 private struct PreviewItem: View {
     let age: BabyAge
     let size: WidgetSize
@@ -158,124 +258,34 @@ private struct PreviewItem: View {
                 .scaleEffect(scale, anchor: .topLeading)
                 .frame(width: dimensions.width * scale, height: dimensions.height * scale, alignment: .topLeading)
                 .shadow(color: palette.isNight ? .black.opacity(0.35) : Color(hex: 0x9C7BB0).opacity(0.25), radius: 16, y: 8)
-            Text("\(size.title)号")
-                .font(.cute(13))
-                .foregroundStyle(palette.inkSoft)
-                .padding(.leading, 6)
         }
     }
 }
 
-/// 生日选择卡片, 用于首次设置与修改
-private struct BirthdayForm: View {
-    let title: String
-    let actionTitle: String
-    let onSave: (Date) -> Void
-    var onCancel: (() -> Void)?
-    @State private var date: Date
-    @Environment(\.palette) private var palette
-
-    init(title: String, actionTitle: String, initial: Date, onSave: @escaping (Date) -> Void, onCancel: (() -> Void)? = nil) {
-        self.title = title
-        self.actionTitle = actionTitle
-        self.onSave = onSave
-        self.onCancel = onCancel
-        _date = State(initialValue: initial)
-    }
-
-    var body: some View {
-        VStack(spacing: 18) {
-            Text(title)
-                .font(.cute(20))
-                .foregroundStyle(palette.ink)
-            #if os(macOS)
-            // macOS 的日历无法快速跳转年月, 上方的日期输入框用于直接输入
-            DatePicker("宝宝的生日", selection: $date, in: ...Date.now, displayedComponents: .date)
-                .datePickerStyle(.stepperField)
-                .labelsHidden()
-                .environment(\.locale, Locale(identifier: "zh_Hans_CN"))
-                .environment(\.calendar, BabyAge.calendar)
-            #endif
-            DatePicker("宝宝的生日", selection: $date, in: ...Date.now, displayedComponents: .date)
-                .datePickerStyle(.graphical)
-                .labelsHidden()
-                .tint(palette.heroBottom)
-                .environment(\.locale, Locale(identifier: "zh_Hans_CN"))
-                .environment(\.calendar, BabyAge.calendar)
-                .frame(maxWidth: 340)
-            HStack(spacing: 12) {
-                if let onCancel {
-                    Button(action: onCancel) {
-                        Text("取消")
-                            .font(.cute(15))
-                            .foregroundStyle(palette.chipInk)
-                            .padding(.horizontal, 22)
-                            .padding(.vertical, 9)
-                            .background(Capsule().fill(palette.chip))
-                    }
-                    .buttonStyle(.plain)
-                }
-                Button {
-                    onSave(date)
-                } label: {
-                    Text(actionTitle)
-                        .font(.cute(15))
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 28)
-                        .padding(.vertical, 9)
-                        .background(
-                            Capsule().fill(
-                                LinearGradient(colors: [palette.heroTop, palette.heroBottom], startPoint: .top, endPoint: .bottom)
-                            )
-                        )
-                }
-                .buttonStyle(.plain)
-            }
-        }
-        .padding(24)
-        .frame(maxWidth: 420)
-        .background(RoundedRectangle(cornerRadius: 28, style: .continuous).fill(palette.chip))
-    }
-}
-
-/// 添加小组件的操作说明
-private struct GuideCard: View {
-    @Environment(\.palette) private var palette
-
+private struct WidgetHelpView: View {
+    @Environment(\.dismiss) private var dismiss
     private var steps: [String] {
         #if os(macOS)
-        ["右键点按桌面空白处, 选择「编辑小组件」", "在小组件库中搜索「宝宝多大」", "选择喜欢的尺寸, 拖到桌面上"]
+        ["右键点按桌面, 选择「编辑小组件」", "搜索「宝宝多大」并添加", "右键编辑小组件, 选择宝宝"]
         #else
-        ["长按主屏幕空白处, 进入编辑状态", "点击左上角「编辑」, 选择「添加小组件」", "搜索「宝宝多大」, 选择喜欢的尺寸"]
+        ["长按主屏幕, 点按「编辑」", "添加「宝宝多大」小组件", "长按小组件, 点「编辑小组件」选择宝宝"]
         #endif
     }
-
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack(spacing: 8) {
-                Image(systemName: "sparkles")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(palette.sparkle)
-                Text("放到桌面上")
-                    .font(.cute(18))
-                    .foregroundStyle(palette.ink)
-            }
-            ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
-                HStack(alignment: .firstTextBaseline, spacing: 10) {
-                    Text("\(index + 1)")
-                        .font(.system(size: 13, weight: .heavy, design: .rounded))
-                        .foregroundStyle(.white)
-                        .frame(width: 22, height: 22)
-                        .background(Circle().fill(palette.accents[index]))
+        NavigationStack {
+            List(Array(steps.enumerated()), id: \.offset) { index, step in
+                HStack(alignment: .top, spacing: 12) {
+                    Text("\(index + 1)").monospacedDigit().foregroundStyle(.secondary)
                     Text(step)
-                        .font(.cute(14))
-                        .foregroundStyle(palette.ink)
-                }
+                }.padding(.vertical, 8)
             }
+            .navigationTitle("添加小组件")
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } }
         }
-        .padding(20)
-        .frame(maxWidth: 520, alignment: .leading)
-        .background(RoundedRectangle(cornerRadius: 22, style: .continuous).fill(palette.chip))
+        .presentationDetents([.medium])
+        #if os(macOS)
+        .frame(width: 440, height: 340)
+        #endif
     }
 }
 
@@ -318,7 +328,6 @@ private struct AppBackground: View {
                 let w = geo.size.width
                 Cloud().fill(palette.cloud).frame(width: 180, height: 90).position(x: w - 40, y: 120)
                 Cloud().fill(palette.cloud).frame(width: 140, height: 70).position(x: 20, y: 250)
-                Twinkle().fill(palette.sparkle).frame(width: 26, height: 26).position(x: 60, y: 110)
                 Twinkle().fill(palette.sparkleAlt).frame(width: 16, height: 16).position(x: w - 90, y: 220)
             }
         }
