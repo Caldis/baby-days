@@ -75,7 +75,7 @@ iOS 版本同时支持 iPhone 与 iPad (App 与 Widget 的 TARGETED_DEVICE_FAMIL
 审核备注
 
 ```
-宝宝多大无需登录, 不访问网络, 宝宝资料只保存在本机. 首次打开时点 "添加宝宝", 填写称呼和生日后点 "完成". 顶部头像切换宝宝, 加号添加宝宝, 生日旁的铅笔和垃圾桶分别用于编辑和删除. 添加主屏幕小组件后, 长按小组件并选择 "编辑小组件", 可独立选择对应宝宝. 设置页可选择默认蛇图标, 跟随宝宝生肖或自选生肖. 测试可使用示例生日 2025-01-01
+宝宝多大无需登录, 不访问网络, 宝宝资料只保存在本机. 首次打开时点 "添加宝宝", 填写称呼和生日后点 "添加"; 编辑已有宝宝时点 "完成". 顶部头像切换宝宝, 加号添加宝宝, 生日旁的铅笔和垃圾桶分别用于编辑和删除. 添加主屏幕小组件后, 长按小组件并选择 "编辑小组件", 可独立选择对应宝宝. 设置页可选择默认蛇图标, 跟随宝宝生肖或自选生肖. 测试可使用示例生日 2025-01-01
 ```
 
 ## 截图
@@ -99,11 +99,15 @@ iPad 图片从 docs/images/ipad-portrait.png 与 ipad-landscape.png 原尺寸导
 
 本机通过 Homebrew 官方源安装 asc, 配套发布 skills 来自 rorkai/app-store-connect-cli-skills. 所有项目命令使用 scripts/asc.sh, 该入口将配置放在 ~/.config/baby-days/asc.json, 网页会话缓存放在 ~/Library/Caches/baby-days/asc-web, 私钥使用系统钥匙串
 
+Mac mini 的默认 profile 为 caldis-appstore, 已在项目之外的新终端通过普通 asc auth status --validate 与真实 App 查询验证. 非空备份按 AuthKey_*.p8 标准命名保存在 ~/.config/baby-days, 权限为 0600. 发布无需再连接 MacBook 或重新创建密钥
+
 先查询 United Memory 中的 App Store 发布记录, 确认凭据所在主机, 再执行 scripts/asc.sh auth status. 历史流程已使用 asc 的系统钥匙串, 原始 .p8 可以不在磁盘上; 当前主机未找到文件不代表用户没有凭据, 不重复要求创建 API Key. 新增配置仅在确实缺少可复用授权时进行, 不把私钥或 Apple 账号密码写入文档与仓库
 
-status 与 doctor 可以仅凭钥匙串条目元数据列出 profile, 仍需用实际 API 请求验证. SSH 会话中的登录钥匙串锁定时, 可能报 credentials not found 或 no keychain credentials found. 先解锁原主机钥匙串, 再用 auth export-to-config 导出到私有临时目录并传输, 不使用 remove-keychain, 保留原机凭据. 使用原始 .p8 前先确认它非空, 不能仅凭标准文件名判断完整性
+status 与 doctor 可以仅凭钥匙串条目元数据列出 profile, 仍需用实际 API 请求验证. SSH 与桌面会话的访问上下文不同, 在桌面解锁后 SSH 仍可能报 credentials not found. 已验证可在用户已解锁的 gui/UID 会话中通过一次性 launchd 任务运行官方 auth export-to-config, 不改变钥匙串访问控制; 完成传输后移除任务和临时文件, 保留原机 profile
 
-2026-11-08 已上传三平台 1.3.0 (202611082247), 上传日志保存在 ~/Library/Caches/baby-days/appstore-1.3.0-upload.log. 当前尚未绑定商店版本和提交审核
+使用原始 .p8 前先确认它非空. asc 5.14.1 导出时会继续引用已存在的 0 字节原文件; 此时仅临时移开已核实为空的占位文件, 用 EXIT trap 恢复原件, 再由官方命令导出钥匙串内嵌密钥. 本轮迁移和临时文件清理均已完成, 详细核验记录在 UM 的 20261108-asc-credential-discovery
+
+2026-11-08 已上传三平台 1.3.0 (202611082247), 上传日志保存在 ~/Library/Caches/baby-days/appstore-1.3.0-upload.log. 构建均为 VALID, 已绑定三平台草稿. 9 张截图已完成服务器处理, 版本文案和审核说明已更新, 原联系人不变. 三平台预检均为 0 errors / 0 warnings, 提交 dry run 均为 wouldSubmit=true. 发布方式为审核通过后自动发布, 当前等待最终提交确认
 
 1. 确认 project.yml 的 MARKETING_VERSION 为本次要提交的版本号, App Store Connect 中待提交版本的版本号与之一致
 2. 运行上传脚本, 默认同时上传 iOS, tvOS 与 Mac App Store 版本

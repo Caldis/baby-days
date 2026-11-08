@@ -24,7 +24,7 @@
 | Bundle ID | App: com.caldis.babydays; 小组件: com.caldis.babydays.widget; 顶部栏: com.caldis.babydays.topshelf |
 | App Group | iOS 与 tvOS: group.com.caldis.babydays; macOS: N7Z52F27XK.com.caldis.babydays |
 | App Store Connect | App 编号 6817262216, SKU babydays, 详见 docs/app-store.md |
-| App Store Connect CLI | asc 6.5.3, Homebrew 官方源安装; 项目入口 scripts/asc.sh. API profiles 保存在系统钥匙串, 配置路径为 ~/.config/baby-days/asc.json, 不放进仓库 |
+| App Store Connect CLI | asc 6.5.3, Homebrew 官方源安装; Mac mini 的默认 caldis-appstore profile 保存在标准系统钥匙串. 项目入口 scripts/asc.sh, 配置路径为 ~/.config/baby-days/asc.json, 非空密钥备份使用 AuthKey_*.p8 命名并以 0600 保存在同目录 |
 | Sparkle EdDSA 私钥 | ~/.config/baby-days/sparkle_private_key (权限 600); 登录钥匙串中 generate_keys 的 baby-days 账户另存一份. 公钥写在 project.yml 的 SPARKLE_PUBLIC_KEY. 私钥丢失后已安装的 Mac 版无法再验证更新, 不得删除或重新生成 |
 | 更新清单地址 | https://github.com/Caldis/baby-days/releases/latest/download/appcast.xml (project.yml 的 UPDATE_FEED_URL) |
 
@@ -132,7 +132,8 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 | 模块名 Sparkle 与同名类型冲突 | 四角星图形已命名为 Twinkle, 新增类型避免与 Sparkle, WidgetKit 等模块同名 |
 | iOS 26.5 模拟器中选了宝宝, 小组件仍显示默认宝宝 | AppEntity 在本地签名模拟器中可能无法注册, linkd 报 Unable to get teamId, 参数被还原为 nil. 小组件现使用原生字符串 babyID + BabyOptionsProvider 动态选项, 已实测同屏两个小组件独立显示宝宝与配色; 不要改回依赖实体注册的配置 |
 | 图标模式点击后回跳, 关闭重开才更新 | 保存时重新创建 UserDefaults(suiteName:) 会让 AppStorage 观察不同实例. BabyProfile.defaults 必须保持进程内单例, 不要改回计算属性; 验证需使用真实持久化路径, 内存 preview 不能覆盖此问题 |
-| asc auth status 能看到 profile, API 命令却报 credentials not found | status 与 doctor 可能只读到钥匙串元数据. 先检查执行主机和钥匙串是否解锁, 再实际验证 API 访问. SSH 中登录钥匙串锁定时, 读取私钥会被 macOS 拒绝; 原始 AuthKey_*.p8 也要先检查字节数, 不能只看文件名是否存在 |
+| asc auth status 能看到 profile, API 命令却报 credentials not found | status 与 doctor 可能只读到钥匙串元数据. SSH 与桌面会话的钥匙串访问上下文不同, 桌面解锁后 SSH 仍可能读不到; 可在用户已解锁的 gui/UID 会话用一次性 launchd 任务运行官方 auth export-to-config, 完成后移除任务. 不改变钥匙串访问控制; 始终用实际 API 请求验证 |
+| asc 导出成功却仍引用空 .p8 | 5.14.1 在原文件存在时不会检查其内容, 因而可能继续引用 0 字节占位文件. 先确认字节数, 仅临时移开空占位文件并以 EXIT trap 恢复, 再用 private-key-dir 导出钥匙串内嵌密钥. 不删除原机 profile, 不把空文件或元数据列表当作可用凭据 |
 | iPad 上应用四周出现黑边 | App 和 Widget 的 TARGETED_DEVICE_FAMILY 都需为 1,2, 并声明 iPad 四个方向与 UIRequiresFullScreen=NO, 否则系统以 iPhone 兼容模式运行 |
 | install-mac.sh 构建后一直不安装 | pgrep -x BabyDays 会匹配正在运行的 iPhone 或 Apple TV 模拟器进程. 脚本现仅退出并等待 /Applications/BabyDays.app 的进程, 不影响模拟器 |
 | SourceKit 报找不到类型 | 单文件诊断的噪音, 以 xcodebuild 或 swiftc 的结果为准 |
@@ -152,7 +153,7 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 ## 9. 当前状态
 
 - 已发布 macOS 1.2.1 (GitHub Releases), 用户的 Mac 已通过 Sparkle 更新到该版本
-- App Store Connect: iOS, macOS, tvOS 的 1.2.1 已于 2026-09-29 提交审核, 发布方式为审核通过后自动发布. Mac 版于 2026-09-30 因 Guideline 2.1 Information Needed 被拒, 当天回复审核并附上用户录制的视频后重新提交, 三个平台均为等待审核. 审核联系人信息已在 App Store Connect 中填写, 不写入仓库
+- App Store Connect: 本次经 API 核对, iOS, macOS, tvOS 的 1.2.1 均已上架, 状态为 READY_FOR_DISTRIBUTION. 历史 Mac 审核要求的用户真机录屏已随回复提供. 审核联系人信息已在 App Store Connect 中填写, 不写入仓库
 - 2026-11-08 为本地开发执行 scripts/install-mac.sh, /Applications/BabyDays.app 当前为 BabyDays-macOS 的 Release 开发签名构建, 版本 1.2.1, 构建号 202611082143, 含 Sparkle; 已启动并打开 Xcode 工程, 已安装独立生肖双版本与新版宝宝编辑界面. 替换前已告知用户桌面小组件会被移除
 - 2026-11-08 已安装 design-playful-app-icons skill 到 ~/.codex/skills/design-playful-app-icons. 最新 12 生肖按动物独立生成, Resources/Artwork/Zodiac/calendar 为日历版图标原画, mascots 为无日历版 App 与小组件形象, designs-v2.json 与 generation-v2.json 保存角色设定和每张图的提示词. zodiac 渲染先生成默认蛇的 Artwork/app-icon.png, 再运行 icon, tv, docs, snapshots 与 appstore. 日历颜色随生肖变化, 不共用绿色日历
 - 中国大陆: 首次提交未包含中国大陆, 避免没有 ICP 备案号拖住其他地区的审核. 三个 App Store 版本都不访问网络, 属于可能豁免备案的离线应用, 但 Apple 未公布豁免清单. 审核通过后先在销售范围中加回中国大陆 (POST /iris/v2/appAvailabilities, CHN 设为 available); 若被要求备案号, 联系 Apple Developer Support 说明离线, 或由用户办理 ICP 备案后在 App 信息中填写
@@ -171,6 +172,7 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 - 已在真实持久化路径复现并修复图标模式回跳: 修复前点击后立即回默认, 重启才看到保存值; 修复后隔离应用与 /Applications 安装版均验证默认, 跟随宝宝和自选即时切换, 关闭重开和重启保留偏好. 实际用户的原默认模式已恢复
 - iPad Pro 13-inch (M5) / iPadOS 26.5 模拟器已验证原生全屏, 横竖屏, 深色模式和拖动窗口至约 375 pt 后纵向重排. App 与 Widget 的成品 UIDeviceFamily 均为 [1,2], iPad 备选图标 11 个, 原生设置已实测切换并由系统确认自动图标
 - 本轮最终 /Applications 构建号为 202611082143. 已验证实际安装版图标三种模式切换并恢复原默认, iPhone 模拟器完成回归. 当前没有可直接安装的实体 iPad, iPad 支持尚需用户设备安装新构建才会生效, 未上传 TestFlight 或 App Store
-- 1.3.0 (202611082247) 已于 2026-11-08 经 release-appstore.sh 成功上传 iOS / iPadOS, tvOS 与 Mac App Store, 尚未绑定商店版本或提交审核. 源码与资料已推送到 main 的 01f341a. 三个平台的简体中文资料分别存于 metadata/ios, metadata/macos, metadata/tvos, CLI 离线校验通过. 9 张商店截图已逐张查看并校验尺寸, 全部为无 alpha 的 sRGB PNG, 包含原生 iPad 横竖屏
-- 已核实历史 App Store 凭据在 MacBook 的标准 asc 系统钥匙串中, 原始 Downloads/AuthKey_*.p8 已是 0 字节. 用户已明确授权复制到 Mac mini, 迁移需先解锁 MacBook 的登录钥匙串. 不再要求用户重复创建 API Key, 不把文件名存在或 auth status 的元数据列表当作可用性证明
+- 1.3.0 (202611082247) 已于 2026-11-08 成功上传三平台, 构建均为 VALID. 三个平台的 1.3.0 草稿已绑定本次构建, 9 张新截图全部处理完成, 包含原生 iPad 横竖屏. 简体中文资料来自 metadata/ios, metadata/macos, metadata/tvos, 审核说明已更新并保留原联系人. 已补齐年龄分级的 socialMediaAgeRestricted=false. 三个平台 validate 均为 0 errors, 0 warnings, 提交 dry run 均为 wouldSubmit=true; 发布方式为 AFTER_APPROVAL, 等待最终提交确认
+- 用户已授权并完成将原 MacBook d2r profile 的有效密钥迁至 Mac mini 标准系统钥匙串, 默认标签为 caldis-appstore. 已在 /private/tmp 的新终端中用普通 asc auth status --validate 与读取 BabyDays App 验证, 不依赖项目环境变量或 MacBook 在线. 原机 profile 与空下载占位文件保留, 一次性导出任务和临时目录已清理
+- 本次发现 ~/.codex/AGENTS.md 原为 0 字节, 已补齐 UM 启动与凭据查找指引, 新任务上下文已自动加载. UM 记忆 20261108-asc-credential-discovery 已保存并同步, 不含私钥或 Key ID / Issuer ID. 详见该记忆的已验证恢复步骤, 不再重复要求用户创建密钥
 - 已安装 asc-cli-usage, asc-release-flow, asc-submission-health, asc-xcode-build, asc-metadata-sync, asc-shots-pipeline, asc-screenshot-resize, asc-build-lifecycle 与 asc-whats-new-writer, 来源固定为 rorkai/app-store-connect-cli-skills 的 266d7ad357acd3a1c437668b0e77021bb0ff2f02
