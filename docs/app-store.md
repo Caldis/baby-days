@@ -111,7 +111,9 @@ status 与 doctor 可以仅凭钥匙串条目元数据列出 profile, 仍需用�
 
 2026-11-08 已上传三平台 1.3.0 (202611082247), 上传日志保存在 ~/Library/Caches/baby-days/appstore-1.3.0-upload.log. 构建均为 VALID, 9 张截图已完成服务器处理, 版本文案和审核说明已更新, 原联系人不变. 三平台预检均为 0 errors / 0 warnings, 提交 dry run 均为 wouldSubmit=true
 
-2026-11-09 用户确认送审并自动发布后, 已通过 asc review submit 分别提交三个平台. 随后独立查询审核状态与版本设置, 三平台均为 WAITING_FOR_REVIEW, 构建号均为 202611082247, releaseType 均为 AFTER_APPROVAL. 当前等待 Apple 审核, 通过后自动发布
+2026-11-09 用户确认送审并自动发布后, 已通过 asc review submit 分别提交三个平台. 首次独立查询审核状态与版本设置, 三平台均为 WAITING_FOR_REVIEW, 构建号均为 202611082247, releaseType 均为 AFTER_APPROVAL
+
+同日后续 API 复查, iOS / iPadOS 与 tvOS 的 1.3.0 已为 READY_FOR_DISTRIBUTION, macOS 仍为 WAITING_FOR_REVIEW. 用户已要求每 3 小时检查一次, 当前 Codex 聊天已启用定时只读跟进, 区分审核完成与正式上架, 三平台均正式上架后停用. 本地检查需要 Mac mini 在线且桌面 App 运行
 
 | 平台 | 审核提交编号 |
 |---|---|
