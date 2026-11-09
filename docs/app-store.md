@@ -113,7 +113,9 @@ status 与 doctor 可以仅凭钥匙串条目元数据列出 profile, 仍需用�
 
 2026-11-09 用户确认送审并自动发布后, 已通过 asc review submit 分别提交三个平台. 首次独立查询审核状态与版本设置, 三平台均为 WAITING_FOR_REVIEW, 构建号均为 202611082247, releaseType 均为 AFTER_APPROVAL
 
-同日后续 API 复查, iOS / iPadOS 与 tvOS 的 1.3.0 已为 READY_FOR_DISTRIBUTION, macOS 仍为 WAITING_FOR_REVIEW. 用户已要求每 3 小时检查一次, 当前 Codex 聊天已启用定时只读跟进, 区分审核完成与正式上架, 三平台均正式上架后停用. 本地检查需要 Mac mini 在线且桌面 App 运行
+同日后续 API 复查, iOS / iPadOS 与 tvOS 的 1.3.0 已为 READY_FOR_DISTRIBUTION, macOS 当时仍为 WAITING_FOR_REVIEW. 按用户要求, 当前 Codex 聊天每 3 小时执行一次定时只读跟进
+
+2026-11-10 05:02 (Asia/Shanghai) 最终复查, iOS / iPadOS, macOS 与 tvOS 的 1.3.0 均为 READY_FOR_DISTRIBUTION, reviewState 均为 COMPLETE, 关联构建号均为 202611082247. 正式上架依据是目标版本的 appVersionState, 而非仅凭审核完成. 三个平台均已上架, 本次定时跟进已完成, 对应自动任务已删除
 
 | 平台 | 审核提交编号 |
 |---|---|
