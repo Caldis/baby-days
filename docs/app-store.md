@@ -103,6 +103,14 @@ iPad 图片从 docs/images/ipad-portrait.png 与 ipad-landscape.png 原尺寸导
 
 macOS TestFlight 版与现有 Developer ID 版的 Bundle ID 相同, 安装时会替换现有 App, 桌面小组件可能需要重新添加. Agent 本轮不替换用户 /Applications 中的版本
 
+2026-11-12 已上传 1.4.0 (202611120033), 源码为 e30006e. 三平台均为 VALID / IN_BETA_TESTING, 已核对实际属于 HOME 内部测试组, 并保存简体中文实测步骤. 本轮未提交 App Store 或外部 Beta 审核, 等待用户的真实跨设备反馈. 上传日志为 ~/Library/Caches/baby-days/appstore-1.4.0-upload.log, 核验收据为 ~/Library/Caches/baby-days/asc/1.4.0-202611120033-testflight.json
+
+| 平台 | TestFlight 构建 ID |
+|---|---|
+| iOS / iPadOS | 67f35734-1a20-4381-bae6-3000d90bac52 |
+| macOS | 4a5d62ef-2100-4c5d-8d95-274e82697a15 |
+| tvOS | d6e7ef0a-8c43-4218-a746-b1ad876bf95d |
+
 本机通过 Homebrew 官方源安装 asc, 配套发布 skills 来自 rorkai/app-store-connect-cli-skills. 所有项目命令使用 scripts/asc.sh, 该入口将配置放在 ~/.config/baby-days/asc.json, 网页会话缓存放在 ~/Library/Caches/baby-days/asc-web, 私钥使用系统钥匙串
 
 Mac mini 的默认 profile 为 caldis-appstore, 已在项目之外的新终端通过普通 asc auth status --validate 与真实 App 查询验证. 非空备份按 AuthKey_*.p8 标准命名保存在 ~/.config/baby-days, 权限为 0600. 发布无需再连接 MacBook 或重新创建密钥

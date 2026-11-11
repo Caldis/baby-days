@@ -18,7 +18,7 @@
 
 ## 网络访问
 
-关闭 iCloud 同步时, App 不会通过 iCloud 上传或下载宝宝资料. 开启后由 Apple 系统服务处理同步, 使用 Apple 账户与 iCloud 需遵守 Apple 的隐私政策与服务条款
+关闭 iCloud 同步时, 后续编辑只保存在本机, App 不向 iCloud 写入这些修改. 开启后由 Apple 系统服务处理同步, 使用 Apple 账户与 iCloud 需遵守 Apple 的隐私政策与服务条款
 
 从 GitHub 下载安装的 Mac 版本内置自动更新. 该功能每天读取一次公开的更新清单 (https://github.com/Caldis/baby-days/releases/latest/download/appcast.xml), 请求中不附带任何个人信息
 

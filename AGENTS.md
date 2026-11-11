@@ -179,7 +179,9 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 - 用户已授权并完成将原 MacBook d2r profile 的有效密钥迁至 Mac mini 标准系统钥匙串, 默认标签为 caldis-appstore. 已在 /private/tmp 的新终端中用普通 asc auth status --validate 与读取 BabyDays App 验证, 不依赖项目环境变量或 MacBook 在线. 原机 profile 与空下载占位文件保留, 一次性导出任务和临时目录已清理
 - 本次发现 ~/.codex/AGENTS.md 原为 0 字节, 已补齐 UM 启动与凭据查找指引, 新任务上下文已自动加载. UM 记忆 20261108-asc-credential-discovery 已保存并同步, 不含私钥或 Key ID / Issuer ID. 详见该记忆的已验证恢复步骤, 不再重复要求用户创建密钥
 - 已安装 asc-cli-usage, asc-release-flow, asc-submission-health, asc-xcode-build, asc-metadata-sync, asc-shots-pipeline, asc-screenshot-resize, asc-build-lifecycle 与 asc-whats-new-writer, 来源固定为 rorkai/app-store-connect-cli-skills 的 266d7ad357acd3a1c437668b0e77021bb0ff2f02
-- 1.4.0 开发中加入可选 iCloud KVS 同步, 每台设备默认关闭, 仅同步宝宝称呼, 生日与新增删除. 选择, 图标与各小组件关联保留本机. 八个正式 target 的 KVS 标识均为 $(TeamIdentifierPrefix)com.caldis.babydays, tvOS 上传临时签名需写入展开后的同一标识, 导出前核验 App 与扩展的 KVS 和 App Group 权限
+- 1.4.0 加入可选 iCloud KVS 同步, 每台设备默认关闭, 仅同步宝宝称呼, 生日与新增删除. 选择, 图标与各小组件关联保留本机. 八个正式 target 的 KVS 标识均为 $(TeamIdentifierPrefix)com.caldis.babydays, tvOS 上传临时签名需写入展开后的同一标识, 导出前核验 App 与扩展的 KVS 和 App Group 权限
 - BabySyncState 以字段逻辑时钟合并离线编辑, 删除 ID 标记不含称呼与生日且不复活. BabyProfile.save 返回合并后的结果, App Group 文件锁保证 App 与扩展的读改写串行, 通知在释放锁后发送. 旧 legacy-baby 首次启用改为各设备独立 UUID, 本机保留旧小组件关联别名
 - scripts/test-sync.sh macos 或 scripts/test-sync.sh ios|tvos <指定模拟器 UDID> 使用隔离数据验证默认关闭, 合并, 删除, 旧编辑器保存, 本机偏好, 账户变更, 错误与限额. 同一测试已在 macOS, iPhone, iPad 与 Apple TV 模拟器进程通过. scripts/render.sh sync 生成八张原生设置状态图, .impeccable/review 保存忽略提交的界面核验图
 - 用户本轮选择先上传 1.4.0 到 TestFlight, 由用户进行真实 Apple 账户的跨设备同步实测. 本机模型测试与模拟器开关测试不代表真实 iCloud 端到端传输已验证, 实测确认前不提交 App Store 审核或发布 Developer ID 正式更新
+- 2026-11-12 已上传 1.4.0 (202611120033), 源码提交 e30006e. iOS / iPadOS, macOS 与 tvOS 均为 VALID / IN_BETA_TESTING, 已逐一核对实际在 HOME 内部组, 简体中文测试步骤均已保存. Mac 测试说明含替换安装及桌面小组件提示. 未提交正式审核, 1.3.0 仍为 App Store 正式版本. 成品权限, 分发日志摘要与 TestFlight 收据保存在 ~/Library/Caches/baby-days/asc/1.4.0-202611120033-*.json
+- 本轮创建的三台测试模拟器及其示例资料, Mac 构建副本和 MacBook 上的一次性 GUI 任务已清理. 独立诊断工具 com.caldis.babydays.syncprobe 曾安装到用户 iPhone, 远程卸载返回 CoreDevice 4016, 未确认卸载成功, 已告知用户可删除 BabyDays Sync Probe. 不把该工具与正式 BabyDays 混淆, 不将此结果解释为 App Store 凭据问题
