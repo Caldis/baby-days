@@ -11,7 +11,7 @@ fi
 # 每次安装使用新的构建号, 系统据此丢弃旧版本缓存的小组件画面
 BUILD_NUMBER=$(date +%Y%m%d%H%M)
 if ! LOG=$(xcodebuild -project BabyDays.xcodeproj -scheme BabyDays-macOS -configuration Release \
-  -destination 'generic/platform=macOS' -derivedDataPath "$DERIVED" -allowProvisioningUpdates \
+  -destination "platform=macOS,arch=$(uname -m)" -derivedDataPath "$DERIVED" -allowProvisioningUpdates -allowProvisioningDeviceRegistration \
   CURRENT_PROJECT_VERSION=$BUILD_NUMBER build 2>&1); then
   print -r -- "$LOG" | grep -E "error" || print -r -- "$LOG" | tail -20
   echo "构建失败"

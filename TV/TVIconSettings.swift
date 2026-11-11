@@ -3,10 +3,12 @@ import SwiftUI
 struct TVIconSettings: View {
     let collection: BabyCollection
     let onChange: (BabyCollection) -> Void
+    @ObservedObject var sync: BabyCloudSync = .shared
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         NavigationStack {
             Form {
+                CloudSyncSettings(sync: sync)
                 Section("应用图标") {
                     Picker("选择方式", selection: Binding(get: { collection.iconMode }, set: { mode in
                         var state = collection; state.iconMode = mode; onChange(state)
@@ -25,7 +27,7 @@ struct TVIconSettings: View {
                     }
                     Button("完成") { dismiss() }
                 }
-            }.navigationTitle("图标设置")
+            }.navigationTitle("设置")
         }
     }
 }

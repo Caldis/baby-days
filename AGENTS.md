@@ -32,7 +32,7 @@
 
 ## 3. 工程与目录
 
-project.yml 是工程定义源头, 修改后执行 xcodegen generate, 生成的 BabyDays.xcodeproj 一并提交. 8 个 target: BabyDays-iOS, BabyDays-macOS, BabyDays-macOS-AppStore, BabyDays-tvOS, BabyDaysWidget-iOS, BabyDaysWidget-macOS, BabyDaysWidget-macOS-AppStore, BabyDaysTopShelf-tvOS. 与 Sparkle 相关的代码 (Updater, 检查更新菜单与按钮, 小组件的更新提示) 包在 #if !APP_STORE 中
+project.yml 是工程定义源头, 修改后执行 xcodegen generate, 生成的 BabyDays.xcodeproj 一并提交. 8 个正式 target: BabyDays-iOS, BabyDays-macOS, BabyDays-macOS-AppStore, BabyDays-tvOS, BabyDaysWidget-iOS, BabyDaysWidget-macOS, BabyDaysWidget-macOS-AppStore, BabyDaysTopShelf-tvOS. 另有 3 个 BabyDaysSyncProbe-* 诊断 target, 不内嵌于正式 App. 与 Sparkle 相关的代码 (Updater, 检查更新菜单与按钮, 小组件的更新提示) 包在 #if !APP_STORE 中
 
 | 目录 | 内容 |
 |---|---|
@@ -51,7 +51,7 @@ project.yml 是工程定义源头, 修改后执行 xcodegen generate, 生成的 
 ```sh
 xcodegen generate
 D=~/Library/Caches/baby-days/DerivedData
-xcodebuild -project BabyDays.xcodeproj -scheme BabyDays-macOS -destination 'generic/platform=macOS' -derivedDataPath $D -allowProvisioningUpdates build
+xcodebuild -project BabyDays.xcodeproj -scheme BabyDays-macOS -destination "platform=macOS,arch=$(uname -m)" -derivedDataPath $D -allowProvisioningUpdates -allowProvisioningDeviceRegistration build
 xcodebuild -project BabyDays.xcodeproj -scheme BabyDays-iOS -destination 'generic/platform=iOS Simulator' -derivedDataPath $D build
 xcodebuild -project BabyDays.xcodeproj -scheme BabyDays-tvOS -destination 'generic/platform=tvOS Simulator' -derivedDataPath $D build
 ```
@@ -137,6 +137,8 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 | asc 导出成功却仍引用空 .p8 | 5.14.1 在原文件存在时不会检查其内容, 因而可能继续引用 0 字节占位文件. 先确认字节数, 仅临时移开空占位文件并以 EXIT trap 恢复, 再用 private-key-dir 导出钥匙串内嵌密钥. 不删除原机 profile, 不把空文件或元数据列表当作可用凭据 |
 | iPad 上应用四周出现黑边 | App 和 Widget 的 TARGETED_DEVICE_FAMILY 都需为 1,2, 并声明 iPad 四个方向与 UIRequiresFullScreen=NO, 否则系统以 iPhone 兼容模式运行 |
 | install-mac.sh 构建后一直不安装 | pgrep -x BabyDays 会匹配正在运行的 iPhone 或 Apple TV 模拟器进程. 脚本现仅退出并等待 /Applications/BabyDays.app 的进程, 不影响模拟器 |
+| 加入 iCloud 后 Mac 调试 App 被系统终止, 但 codesign verify 通过 | 开发描述文件可能没有当前 Mac 的 provisioning UDID, 它与硬件 UUID 不同. 本机开发构建使用明确的 platform=macOS,arch=arm64 destination 与 -allowProvisioningDeviceRegistration, 不用 generic destination 代替本机登记. App Store 归档仍使用分发导出 |
+| SSH 能列出手机, devicectl 却连接失败 | 配对元数据不等于当前会话可访问设备. 已解锁桌面的 gui/UID 上下文与 SSH 不同, 可通过一次性 launchd 任务执行同一个开发工具命令, 不改配对与访问控制; 设备锁定或离线时仍需等待 |
 | SourceKit 报找不到类型 | 单文件诊断的噪音, 以 xcodebuild 或 swiftc 的结果为准 |
 | 小组件库侧栏中的宝宝多大显示旧图标与名称 BabyDays | 系统小组件服务缓存了首次安装时的图标与名称, 安装包内的图标与本地化名称正确 (用 NSWorkspace 渲染可确认). killall chronod 或重启后刷新, 与构建无关 |
 | GitHub 上旧提交仍可按 SHA 访问 | 历史已强推重写, 旧对象需要删除并重建仓库 (需 gh auth refresh -s delete_repo) 或联系 GitHub Support 清理 |
@@ -157,11 +159,11 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 - App Store Connect: 本次经 API 核对, iOS, macOS, tvOS 的 1.2.1 均已上架, 状态为 READY_FOR_DISTRIBUTION. 历史 Mac 审核要求的用户真机录屏已随回复提供. 审核联系人信息已在 App Store Connect 中填写, 不写入仓库
 - 2026-11-08 为本地开发执行 scripts/install-mac.sh, /Applications/BabyDays.app 当前为 BabyDays-macOS 的 Release 开发签名构建, 版本 1.2.1, 构建号 202611082143, 含 Sparkle; 已启动并打开 Xcode 工程, 已安装独立生肖双版本与新版宝宝编辑界面. 替换前已告知用户桌面小组件会被移除
 - 2026-11-08 已安装 design-playful-app-icons skill 到 ~/.codex/skills/design-playful-app-icons. 最新 12 生肖按动物独立生成, Resources/Artwork/Zodiac/calendar 为日历版图标原画, mascots 为无日历版 App 与小组件形象, designs-v2.json 与 generation-v2.json 保存角色设定和每张图的提示词. zodiac 渲染先生成默认蛇的 Artwork/app-icon.png, 再运行 icon, tv, docs, snapshots 与 appstore. 日历颜色随生肖变化, 不共用绿色日历
-- 中国大陆: 首次提交未包含中国大陆, 避免没有 ICP 备案号拖住其他地区的审核. 三个 App Store 版本都不访问网络, 属于可能豁免备案的离线应用, 但 Apple 未公布豁免清单. 审核通过后先在销售范围中加回中国大陆 (POST /iris/v2/appAvailabilities, CHN 设为 available); 若被要求备案号, 联系 Apple Developer Support 说明离线, 或由用户办理 ICP 备案后在 App 信息中填写
+- 中国大陆: 首次提交未包含中国大陆, 当前保持 App Store Connect 已有的销售范围. 1.4.0 新增可选 iCloud, 商店文案和审核说明不再将该版本描述为完全离线. 日后调整中国大陆发行前另行核实 Apple 的当前要求, 本轮 TestFlight 不修改销售地区
 - 仓库需保持公开: App Store 的隐私政策, 技术支持与营销网址, 以及 Mac 版 Sparkle 的更新清单和安装包都指向本仓库. 如需改为私有, 先新建公开仓库承接这些内容, 发布一版 Mac 更新把 UPDATE_FEED_URL 切过去, 在下一个 App Store 版本中更换网址, 最后再改私有
 - 本机已安装 XcodeGen 2.46.0, 修改 project.yml 后必须执行 xcodegen generate 同步新增源文件与资源; 不可依赖旧工程继续构建
 - 多宝宝数据保存在 App Group 的 babyCollection.v1, 旧 birthDate 自动迁移为稳定 ID legacy-baby 并保留镜像, 避免 App 与扩展同时迁移时产生不同 ID; Widget kind 不变, 每个小组件通过 AppIntent 保存宝宝 ID, 删除宝宝后提示重新选择. 生肖按农历新年换年, 默认图标仍为蛇
-- 模型验证: swiftc Shared/BabyAge.swift Shared/BabyProfile.swift Shared/Zodiac.swift Tests/ModelTests.swift -o ~/Library/Caches/baby-days/model-tests, 然后运行产物. 覆盖春节边界, 12 生肖, 独立小组件关联, 旧数据迁移, 删除与图标偏好
+- 模型验证: swiftc Shared/BabyAge.swift Shared/BabyProfile.swift Shared/BabySyncRecord.swift Shared/Zodiac.swift Tests/ModelTests.swift -o ~/Library/Caches/baby-days/model-tests, 然后运行产物. 覆盖春节边界, 12 生肖, 独立小组件关联, 旧数据迁移, 删除与图标偏好
 - 2026-11-08 已在 tvOS 26.5 模拟器运行新版, 验证生肖主题与备选图标; iOS 26.5 模拟器已验证自动图标和同屏两个独立宝宝小组件. 三个平台均已构建, 用户真机尚未安装本轮开发改动
 - 用户的 iPhone 上仍是旧的开发签名版本, 需要用 Xcode 重装或等待 TestFlight
 - 主界面使用生肖头像选择宝宝, 生日旁直接显示编辑和删除, 添加入口为加号. BabyEditor 只保留称呼与生日, 图标设置的图片直接作为选项. 小组件使用独立的 ZodiacWidgets.xcassets 缩略图, 不要把完整图标目录加入扩展
@@ -177,3 +179,7 @@ MARKETING_VERSION 只增不减. 修复用第三位, 功能用第二位. macOS �
 - 用户已授权并完成将原 MacBook d2r profile 的有效密钥迁至 Mac mini 标准系统钥匙串, 默认标签为 caldis-appstore. 已在 /private/tmp 的新终端中用普通 asc auth status --validate 与读取 BabyDays App 验证, 不依赖项目环境变量或 MacBook 在线. 原机 profile 与空下载占位文件保留, 一次性导出任务和临时目录已清理
 - 本次发现 ~/.codex/AGENTS.md 原为 0 字节, 已补齐 UM 启动与凭据查找指引, 新任务上下文已自动加载. UM 记忆 20261108-asc-credential-discovery 已保存并同步, 不含私钥或 Key ID / Issuer ID. 详见该记忆的已验证恢复步骤, 不再重复要求用户创建密钥
 - 已安装 asc-cli-usage, asc-release-flow, asc-submission-health, asc-xcode-build, asc-metadata-sync, asc-shots-pipeline, asc-screenshot-resize, asc-build-lifecycle 与 asc-whats-new-writer, 来源固定为 rorkai/app-store-connect-cli-skills 的 266d7ad357acd3a1c437668b0e77021bb0ff2f02
+- 1.4.0 开发中加入可选 iCloud KVS 同步, 每台设备默认关闭, 仅同步宝宝称呼, 生日与新增删除. 选择, 图标与各小组件关联保留本机. 八个正式 target 的 KVS 标识均为 $(TeamIdentifierPrefix)com.caldis.babydays, tvOS 上传临时签名需写入展开后的同一标识, 导出前核验 App 与扩展的 KVS 和 App Group 权限
+- BabySyncState 以字段逻辑时钟合并离线编辑, 删除 ID 标记不含称呼与生日且不复活. BabyProfile.save 返回合并后的结果, App Group 文件锁保证 App 与扩展的读改写串行, 通知在释放锁后发送. 旧 legacy-baby 首次启用改为各设备独立 UUID, 本机保留旧小组件关联别名
+- scripts/test-sync.sh macos 或 scripts/test-sync.sh ios|tvos <指定模拟器 UDID> 使用隔离数据验证默认关闭, 合并, 删除, 旧编辑器保存, 本机偏好, 账户变更, 错误与限额. 同一测试已在 macOS, iPhone, iPad 与 Apple TV 模拟器进程通过. scripts/render.sh sync 生成八张原生设置状态图, .impeccable/review 保存忽略提交的界面核验图
+- 用户本轮选择先上传 1.4.0 到 TestFlight, 由用户进行真实 Apple 账户的跨设备同步实测. 本机模型测试与模拟器开关测试不代表真实 iCloud 端到端传输已验证, 实测确认前不提交 App Store 审核或发布 Developer ID 正式更新

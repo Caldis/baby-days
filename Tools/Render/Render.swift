@@ -35,6 +35,7 @@ struct Render {
         case "zodiac": try ZodiacArtwork.render(root: root)
         case "tv": try TVArtwork.render(to: output)
         case "appstore": try AppStoreArt.render(root: root, to: output)
+        case "sync": try SyncSettingsArt.render(to: output)
         default:
             print("unknown mode \(arguments[2])")
             exit(1)

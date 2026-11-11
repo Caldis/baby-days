@@ -175,13 +175,27 @@ GalleryView 依据窗口内的实际可用宽度排版. 780 pt 及以上时, 左
 
 BirthDate 只保存公历年月日, 例如示例 2025-01-01. Baby 保存稳定 UUID, 称呼, 生日和可选 revision; BabyCollection 保存宝宝列表, 当前选中的 ID, 图标模式和图标跟随的宝宝 ID. App Group UserDefaults 的 babyCollection.v1 键以 JSON Data 原子保存整份集合. 首次读取时将旧 birthDate 迁移为第一位宝宝, UUID 只生成一次, 后续清空列表也不会重新导入旧日期. 每次保存同步旧 birthDate 键, 兼容尚未退出的旧扩展
 
-BabyProfile.defaults 是进程内唯一的 UserDefaults 实例, 保存与 @AppStorage 监听必须共用这个对象, 避免已保存的修改无法刷新界面. GalleryView 使用 @AppStorage 监听集合, 头像列表负责选择宝宝, 加号添加, 当前宝宝的生日旁直接显示铅笔与垃圾桶. BabyEditor 只编辑称呼与公历生日, 日期范围为 1900 年起至当天, 头像随日期自动变化, 未修改时完成按钮禁用. 删除经确认后执行, 不放入更多菜单. 图标设置用分段选项切换默认, 跟随宝宝和自选, 自选图片本身就是可点选项. 保存, 切换和移除宝宝后调用 WidgetCenter.shared.reloadAllTimelines(). 小组件通过 SelectBabyIntent 的原生字符串 babyID 参数选择宝宝, BabyOptionsProvider 以动态选项显示称呼, 每个实例保存自己的稳定 ID. timeline 每次用 ID 读取最新生日和称呼, 保持原有 7 天时间线. 宝宝已移除时显示重新选择提示, 不回退到其他宝宝. 未配置 ID 的旧小组件使用当前默认宝宝, 保留 BabyDaysWidget kind
+BabyProfile.defaults 是进程内唯一的 UserDefaults 实例, 保存与 @AppStorage 监听必须共用这个对象, 避免已保存的修改无法刷新界面. GalleryView 使用 @AppStorage 监听集合, 头像列表负责选择宝宝, 加号添加, 当前宝宝的生日旁直接显示铅笔与垃圾桶. BabyEditor 只编辑称呼与公历生日, 日期范围为 1900 年起至当天, 头像随日期自动变化, 未修改时完成按钮禁用. 删除经确认后执行, 不放入更多菜单. 设置页使用原生 Form, 顶部为 iCloud 同步开关, 下方保留图标选项. 图标设置用分段选项切换默认, 跟随宝宝和自选, 自选图片本身就是可点选项. 保存, 切换和移除宝宝后调用 WidgetCenter.shared.reloadAllTimelines(). 小组件通过 SelectBabyIntent 的原生字符串 babyID 参数选择宝宝, BabyOptionsProvider 以动态选项显示称呼, 每个实例保存自己的稳定 ID. timeline 每次用 ID 读取最新生日和称呼, 保持原有 7 天时间线. 宝宝已移除时显示重新选择提示, 不回退到其他宝宝. 未配置 ID 的旧小组件使用当前默认宝宝, 保留 BabyDaysWidget kind
 
 Zodiac 使用 Foundation 中国历的循环年份计算生肖, 以中国时区的出生日期中午计算, 在农历新年当天换年. 不能用公历年份直接取模. 应用, WidgetKit 入口与 tvOS 顶部栏均从同一 Zodiac 读取主题, 小组件系统着色模式仍由系统接管
 
 12 个生肖逐个独立生成无日历版, 再以各自形象为参照单独生成日历版. designs-v2.json 保存角色, 配色与动作设定, generation-v2.json 保存 24 张成稿的完整提示词与修订记录. calendar 用于 App 图标, mascots 用于主界面, 小组件与 tvOS 页面. Zodiac.xcassets 包含 App 形象和图标预览, 小蛇最新比例与生成修订记录见 snake-rounded-v3.json. ZodiacWidgets.xcassets 只含 192 px 无日历缩略图, 防止小组件加载整套高分辨率图标. zodiac 渲染同时生成 iOS 的 11 个 AlternateIcons/*.icon 和双版本生肖总览图, tv 渲染生成 tvOS 分层图标与顶部栏静态图
 
 图标模式为 default, automatic 或生肖 rawValue, 默认蛇. automatic 可跟随当前选中宝宝或固定某个宝宝, 图标偏好与小组件主题独立. iOS 和 tvOS 使用 UIApplication.setAlternateIconName, 相同图标不重复请求, 系统失败时显示错误并允许重试. macOS 使用 NSApplication.applicationIconImage 切换运行中的程序坞图标, Finder 安装图标仍为默认蛇, 不改写已签名 App 包
+
+## 可选的 iCloud 同步
+
+BabyCloudSync 通过 NSUbiquitousKeyValueStore 在同一 Apple 账户的设备间同步宝宝资料. 开关 iCloudSync.enabled.v1 保存在本机 App Group, 每台设备默认关闭; 关闭时不创建 iCloud 客户端, 不读写云端. 关闭后保留两端副本, Apple 账户变更后自动关闭并要求重新开启. 界面显示开关和可重试的错误, 不将系统缓存写入成功标成服务器已同步
+
+八个正式 App 与扩展 target 共用 N7Z52F27XK.com.caldis.babydays 这一 KVS 标识. 不使用 CloudKit 数据库或 schema. macOS 的本机 App Group 与 iOS / tvOS 不同, 云端标识必须相同. App 前台, 小组件时间线与配置选项, tvOS 顶部栏均读取已启用同步的系统缓存; 导入资料后刷新 WidgetKit 或 Top Shelf
+
+每位宝宝对应一个 baby.v1.<ID> 云端键, BabySyncState 随本机集合保存在同一 JSON 事务内. 称呼与生日分别保存逻辑时钟和写入设备标识, 独立字段可合并离线编辑, 同字段冲突按时钟与设备标识确定顺序. 删除使用永久 ID 标记, 不保留被删除宝宝的称呼与生日, 防止离线编辑使宝宝复活. 初次启用会合并各设备已有宝宝, 不按称呼或生日自动去重, 避免误合并双胞胎
+
+旧单宝宝的 legacy-baby 在各设备首次启用时换成独立 UUID, 本机保留旧小组件 ID 的别名. 当前选择, 图标模式与各小组件关联不上传. BabyProfile.save 返回合并后的集合, 旧编辑弹层的保存只应用实际修改的字段, 保留期间收到的新宝宝与其他字段修改. App Group 内的文件锁与进程内递归锁串行化 App 和扩展的读改写, 释放锁后才发送通知
+
+首次连接暂缓上传以接收初始云端通知. 无法识别的云端记录不覆盖, 超过保守的 1000 键 / 900 KB 预算时保留本机修改并提示. 真实跨设备传输仍受 Apple 账户, 网络与系统调度影响
+
+scripts/test-sync.sh 在 macOS 或指定 iOS / tvOS 模拟器执行同一份隔离测试. 测试使用独立 UserDefaults 与内存云端, 不读取真实宝宝资料. Tools/Probe 的独立诊断 target 可使用随机会话键测试真实 KVS, 不打包进正式 App, 不访问正式资料键
 
 ## Apple TV
 
@@ -302,11 +316,11 @@ xcodebuild -downloadPlatform iOS
 
 ### 生日保存在本机 App Group
 
-宝宝列表与图标偏好保存在 App Group UserDefaults, 不需要网络与账号. 小组件使用 AppIntent 选择已保存宝宝的 ID, 避免在每个小组件内重复填写生日, 也避免修改姓名后丢失关联
+宝宝列表与图标偏好保存在 App Group UserDefaults, 关闭 iCloud 时可完全在本机使用. 小组件使用 AppIntent 选择已保存宝宝的 ID, 避免在每个小组件内重复填写生日, 也避免修改姓名后丢失关联
 
 ### Apple TV 用全屏 App 与顶部栏替代小组件
 
-tvOS 没有 WidgetKit, 首页上最接近小组件的位置是 App 位于首行时的顶部栏. 顶部栏扩展只能提供图片, 横幅因此在扩展中用 ImageRenderer 渲染 TVAgeBoard 得到, 与全屏 App 共用同一个视图. 生日在 Apple TV 上单独设置, 跨设备同步需要 iCloud 能力, 会给 Developer ID 分发的 Mac 版带来描述文件依赖, 当前留作备选
+tvOS 没有 WidgetKit, 首页上最接近小组件的位置是 App 位于首行时的顶部栏. 顶部栏扩展只能提供图片, 横幅因此在扩展中用 ImageRenderer 渲染 TVAgeBoard 得到, 与全屏 App 共用同一个视图. Apple TV 可手动设置宝宝, 或开启 iCloud 导入其他设备的资料. Developer ID 版本也需要包含 KVS 权限的描述文件
 
 ### 平台拆成 4 个独立 target
 
@@ -342,7 +356,7 @@ Sparkle 只在 App 运行时工作, 而这个 App 平时只以小组件的形式
 
 ### 更新包托管在公开仓库的 Releases
 
-Sparkle 需要匿名可访问的更新清单与安装包, 私有仓库的 Release 附件需要登录才能下载. 仓库因此设为公开, 更新清单固定使用 releases/latest/download/appcast.xml 地址, 每次发布只需上传新的 appcast.xml. 出生日期只保存在用户本机 App Group, 不写入公开安装包
+Sparkle 需要匿名可访问的更新清单与安装包, 私有仓库的 Release 附件需要登录才能下载. 仓库因此设为公开, 更新清单固定使用 releases/latest/download/appcast.xml 地址, 每次发布只需上传新的 appcast.xml. 宝宝资料不写入公开安装包, 可选 iCloud 副本仅供同一 Apple 账户的设备同步
 
 ### 时间线一次排 7 天, 0 点切换
 

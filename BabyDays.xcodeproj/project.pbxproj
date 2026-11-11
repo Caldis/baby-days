@@ -9,42 +9,60 @@
 /* Begin PBXBuildFile section */
 		0114FE639981345F8C255595 /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
 		031D2BDEB17531007F651CAB /* Zodiac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDB433C82C0304625E2A708 /* Zodiac.swift */; };
+		04E14D40701CEC7799DB822B /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
 		0514E2657E7030039B98C6B4 /* ZodiacIcon-ox.icon in Resources */ = {isa = PBXBuildFile; fileRef = 6260B06C144CBE319264FA3B /* ZodiacIcon-ox.icon */; };
 		05BD657E9F27932B7731B22E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0BEB119AC346575F294791 /* Theme.swift */; };
+		080A1EF9B2BB7034A4142470 /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
 		087C21614953E3550AFA5EAD /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
 		0C230769F509366AD8CF68D3 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 88D6A4AC13FCED85D5A1C9C9 /* AppIcon.icon */; };
+		0E2D43F45721981DBAA2EFC5 /* CloudSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972FFA0591FC805DF28AB877 /* CloudSyncSettings.swift */; };
 		0F34224133EC73B9E5A14293 /* ZodiacWidgets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 769C35D86BF4D8ED86BDCA37 /* ZodiacWidgets.xcassets */; };
+		10CA2F2E3EDB19F216D55B58 /* ProbeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2564A27304BC5F903BD816D /* ProbeApp.swift */; };
 		11B16FB2B6452F27E284036D /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
 		1340206C687EF386A337FF93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6D39776A1F273D7F76662DC /* Assets.xcassets */; };
 		141A7223F51A284E838ADB4D /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
+		14837484D9E946B48DA9FD5B /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
 		15C6348AB82ABDDF788ABD95 /* ZodiacMascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C3F353B393DB3EAC543BE9 /* ZodiacMascot.swift */; };
 		163D85FBE7B705CB903F1B6F /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
 		17C9F9D3EFE6B3792058274A /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
 		19B036DBB1F7E2D279FCEEA8 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
 		1B59DBD6BB9AD02B553E6412 /* ZodiacMascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C3F353B393DB3EAC543BE9 /* ZodiacMascot.swift */; };
 		1C1FA579E8D7392EBA8189FB /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
+		1C20E5838810420B273DA19A /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
 		1C92691F38047DC973E76C43 /* Zodiac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDB433C82C0304625E2A708 /* Zodiac.swift */; };
 		1D63D4D4F7687CE5D2FA431E /* BabyDaysWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4640FE427534B41F9E66EF30 /* BabyDaysWidget.swift */; };
 		1DF7582397B71ED5EBC552EE /* TVAgeBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562C371354B4E5E7861A88D7 /* TVAgeBoard.swift */; };
 		1F536F6CC8FC377333274442 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C421F113884D2FD2A73B5 /* Updater.swift */; };
+		200A3D3080EA618AD99B35E6 /* CloudSyncProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D14D3499BE86FCEBF31F /* CloudSyncProbe.swift */; };
+		224B24B29981F447BD40BCD1 /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
 		2672869FA5261815AF0A8D81 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68CFCCA75FC5797CC4E247 /* GalleryView.swift */; };
 		2695FF58B5C2E3BF6B1F480C /* TVShared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8229526326E4A84451C6D13 /* TVShared.xcassets */; };
 		28FFDB31CD396127A5497CA0 /* TVShared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8229526326E4A84451C6D13 /* TVShared.xcassets */; };
 		29E7AB717B51B5BEE10696D7 /* ZodiacIcon-dog.icon in Resources */ = {isa = PBXBuildFile; fileRef = F9ADFBF6697E3D078B5E202B /* ZodiacIcon-dog.icon */; };
+		2A131BA61FEA19A9A340A71D /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
 		2B4CB2C9081B7004C28DC16B /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 88D6A4AC13FCED85D5A1C9C9 /* AppIcon.icon */; };
 		2E4297B5FCB6A094A71A0080 /* ZodiacWidgets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 769C35D86BF4D8ED86BDCA37 /* ZodiacWidgets.xcassets */; };
 		2EC0312642937510BDFA9D19 /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
+		303EEFFA190FF9CDD34A0F17 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
 		30550F42538C5650948AD546 /* BabyDaysWidget-macOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C3D54712B8B857E06731C70F /* BabyDaysWidget-macOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3490386E310354D279FFF94A /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
 		35D28C6CE0A4CA7F61986889 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
+		35EBBC691B39811BDD4C5861 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
 		365510F3CE10A3698676059A /* ZodiacIcon-tiger.icon in Resources */ = {isa = PBXBuildFile; fileRef = 9A4F591687073865FA5E7996 /* ZodiacIcon-tiger.icon */; };
+		3712D7A88CEC39EB4FB0A0BD /* CloudSyncProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D14D3499BE86FCEBF31F /* CloudSyncProbe.swift */; };
 		3B24C658E6F75E06FE4FFA0B /* TVIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 333570876B84B607B200E168 /* TVIcon.xcassets */; };
+		3B633DD0899FBF810C126874 /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
+		3CC788E1C13E5AB2F31191A2 /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
+		3D6E7EFC550A57F2A3E6D439 /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
 		3DEBB0754ECFDBCD83CA6F39 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C421F113884D2FD2A73B5 /* Updater.swift */; };
 		41F9061153B220233335AF24 /* IconAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6396E5A7491A036DBF5C5EC2 /* IconAppearance.swift */; };
 		443A315C5A73F7E8316DFB56 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68CFCCA75FC5797CC4E247 /* GalleryView.swift */; };
 		4643DD1E19D18DEF2F836278 /* BabyDaysWidget-macOS-AppStore.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D78CDCD752E3BD6B38BFFB10 /* BabyDaysWidget-macOS-AppStore.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		46D4F992CA85BB3C9934DDE0 /* CloudSyncProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D14D3499BE86FCEBF31F /* CloudSyncProbe.swift */; };
 		47FC756A10D8614C60ECDA5A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B81C9E4F6BC9C9063C685250 /* InfoPlist.strings */; };
+		4848F281F1108E02DBD8A868 /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
 		4A28258B37CB00B9BA0133A3 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
+		4B4DEBD84CE041DC3F03E566 /* Zodiac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDB433C82C0304625E2A708 /* Zodiac.swift */; };
 		4C7E53260D36B119659F54EA /* ZodiacMascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C3F353B393DB3EAC543BE9 /* ZodiacMascot.swift */; };
 		4E7CA48C8F7814C9872A213B /* BabySelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF7D7E13955EBB19564767 /* BabySelection.swift */; };
 		4FBAB5892AFF61B0D2E4D7C7 /* ZodiacMascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C3F353B393DB3EAC543BE9 /* ZodiacMascot.swift */; };
@@ -52,27 +70,33 @@
 		50EDB38D4DDE446C977EF664 /* Zodiac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDB433C82C0304625E2A708 /* Zodiac.swift */; };
 		50FA9A869BB4309EEAB793BC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0BEB119AC346575F294791 /* Theme.swift */; };
 		51FB3C22489FB196D8DE4D37 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B81C9E4F6BC9C9063C685250 /* InfoPlist.strings */; };
+		53ECA8DCD55B1354C0B96E11 /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
 		552055D7C68978B104A225BD /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
 		55C3B6E6004828112DD7D507 /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
 		587B3BFDE00B0AF180059292 /* ContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14FB6A857E7010FA0C5FBB6 /* ContentProvider.swift */; };
 		5CBD383984F707CEB9ACBFB7 /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
+		5CE3DC11B47B70E740539AF9 /* CloudSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972FFA0591FC805DF28AB877 /* CloudSyncSettings.swift */; };
 		5D01EE61320F6213E197DA3B /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C421F113884D2FD2A73B5 /* Updater.swift */; };
 		5D34C5986FC44FCA4988C124 /* TVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AE50650625C813585A0986 /* TVApp.swift */; };
 		5D463C38030B45A9DAC590A2 /* IconAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6396E5A7491A036DBF5C5EC2 /* IconAppearance.swift */; };
 		5ED75374B756458B07B71863 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0BEB119AC346575F294791 /* Theme.swift */; };
+		62CE317553082EB4639A32CA /* CloudSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972FFA0591FC805DF28AB877 /* CloudSyncSettings.swift */; };
 		648762603AC801B2A79FB589 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
 		6806DADC6FAB14E3F68856B3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0BEB119AC346575F294791 /* Theme.swift */; };
+		6830D3DBA1B43EADE3145325 /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
 		6A20A6593BEA3C5B47930B6D /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 97DEF3B07E064FF3AA75D12A /* Sparkle */; };
 		6D98110133053D781BBDA668 /* BabyDaysTopShelf-tvOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 456E70E52E0220280AAE2AFE /* BabyDaysTopShelf-tvOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6DB8F4CCA8B27D3022A2D356 /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
 		6E575C742F050C93D9365813 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0BEB119AC346575F294791 /* Theme.swift */; };
 		6ED6B46974BA3ABC52E84628 /* ZodiacWidgets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 769C35D86BF4D8ED86BDCA37 /* ZodiacWidgets.xcassets */; };
 		70414C506ABD16B083F85C5E /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
+		70B1FB85FED69F7579151F12 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
 		732E1493A42F3746915B719F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0BEB119AC346575F294791 /* Theme.swift */; };
 		73A3C4D5FA9A9118F39F0C83 /* ZodiacIcon-pig.icon in Resources */ = {isa = PBXBuildFile; fileRef = C24F653600A46D01BE1ECDCE /* ZodiacIcon-pig.icon */; };
 		742FA5E8D80DC79B86558027 /* BabyEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744501737648D44B11FF904 /* BabyEditor.swift */; };
 		7776FF7325F403EF8FE2A8D8 /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
 		77D5ADAD0FBDB83E04046847 /* Zodiac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC47D45585F050861EC5DF7E /* Zodiac.xcassets */; };
+		7900C8C6C6459709BDC0F438 /* CloudSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972FFA0591FC805DF28AB877 /* CloudSyncSettings.swift */; };
 		7B8B17C01BDED15AE27C51A1 /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
 		7C5AE6A358C5EA6DFEF1D320 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
 		7CE8F8D81AC253D42B001F96 /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
@@ -81,6 +105,7 @@
 		7F87B264AE413FC2CE92DE0D /* Zodiac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDB433C82C0304625E2A708 /* Zodiac.swift */; };
 		81124A6A54628D539119F77C /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
 		818AE843F054285AFC2D89D1 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
+		82FEF1C8992402D15F4B70E3 /* CloudSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972FFA0591FC805DF28AB877 /* CloudSyncSettings.swift */; };
 		83E2E41E1A9B28344BEDECFE /* Zodiac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC47D45585F050861EC5DF7E /* Zodiac.xcassets */; };
 		84F3CA6D389CB97B3CBE45E7 /* ZodiacIcon-goat.icon in Resources */ = {isa = PBXBuildFile; fileRef = C23ECF85DB6036591573019A /* ZodiacIcon-goat.icon */; };
 		8826B1BAAA7672D767AA4010 /* ZodiacWidgets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 769C35D86BF4D8ED86BDCA37 /* ZodiacWidgets.xcassets */; };
@@ -88,6 +113,8 @@
 		898211D42D57C5FCB71629E1 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
 		8B50C2723B2F171563D70AD2 /* BabyDaysApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810606B02BF8DCC10BCC53E9 /* BabyDaysApp.swift */; };
 		8E9C2F4AA36B834A72CD1E69 /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
+		8FE2FABDC9CBE3CE1AB65693 /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
+		975A9E1A0582FF5AB11EC95C /* ProbeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2564A27304BC5F903BD816D /* ProbeApp.swift */; };
 		9ABC19ECB372FA6A0B4170B3 /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
 		9AEA8B7C2BD6ABE4493DED21 /* ZodiacIcon-rooster.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3FD515CCDD201DC291A22299 /* ZodiacIcon-rooster.icon */; };
 		9C0BBC09B749160A022DB865 /* BabyDaysApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810606B02BF8DCC10BCC53E9 /* BabyDaysApp.swift */; };
@@ -96,22 +123,29 @@
 		9D9CDC09F963FC81122513F1 /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
 		9FB693FD9EA27D0A1BE68DD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6D39776A1F273D7F76662DC /* Assets.xcassets */; };
 		A20A1DE32EBA6DF425127547 /* Zodiac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC47D45585F050861EC5DF7E /* Zodiac.xcassets */; };
+		A47721FA8E3FB9F32108DF7B /* CloudSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972FFA0591FC805DF28AB877 /* CloudSyncSettings.swift */; };
 		A5D626FD91DABD389C057C0A /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
 		A668308171EC3A46E11B641C /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
+		A6872BC63BBBB360F8D2CE6A /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
 		A6D7AF87D52ADCFF015C67E2 /* BabyDaysWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4640FE427534B41F9E66EF30 /* BabyDaysWidget.swift */; };
+		A7386042F020ACC26D9F84C8 /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
 		A7B5774B9499A3E3D82492FF /* ZCOOLKuaiLe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */; };
 		A85B7059ADDF81A81819CDD2 /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
 		AA5FCD196E58298066FE16B6 /* TVIconSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101344F22A26B0BF1CE6B2F /* TVIconSettings.swift */; };
 		AAAA2A3BA543542161261237 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
+		AE4B8B3AADBDFCBBCA4FCA90 /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
 		B1ABFA14867F1D3C740BC097 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6D39776A1F273D7F76662DC /* Assets.xcassets */; };
+		B1BAA2704B4F1D7932175DD6 /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
 		B536F3D704D95169ABFC3EF7 /* UpdateFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */; };
 		B59F671BF5E514E5D836E87B /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
 		B73AB9F8DF159C2A3AEF662B /* ZodiacWidgets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 769C35D86BF4D8ED86BDCA37 /* ZodiacWidgets.xcassets */; };
 		B8D78C1203679B5584DDEF27 /* ZodiacIcon-monkey.icon in Resources */ = {isa = PBXBuildFile; fileRef = F5E373B3955B2EDB307D4B5B /* ZodiacIcon-monkey.icon */; };
 		BAE30CB8CC9B7951FD9B4362 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
+		BB4EB172CA8A7ABDB8F72CE4 /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
 		BB892264ED596B757EE4F4D5 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
 		BE293EA831EEA6CC1E94BBA0 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
 		BEF5581BC8856DEB24AA6971 /* ZodiacMascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C3F353B393DB3EAC543BE9 /* ZodiacMascot.swift */; };
+		C09D89D9ECBC5EE925A12F52 /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
 		C528832EFA2A7604F3CAFA5E /* IconSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCFDD50EDEB4D5C8ACE7CED /* IconSettings.swift */; };
 		C5B5BF6F630C1C12FE7F5630 /* ZodiacWidgets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 769C35D86BF4D8ED86BDCA37 /* ZodiacWidgets.xcassets */; };
 		C76DBAAE7E425DB8000CDB91 /* ZodiacIcon-dragon.icon in Resources */ = {isa = PBXBuildFile; fileRef = AE4FFD881F03703F9FF8EF54 /* ZodiacIcon-dragon.icon */; };
@@ -125,24 +159,35 @@
 		DAE390F056F22A7315E37266 /* Zodiac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC47D45585F050861EC5DF7E /* Zodiac.xcassets */; };
 		DB9F2DDC16387D2B66640AB7 /* ZodiacIcon-rabbit.icon in Resources */ = {isa = PBXBuildFile; fileRef = 61D7AC8049934CC2CEB9745E /* ZodiacIcon-rabbit.icon */; };
 		DDBD4D7F6E0AFEAEFAC9E67F /* BabySelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF7D7E13955EBB19564767 /* BabySelection.swift */; };
+		DFB5BDB4A7E000C5B6C77128 /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
 		DFCD8538272174EC279FE84B /* ZodiacMascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C3F353B393DB3EAC543BE9 /* ZodiacMascot.swift */; };
 		E0DE40B20A9E50F200E1FA17 /* TVAgeBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562C371354B4E5E7861A88D7 /* TVAgeBoard.swift */; };
 		E1BC3395895F43464AE82D70 /* Zodiac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDB433C82C0304625E2A708 /* Zodiac.swift */; };
 		E317B33A3C3BDC36AD9103C4 /* ZodiacIcon-horse.icon in Resources */ = {isa = PBXBuildFile; fileRef = DE489BE585A6BF03C3C46A2C /* ZodiacIcon-horse.icon */; };
 		E4E8E1C2C15E6E7C633CA697 /* IconAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6396E5A7491A036DBF5C5EC2 /* IconAppearance.swift */; };
+		E5A29E67E115A59CE6B85FA1 /* CloudSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972FFA0591FC805DF28AB877 /* CloudSyncSettings.swift */; };
 		E7B428748B102A1453B9D209 /* Decorations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */; };
+		E82FE59BB7F9C50A0904CA79 /* BabyCloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */; };
 		E864EF0C605C1E339BFAF2B3 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
 		E86A65861CC0A8554F105309 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
+		E8F81304929C293F3AE83FC4 /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
+		EA3B66769371A050A8589CF7 /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
+		EBAD2108D7ED35A9D31A8B98 /* Zodiac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDB433C82C0304625E2A708 /* Zodiac.swift */; };
 		EBFC64EBB33213F72A98DC1D /* BabySelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF7D7E13955EBB19564767 /* BabySelection.swift */; };
 		EEB41A8279EF61742C23CBF8 /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
 		EF39BDBDF94894269A044322 /* BabyAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E15C85B14A587F1C93FD /* BabyAge.swift */; };
+		EFBDEE0F3C35F2849084B7CC /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
 		EFFDD959E70B70FBB3763662 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7290B862DB31AC443A2B318 /* WidgetViews.swift */; };
+		F0607F1EC6B56BA4C929F73F /* ProbeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2564A27304BC5F903BD816D /* ProbeApp.swift */; };
 		F0863B8DAC4A6FC43E761805 /* BabyDaysWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4640FE427534B41F9E66EF30 /* BabyDaysWidget.swift */; };
 		F0A496E32402CC04368DFDFB /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68CFCCA75FC5797CC4E247 /* GalleryView.swift */; };
 		F0D70CBAE3E54F722398752C /* IconSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCFDD50EDEB4D5C8ACE7CED /* IconSettings.swift */; };
 		F1608AE7010E09507945DF91 /* ZodiacMascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C3F353B393DB3EAC543BE9 /* ZodiacMascot.swift */; };
+		F24B0DC5F178F15A66ECD8B2 /* CloudSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972FFA0591FC805DF28AB877 /* CloudSyncSettings.swift */; };
+		F488938AA70BBF686E8E2FE3 /* BabySyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */; };
 		F488ABFBC20501BA93B8C12F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B81C9E4F6BC9C9063C685250 /* InfoPlist.strings */; };
 		F529A693D5152869F066FC61 /* BabyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */; };
+		F7A428DF7AAF1914F6B18E68 /* Zodiac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDB433C82C0304625E2A708 /* Zodiac.swift */; };
 		F7DB1070E716F542936AD159 /* ZodiacIcon-rat.icon in Resources */ = {isa = PBXBuildFile; fileRef = C5F1C4FD0569BE003AA65C7B /* ZodiacIcon-rat.icon */; };
 		FA6FF4AD0E7203E8888C7A4A /* Zodiac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDB433C82C0304625E2A708 /* Zodiac.swift */; };
 		FC72EE14167FB244C60E0C50 /* Zodiac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDB433C82C0304625E2A708 /* Zodiac.swift */; };
@@ -238,6 +283,7 @@
 		24DF7D7E13955EBB19564767 /* BabySelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabySelection.swift; sourceTree = "<group>"; };
 		2723E15C85B14A587F1C93FD /* BabyAge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyAge.swift; sourceTree = "<group>"; };
 		2744501737648D44B11FF904 /* BabyEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyEditor.swift; sourceTree = "<group>"; };
+		2939C96B9B5A57FE9D454C20 /* BabyDaysSyncProbe-iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "BabyDaysSyncProbe-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30F711863769175BEFE4D2C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		333570876B84B607B200E168 /* TVIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TVIcon.xcassets; sourceTree = "<group>"; };
 		36E359ABA70D3F000C664E84 /* ZCOOLKuaiLe-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZCOOLKuaiLe-Regular.ttf"; sourceTree = "<group>"; };
@@ -249,7 +295,9 @@
 		4CCFDD50EDEB4D5C8ACE7CED /* IconSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSettings.swift; sourceTree = "<group>"; };
 		4FC992014CF0193F26FC50F8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		500C6288A8177C978602FBC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyCloudSync.swift; sourceTree = "<group>"; };
 		562C371354B4E5E7861A88D7 /* TVAgeBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVAgeBoard.swift; sourceTree = "<group>"; };
+		5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabySyncRecord.swift; sourceTree = "<group>"; };
 		5EFBAC3B4932A25BC015745C /* BabyDays-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BabyDays-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		61D7AC8049934CC2CEB9745E /* ZodiacIcon-rabbit.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "ZodiacIcon-rabbit.icon"; sourceTree = "<group>"; };
 		6260B06C144CBE319264FA3B /* ZodiacIcon-ox.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "ZodiacIcon-ox.icon"; sourceTree = "<group>"; };
@@ -260,6 +308,7 @@
 		8091240D6C62BD343A9E11A5 /* BabyDaysTopShelf.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BabyDaysTopShelf.entitlements; sourceTree = "<group>"; };
 		810606B02BF8DCC10BCC53E9 /* BabyDaysApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyDaysApp.swift; sourceTree = "<group>"; };
 		88D6A4AC13FCED85D5A1C9C9 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		972FFA0591FC805DF28AB877 /* CloudSyncSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncSettings.swift; sourceTree = "<group>"; };
 		979C421F113884D2FD2A73B5 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		9A4F591687073865FA5E7996 /* ZodiacIcon-tiger.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "ZodiacIcon-tiger.icon"; sourceTree = "<group>"; };
 		A1549065F95E8F52F9DB2665 /* BabyDaysWidget-iOS.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = "BabyDaysWidget-iOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -279,11 +328,15 @@
 		C9492826F2CDD46A6EE16DCC /* BabyDays-tvOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BabyDays-tvOS.entitlements"; sourceTree = "<group>"; };
 		D78CDCD752E3BD6B38BFFB10 /* BabyDaysWidget-macOS-AppStore.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "BabyDaysWidget-macOS-AppStore.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8229526326E4A84451C6D13 /* TVShared.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TVShared.xcassets; sourceTree = "<group>"; };
+		DA46D14D3499BE86FCEBF31F /* CloudSyncProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncProbe.swift; sourceTree = "<group>"; };
 		DE489BE585A6BF03C3C46A2C /* ZodiacIcon-horse.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "ZodiacIcon-horse.icon"; sourceTree = "<group>"; };
+		DF299F8AF5E7175CCB9BDEFA /* BabyDaysSyncProbe-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BabyDaysSyncProbe-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E43A770E5F3F8C325FA0EE22 /* BabyDaysWidget-AppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BabyDaysWidget-AppStore.entitlements"; sourceTree = "<group>"; };
 		E6D39776A1F273D7F76662DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC47D45585F050861EC5DF7E /* Zodiac.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Zodiac.xcassets; sourceTree = "<group>"; };
+		ED8FBF2CC2BEEDFB9B13E47B /* BabyDaysSyncProbe-tvOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "BabyDaysSyncProbe-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14FB6A857E7010FA0C5FBB6 /* ContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentProvider.swift; sourceTree = "<group>"; };
+		F2564A27304BC5F903BD816D /* ProbeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProbeApp.swift; sourceTree = "<group>"; };
 		F351EE65939441A15140E046 /* BabyDays-iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "BabyDays-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E373B3955B2EDB307D4B5B /* ZodiacIcon-monkey.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "ZodiacIcon-monkey.icon"; sourceTree = "<group>"; };
 		F867FC602B17F8EC52DFEF01 /* BabyDays-macOS-AppStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BabyDays-macOS-AppStore.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -368,6 +421,7 @@
 				59C2F34094F6040A86615049 /* App */,
 				27D76680F2FC9F26CE75EA55 /* Resources */,
 				F5FBA8F2DCC604939E7466B1 /* Shared */,
+				DAE6EFC118C4BD5B0EBF7286 /* Tools */,
 				4CA32BBF73F94131492780A9 /* TopShelf */,
 				E14A0EAF2E81E0D3A8FC0E7D /* TV */,
 				1A72E3E4DC1E57BD976315E5 /* TVShared */,
@@ -391,12 +445,24 @@
 				F867FC602B17F8EC52DFEF01 /* BabyDays-macOS-AppStore.app */,
 				5EFBAC3B4932A25BC015745C /* BabyDays-macOS.app */,
 				0CC9A25A0762CA85A31F6270 /* BabyDays-tvOS.app */,
+				2939C96B9B5A57FE9D454C20 /* BabyDaysSyncProbe-iOS.app */,
+				DF299F8AF5E7175CCB9BDEFA /* BabyDaysSyncProbe-macOS.app */,
+				ED8FBF2CC2BEEDFB9B13E47B /* BabyDaysSyncProbe-tvOS.app */,
 				456E70E52E0220280AAE2AFE /* BabyDaysTopShelf-tvOS.appex */,
 				A1549065F95E8F52F9DB2665 /* BabyDaysWidget-iOS.appex */,
 				D78CDCD752E3BD6B38BFFB10 /* BabyDaysWidget-macOS-AppStore.appex */,
 				C3D54712B8B857E06731C70F /* BabyDaysWidget-macOS.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		83CC35FD79DC70BD63781557 /* Probe */ = {
+			isa = PBXGroup;
+			children = (
+				DA46D14D3499BE86FCEBF31F /* CloudSyncProbe.swift */,
+				F2564A27304BC5F903BD816D /* ProbeApp.swift */,
+			);
+			path = Probe;
 			sourceTree = "<group>";
 		};
 		9E9BDEBEAB9612E6BB7D8322 /* AlternateIcons */ = {
@@ -415,6 +481,14 @@
 				9A4F591687073865FA5E7996 /* ZodiacIcon-tiger.icon */,
 			);
 			path = AlternateIcons;
+			sourceTree = "<group>";
+		};
+		DAE6EFC118C4BD5B0EBF7286 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				83CC35FD79DC70BD63781557 /* Probe */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 		DAFF86C3696353047AD7EE8A /* Widget */ = {
@@ -445,7 +519,10 @@
 			isa = PBXGroup;
 			children = (
 				2723E15C85B14A587F1C93FD /* BabyAge.swift */,
+				54E3C8C6F541F66EEBCB3F64 /* BabyCloudSync.swift */,
 				7D07C479FDF6D0DD087CDC1C /* BabyProfile.swift */,
+				5E7DBDED1B50E3BB974D7202 /* BabySyncRecord.swift */,
+				972FFA0591FC805DF28AB877 /* CloudSyncSettings.swift */,
 				B6A3B39A40BA592EAD1A9BFC /* Decorations.swift */,
 				AB0BEB119AC346575F294791 /* Theme.swift */,
 				FF8E59C9E03E51DAC17AA069 /* UpdateFeed.swift */,
@@ -459,6 +536,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		218DF6A423BF7DB5DA8E200D /* BabyDaysSyncProbe-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7799380059513AA17BCECB52 /* Build configuration list for PBXNativeTarget "BabyDaysSyncProbe-iOS" */;
+			buildPhases = (
+				51FA42BA018035A1CB442CD5 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BabyDaysSyncProbe-iOS";
+			packageProductDependencies = (
+			);
+			productName = "BabyDaysSyncProbe-iOS";
+			productReference = 2939C96B9B5A57FE9D454C20 /* BabyDaysSyncProbe-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		31DE4C22020C9E3F48A0A7B1 /* BabyDaysSyncProbe-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F07CBC637670F34FB5603974 /* Build configuration list for PBXNativeTarget "BabyDaysSyncProbe-macOS" */;
+			buildPhases = (
+				0E4B0EB834C6B4FB6BC4404D /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BabyDaysSyncProbe-macOS";
+			packageProductDependencies = (
+			);
+			productName = "BabyDaysSyncProbe-macOS";
+			productReference = DF299F8AF5E7175CCB9BDEFA /* BabyDaysSyncProbe-macOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 		36B3216D9C2511E35BC05D71 /* BabyDays-tvOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7AA122247797471DF09C21E4 /* Build configuration list for PBXNativeTarget "BabyDays-tvOS" */;
@@ -613,6 +724,23 @@
 			productReference = 5EFBAC3B4932A25BC015745C /* BabyDays-macOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BC80940D79934E6967AD9BC4 /* BabyDaysSyncProbe-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FFBEABDC531DDA40897F4D93 /* Build configuration list for PBXNativeTarget "BabyDaysSyncProbe-tvOS" */;
+			buildPhases = (
+				2154C2D827E373C780A3FF6D /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BabyDaysSyncProbe-tvOS";
+			packageProductDependencies = (
+			);
+			productName = "BabyDaysSyncProbe-tvOS";
+			productReference = ED8FBF2CC2BEEDFB9B13E47B /* BabyDaysSyncProbe-tvOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -622,6 +750,14 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					218DF6A423BF7DB5DA8E200D = {
+						DevelopmentTeam = N7Z52F27XK;
+						ProvisioningStyle = Automatic;
+					};
+					31DE4C22020C9E3F48A0A7B1 = {
+						DevelopmentTeam = N7Z52F27XK;
+						ProvisioningStyle = Automatic;
+					};
 					36B3216D9C2511E35BC05D71 = {
 						DevelopmentTeam = N7Z52F27XK;
 						ProvisioningStyle = Automatic;
@@ -654,6 +790,10 @@
 						DevelopmentTeam = N7Z52F27XK;
 						ProvisioningStyle = Automatic;
 					};
+					BC80940D79934E6967AD9BC4 = {
+						DevelopmentTeam = N7Z52F27XK;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 13ED3FF9D07120EABEE61116 /* Build configuration list for PBXProject "BabyDays" */;
@@ -674,6 +814,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				218DF6A423BF7DB5DA8E200D /* BabyDaysSyncProbe-iOS */,
+				31DE4C22020C9E3F48A0A7B1 /* BabyDaysSyncProbe-macOS */,
+				BC80940D79934E6967AD9BC4 /* BabyDaysSyncProbe-tvOS */,
 				B069D1490752D9C1A1692B62 /* BabyDays-iOS */,
 				BC1F52B237183ECF887E0CD4 /* BabyDays-macOS */,
 				54CDCA6781BA322E87460522 /* BabyDays-macOS-AppStore */,
@@ -790,14 +933,45 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0E4B0EB834C6B4FB6BC4404D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE4B8B3AADBDFCBBCA4FCA90 /* BabyAge.swift in Sources */,
+				14837484D9E946B48DA9FD5B /* BabyCloudSync.swift in Sources */,
+				70B1FB85FED69F7579151F12 /* BabyProfile.swift in Sources */,
+				3D6E7EFC550A57F2A3E6D439 /* BabySyncRecord.swift in Sources */,
+				200A3D3080EA618AD99B35E6 /* CloudSyncProbe.swift in Sources */,
+				10CA2F2E3EDB19F216D55B58 /* ProbeApp.swift in Sources */,
+				EBAD2108D7ED35A9D31A8B98 /* Zodiac.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2154C2D827E373C780A3FF6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7386042F020ACC26D9F84C8 /* BabyAge.swift in Sources */,
+				2A131BA61FEA19A9A340A71D /* BabyCloudSync.swift in Sources */,
+				35EBBC691B39811BDD4C5861 /* BabyProfile.swift in Sources */,
+				DFB5BDB4A7E000C5B6C77128 /* BabySyncRecord.swift in Sources */,
+				46D4F992CA85BB3C9934DDE0 /* CloudSyncProbe.swift in Sources */,
+				975A9E1A0582FF5AB11EC95C /* ProbeApp.swift in Sources */,
+				4B4DEBD84CE041DC3F03E566 /* Zodiac.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		25BF97CA63DACDC92AB68515 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				552055D7C68978B104A225BD /* BabyAge.swift in Sources */,
+				A6872BC63BBBB360F8D2CE6A /* BabyCloudSync.swift in Sources */,
 				9C0BBC09B749160A022DB865 /* BabyDaysApp.swift in Sources */,
 				C9AE98530890C45B76002AA9 /* BabyEditor.swift in Sources */,
 				BB892264ED596B757EE4F4D5 /* BabyProfile.swift in Sources */,
+				EA3B66769371A050A8589CF7 /* BabySyncRecord.swift in Sources */,
+				5CE3DC11B47B70E740539AF9 /* CloudSyncSettings.swift in Sources */,
 				55C3B6E6004828112DD7D507 /* Decorations.swift in Sources */,
 				F0A496E32402CC04368DFDFB /* GalleryView.swift in Sources */,
 				885B9D3B361E7361B02B8B85 /* IconAppearance.swift in Sources */,
@@ -816,9 +990,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEB41A8279EF61742C23CBF8 /* BabyAge.swift in Sources */,
+				3CC788E1C13E5AB2F31191A2 /* BabyCloudSync.swift in Sources */,
 				A6D7AF87D52ADCFF015C67E2 /* BabyDaysWidget.swift in Sources */,
 				BAE30CB8CC9B7951FD9B4362 /* BabyProfile.swift in Sources */,
 				EBFC64EBB33213F72A98DC1D /* BabySelection.swift in Sources */,
+				04E14D40701CEC7799DB822B /* BabySyncRecord.swift in Sources */,
+				F24B0DC5F178F15A66ECD8B2 /* CloudSyncSettings.swift in Sources */,
 				163D85FBE7B705CB903F1B6F /* Decorations.swift in Sources */,
 				6806DADC6FAB14E3F68856B3 /* Theme.swift in Sources */,
 				6DB8F4CCA8B27D3022A2D356 /* UpdateFeed.swift in Sources */,
@@ -833,7 +1010,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF39BDBDF94894269A044322 /* BabyAge.swift in Sources */,
+				8FE2FABDC9CBE3CE1AB65693 /* BabyCloudSync.swift in Sources */,
 				898211D42D57C5FCB71629E1 /* BabyProfile.swift in Sources */,
+				53ECA8DCD55B1354C0B96E11 /* BabySyncRecord.swift in Sources */,
+				7900C8C6C6459709BDC0F438 /* CloudSyncSettings.swift in Sources */,
 				587B3BFDE00B0AF180059292 /* ContentProvider.swift in Sources */,
 				17C9F9D3EFE6B3792058274A /* Decorations.swift in Sources */,
 				E0DE40B20A9E50F200E1FA17 /* TVAgeBoard.swift in Sources */,
@@ -845,14 +1025,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		51FA42BA018035A1CB442CD5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B633DD0899FBF810C126874 /* BabyAge.swift in Sources */,
+				B1BAA2704B4F1D7932175DD6 /* BabyCloudSync.swift in Sources */,
+				303EEFFA190FF9CDD34A0F17 /* BabyProfile.swift in Sources */,
+				BB4EB172CA8A7ABDB8F72CE4 /* BabySyncRecord.swift in Sources */,
+				3712D7A88CEC39EB4FB0A0BD /* CloudSyncProbe.swift in Sources */,
+				F0607F1EC6B56BA4C929F73F /* ProbeApp.swift in Sources */,
+				F7A428DF7AAF1914F6B18E68 /* Zodiac.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5A015395480BC9FFD129199C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				B59F671BF5E514E5D836E87B /* BabyAge.swift in Sources */,
+				E82FE59BB7F9C50A0904CA79 /* BabyCloudSync.swift in Sources */,
 				D66DB3782CEF17B44CA2196A /* BabyDaysApp.swift in Sources */,
 				742FA5E8D80DC79B86558027 /* BabyEditor.swift in Sources */,
 				D79D72EDB8A844C29F5C3CF4 /* BabyProfile.swift in Sources */,
+				E8F81304929C293F3AE83FC4 /* BabySyncRecord.swift in Sources */,
+				0E2D43F45721981DBAA2EFC5 /* CloudSyncSettings.swift in Sources */,
 				E7B428748B102A1453B9D209 /* Decorations.swift in Sources */,
 				443A315C5A73F7E8316DFB56 /* GalleryView.swift in Sources */,
 				E4E8E1C2C15E6E7C633CA697 /* IconAppearance.swift in Sources */,
@@ -871,7 +1068,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A668308171EC3A46E11B641C /* BabyAge.swift in Sources */,
+				4848F281F1108E02DBD8A868 /* BabyCloudSync.swift in Sources */,
 				E86A65861CC0A8554F105309 /* BabyProfile.swift in Sources */,
+				F488938AA70BBF686E8E2FE3 /* BabySyncRecord.swift in Sources */,
+				62CE317553082EB4639A32CA /* CloudSyncSettings.swift in Sources */,
 				8E9C2F4AA36B834A72CD1E69 /* Decorations.swift in Sources */,
 				5D463C38030B45A9DAC590A2 /* IconAppearance.swift in Sources */,
 				1DF7582397B71ED5EBC552EE /* TVAgeBoard.swift in Sources */,
@@ -890,9 +1090,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CBD383984F707CEB9ACBFB7 /* BabyAge.swift in Sources */,
+				080A1EF9B2BB7034A4142470 /* BabyCloudSync.swift in Sources */,
 				F0863B8DAC4A6FC43E761805 /* BabyDaysWidget.swift in Sources */,
 				BE293EA831EEA6CC1E94BBA0 /* BabyProfile.swift in Sources */,
 				4E7CA48C8F7814C9872A213B /* BabySelection.swift in Sources */,
+				6830D3DBA1B43EADE3145325 /* BabySyncRecord.swift in Sources */,
+				E5A29E67E115A59CE6B85FA1 /* CloudSyncSettings.swift in Sources */,
 				7776FF7325F403EF8FE2A8D8 /* Decorations.swift in Sources */,
 				6E575C742F050C93D9365813 /* Theme.swift in Sources */,
 				B536F3D704D95169ABFC3EF7 /* UpdateFeed.swift in Sources */,
@@ -907,9 +1110,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A85B7059ADDF81A81819CDD2 /* BabyAge.swift in Sources */,
+				224B24B29981F447BD40BCD1 /* BabyCloudSync.swift in Sources */,
 				1D63D4D4F7687CE5D2FA431E /* BabyDaysWidget.swift in Sources */,
 				F529A693D5152869F066FC61 /* BabyProfile.swift in Sources */,
 				DDBD4D7F6E0AFEAEFAC9E67F /* BabySelection.swift in Sources */,
+				C09D89D9ECBC5EE925A12F52 /* BabySyncRecord.swift in Sources */,
+				A47721FA8E3FB9F32108DF7B /* CloudSyncSettings.swift in Sources */,
 				A5D626FD91DABD389C057C0A /* Decorations.swift in Sources */,
 				5ED75374B756458B07B71863 /* Theme.swift in Sources */,
 				9D9CDC09F963FC81122513F1 /* UpdateFeed.swift in Sources */,
@@ -924,9 +1130,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C1FA579E8D7392EBA8189FB /* BabyAge.swift in Sources */,
+				1C20E5838810420B273DA19A /* BabyCloudSync.swift in Sources */,
 				8B50C2723B2F171563D70AD2 /* BabyDaysApp.swift in Sources */,
 				7D99ABBC28C6F55D8DFE478D /* BabyEditor.swift in Sources */,
 				35D28C6CE0A4CA7F61986889 /* BabyProfile.swift in Sources */,
+				EFBDEE0F3C35F2849084B7CC /* BabySyncRecord.swift in Sources */,
+				82FEF1C8992402D15F4B70E3 /* CloudSyncSettings.swift in Sources */,
 				FE2C9F558545C75288AA2188 /* Decorations.swift in Sources */,
 				2672869FA5261815AF0A8D81 /* GalleryView.swift in Sources */,
 				41F9061153B220233335AF24 /* IconAppearance.swift in Sources */,
@@ -1037,6 +1246,26 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4120A76F9BCF1CDB57978B64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Tools/Probe/Probe.entitlements;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "BabyDays Sync Probe";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays.syncprobe;
+				PRODUCT_NAME = BabyDaysSyncProbe;
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Debug;
 		};
@@ -1161,6 +1390,26 @@
 			};
 			name = Debug;
 		};
+		75670BF88C531965E8E2F0AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Tools/Probe/Probe.entitlements;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "BabyDays Sync Probe";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays.syncprobe;
+				PRODUCT_NAME = BabyDaysSyncProbe;
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Release;
+		};
 		7E97310B8AD5C33687282EB8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1249,6 +1498,49 @@
 			};
 			name = Debug;
 		};
+		98A3BC7A70DB4B30CE3023AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Tools/Probe/Probe.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "BabyDays Sync Probe";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays.syncprobe;
+				PRODUCT_NAME = BabyDaysSyncProbe;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A5845D228AD5B5ED2F0E825F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Tools/Probe/Probe-macOS.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "BabyDays Sync Probe";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays.syncprobe;
+				PRODUCT_NAME = BabyDaysSyncProbe;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		A86C9725178FB5FC2EB884A6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1289,6 +1581,29 @@
 				PRODUCT_NAME = BabyDaysWidget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D4DB031F9635BB5FF2EF8100 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Tools/Probe/Probe.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "BabyDays Sync Probe";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays.syncprobe;
+				PRODUCT_NAME = BabyDaysSyncProbe;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1403,7 +1718,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1470,7 +1785,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1482,6 +1797,26 @@
 				UPDATE_FEED_URL = "https://github.com/Caldis/baby-days/releases/latest/download/appcast.xml";
 			};
 			name = Release;
+		};
+		F987F436795B38B297D2EE8D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Tools/Probe/Probe-macOS.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "BabyDays Sync Probe";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caldis.babydays.syncprobe;
+				PRODUCT_NAME = BabyDaysSyncProbe;
+				SDKROOT = macosx;
+			};
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1518,6 +1853,15 @@
 			buildConfigurations = (
 				31374ADADBBBDD0A480A38D1 /* Debug */,
 				C38F8DE7781A5E25AFDC7BD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7799380059513AA17BCECB52 /* Build configuration list for PBXNativeTarget "BabyDaysSyncProbe-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98A3BC7A70DB4B30CE3023AF /* Debug */,
+				D4DB031F9635BB5FF2EF8100 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1563,6 +1907,24 @@
 			buildConfigurations = (
 				6D25AB6337DEE48C78DC93F6 /* Debug */,
 				E4DA8898FCF92B322C14D88E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F07CBC637670F34FB5603974 /* Build configuration list for PBXNativeTarget "BabyDaysSyncProbe-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F987F436795B38B297D2EE8D /* Debug */,
+				A5845D228AD5B5ED2F0E825F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FFBEABDC531DDA40897F4D93 /* Build configuration list for PBXNativeTarget "BabyDaysSyncProbe-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4120A76F9BCF1CDB57978B64 /* Debug */,
+				75670BF88C531965E8E2F0AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -97,6 +97,12 @@ iPad 图片从 docs/images/ipad-portrait.png 与 ipad-landscape.png 原尺寸导
 
 ## 上传与提交
 
+1.4.0 先上传 TestFlight, 用户确认真实 iCloud 跨设备同步后再准备正式审核. 每台设备默认关闭, 在使用同一 Apple 账户的 iPhone, iPad, Mac 与 Apple TV 上分别开启. 本地回归使用隔离 UserDefaults 与内存传输, 已在 macOS 和三种模拟器设备中执行, 不据此宣称真实 iCloud 传输通过
+
+本轮测试重点是新增与编辑宝宝, 多宝宝合并, 删除同步, 离线后恢复, 关闭后的本机编辑, 以及各端小组件或顶部栏的资料与生肖主题刷新. 当前选择, 图标偏好和每个小组件的关联保留在各自设备. 初次合并不按生日或称呼去重, 各设备曾独立建立的相同宝宝会分别保留
+
+macOS TestFlight 版与现有 Developer ID 版的 Bundle ID 相同, 安装时会替换现有 App, 桌面小组件可能需要重新添加. Agent 本轮不替换用户 /Applications 中的版本
+
 本机通过 Homebrew 官方源安装 asc, 配套发布 skills 来自 rorkai/app-store-connect-cli-skills. 所有项目命令使用 scripts/asc.sh, 该入口将配置放在 ~/.config/baby-days/asc.json, 网页会话缓存放在 ~/Library/Caches/baby-days/asc-web, 私钥使用系统钥匙串
 
 Mac mini 的默认 profile 为 caldis-appstore, 已在项目之外的新终端通过普通 asc auth status --validate 与真实 App 查询验证. 非空备份按 AuthKey_*.p8 标准命名保存在 ~/.config/baby-days, 权限为 0600. 发布无需再连接 MacBook 或重新创建密钥

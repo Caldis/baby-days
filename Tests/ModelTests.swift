@@ -30,7 +30,7 @@ struct ModelTests {
         second.name = "新称呼"
         state.upsert(second)
         check(state.babies.count == 2 && state.babies.last?.name == "新称呼", "Edit without duplicate IDs")
-        BabyProfile.save(state, to: defaults)
+        state = BabyProfile.save(state, to: defaults)
         check(BabyProfile.baby(id: original, from: defaults)?.zodiac == .dragon, "First widget keeps first baby's theme")
         check(BabyProfile.baby(id: second.id, from: defaults)?.zodiac == .snake, "Second widget uses its own theme")
         state.iconMode = "automatic"; state.iconBabyID = second.id
@@ -42,12 +42,12 @@ struct ModelTests {
         state.remove(id: original)
         check(state.selected?.id == second.id, "Deleting selected baby selects remaining baby")
         check(!state.babies.contains { $0.id == original }, "Deleted widget association cannot match another baby")
-        BabyProfile.save(state, to: defaults)
+        state = BabyProfile.save(state, to: defaults)
         check(BabyProfile.baby(id: original, from: defaults) == nil, "Removed widget does not fall back to remaining baby")
         check(BabyProfile.load(from: defaults) == state, "Round trip multiple profiles and icon preferences")
         state.remove(id: second.id)
         check(state.iconZodiac == .snake, "No babies falls back to default snake icon")
-        BabyProfile.save(state, to: defaults)
+        state = BabyProfile.save(state, to: defaults)
         defaults.set(sample.storageValue, forKey: BabyProfile.birthDateKey)
         check(BabyProfile.load(from: defaults).babies.isEmpty, "Never reimport legacy date after deleting all babies")
         state.iconMode = "pig"

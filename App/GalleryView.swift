@@ -87,16 +87,19 @@ struct GalleryView: View {
                 deleting = nil
             }
         } message: {
-            Text("此宝宝的小组件需要重新选择宝宝")
+            Text(BabyCloudSync.shared.isEnabled
+                 ? "删除会同步到其他设备, 此宝宝的小组件需要重新选择宝宝"
+                 : "此宝宝的小组件需要重新选择宝宝")
         }
         .alert("图标暂未更换", isPresented: Binding(get: { iconError != nil }, set: { if !$0 { iconError = nil } })) {
             Button("好", role: .cancel) { iconError = nil }
         } message: { Text(iconError ?? "") }
-        .onAppear { if preview == nil { _ = BabyProfile.load(); applyIcon() } }
+        .onAppear { if preview == nil { _ = BabyProfile.load(); BabyCloudSync.shared.refresh(); applyIcon() } }
         .onChange(of: collection.iconZodiac) { _, _ in applyIcon() }
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
             today = .now
+            if preview == nil { BabyCloudSync.shared.refresh() }
             applyIcon()
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -122,8 +125,8 @@ struct GalleryView: View {
                 .labelStyle(.iconOnly)
                 .buttonStyle(.bordered)
                 .accessibilityIdentifier("settings")
-                .accessibilityLabel("应用图标")
-                .help("应用图标")
+                .accessibilityLabel("设置")
+                .help("设置")
         }
         .frame(maxWidth: contentWidth(for: availableWidth))
     }

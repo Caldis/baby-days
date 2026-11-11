@@ -22,6 +22,7 @@ struct AgeProvider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: SelectBabyIntent, in context: Context) async -> AgeEntry {
+        if !context.isPreview { await BabyCloudSync.shared.refresh() }
         let baby = BabyProfile.baby(id: configuration.babyID)
         if let baby { return entry(baby, date: .now) }
         if context.isPreview && configuration.babyID == nil { return AgeEntry(date: .now, birth: .sample()) }
@@ -29,6 +30,7 @@ struct AgeProvider: AppIntentTimelineProvider {
     }
 
     func timeline(for configuration: SelectBabyIntent, in context: Context) async -> Timeline<AgeEntry> {
+        await BabyCloudSync.shared.refresh()
         #if os(macOS)
         if UpdateFeed.isStaleProcess {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { exit(0) }

@@ -4,12 +4,16 @@ import WidgetKit
 /// 保存原生字符串 ID, 动态选项只负责显示称呼, 避免实体注册失败时配置静默退回默认宝宝
 struct BabyOptionsProvider: DynamicOptionsProvider {
     func results() async throws -> IntentItemCollection<String> {
+        await BabyCloudSync.shared.refresh()
         let items = BabyProfile.load().babies.map { baby in
             IntentItem(baby.id, title: "\(baby.displayName)", subtitle: "属\(baby.zodiac.name) · \(baby.birth.displayText)")
         }
         return IntentItemCollection(sections: [IntentItemSection(items: items)])
     }
-    func defaultResult() async -> String? { BabyProfile.load().selected?.id }
+    func defaultResult() async -> String? {
+        await BabyCloudSync.shared.refresh()
+        return BabyProfile.load().selected?.id
+    }
 }
 
 struct SelectBabyIntent: WidgetConfigurationIntent {

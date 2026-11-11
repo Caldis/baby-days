@@ -22,7 +22,7 @@ settings:
   base:
     DEVELOPMENT_TEAM: N7Z52F27XK
     CODE_SIGN_STYLE: Automatic
-    MARKETING_VERSION: "1.3.0"
+    MARKETING_VERSION: "1.4.0"
     CURRENT_PROJECT_VERSION: "2"
     SWIFT_VERSION: "5.0"
     GENERATE_INFOPLIST_FILE: YES
@@ -76,7 +76,51 @@ targetTemplates:
         INFOPLIST_KEY_CFBundleDisplayName: 宝宝多大
         SKIP_INSTALL: YES
 
+  SyncProbe:
+    type: application
+    sources:
+      - path: Tools/Probe/ProbeApp.swift
+      - path: Shared/BabyAge.swift
+      - path: Shared/BabyProfile.swift
+      - path: Shared/BabySyncRecord.swift
+      - path: Shared/BabyCloudSync.swift
+      - path: Tools/Probe/CloudSyncProbe.swift
+      - path: Shared/Zodiac.swift
+    settings:
+      base:
+        PRODUCT_NAME: BabyDaysSyncProbe
+        PRODUCT_BUNDLE_IDENTIFIER: com.caldis.babydays.syncprobe
+        INFOPLIST_KEY_CFBundleDisplayName: BabyDays Sync Probe
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_ENTITLEMENTS: Tools/Probe/Probe.entitlements
+
 targets:
+  BabyDaysSyncProbe-iOS:
+    templates: [SyncProbe]
+    platform: iOS
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: "1,2"
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
+
+  BabyDaysSyncProbe-macOS:
+    templates: [SyncProbe]
+    platform: macOS
+    settings:
+      base:
+        CODE_SIGN_ENTITLEMENTS: Tools/Probe/Probe-macOS.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+
+  BabyDaysSyncProbe-tvOS:
+    templates: [SyncProbe]
+    platform: tvOS
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: "3"
+
   BabyDays-iOS:
     templates: [App]
     platform: iOS

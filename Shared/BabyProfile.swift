@@ -1,4 +1,5 @@
 import Foundation
+import Darwin
 
 /// 宝宝的出生日期, 只保存公历年月日, 与时区无关
 struct BirthDate: Equatable, Codable, Sendable {
@@ -59,6 +60,9 @@ struct BabyCollection: Codable, Equatable, Sendable {
     var selectedID: String?
     var iconMode: String = "default"
     var iconBabyID: String?
+    var syncState: BabySyncState?
+    // Device-local alias for widgets created before iCloud gave the old singleton a unique ID.
+    var legacySyncID: String?
     var selected: Baby? { babies.first { $0.id == selectedID } ?? babies.first }
     var iconZodiac: Zodiac {
         if iconMode == "automatic" {
@@ -86,6 +90,7 @@ struct BabyCollection: Codable, Equatable, Sendable {
 enum BabyProfile {
     static let birthDateKey = "birthDate"
     static let recordsKey = "babyCollection.v1"
+    static let didChange = Notification.Name("BabyDaysProfileDidChange")
     static var appGroup: String? { Bundle.main.object(forInfoDictionaryKey: "BabyDaysAppGroup") as? String }
     // AppStorage 必须观察保存时使用的同一个实例, 否则同进程的修改不会触发界面刷新
     static let defaults: UserDefaults = appGroup.flatMap(UserDefaults.init(suiteName:)) ?? .standard
@@ -97,25 +102,91 @@ enum BabyProfile {
         return value
     }
     static func load(from store: UserDefaults = defaults) -> BabyCollection {
-        if let data = store.data(forKey: recordsKey), let value = decode(data) { return value }
-        var value = BabyCollection()
-        if store.data(forKey: recordsKey) == nil,
-           let old = store.string(forKey: birthDateKey).flatMap(BirthDate.init(storageValue:)) {
-            value.upsert(Baby(id: "legacy-baby", name: "宝宝", birth: old))
-            save(value, to: store)
+        ProfileTransaction.withStore(store) {
+            if let data = store.data(forKey: recordsKey), var value = decode(data) {
+                if value.syncState == nil {
+                    value.syncState = BabySyncState(babies: value.babies)
+                    persist(value, to: store)
+                }
+                return value
+            }
+            var value = BabyCollection()
+            if store.data(forKey: recordsKey) == nil,
+               let old = store.string(forKey: birthDateKey).flatMap(BirthDate.init(storageValue:)) {
+                value.upsert(Baby(id: "legacy-baby", name: "宝宝", birth: old))
+                value = save(value, to: store)
+            }
+            return value
         }
-        return value
     }
-    static func save(_ value: BabyCollection, to store: UserDefaults = defaults) {
-        guard let data = try? JSONEncoder().encode(value) else { return }
+    @discardableResult
+    static func save(_ value: BabyCollection, to store: UserDefaults = defaults, now: Date = .now) -> BabyCollection {
+        ProfileTransaction.withStore(store) {
+            let previous = store.data(forKey: recordsKey).flatMap(decode)
+            let base = value.syncState ?? BabySyncState(babies: previous?.babies ?? [])
+            var state = previous?.syncState ?? BabySyncState(babies: previous?.babies ?? [])
+            state.edit(from: base, to: value.babies, now: now)
+            var result = value
+            result.syncState = state
+            result.babies = state.babies(keeping: value.babies)
+            repairSelection(&result)
+            persist(result, to: store)
+            return result
+        }
+    }
+
+    /// Incoming cloud data never replaces local selection, icon preferences, or widget assignments.
+    @discardableResult
+    static func merge(_ records: [BabySyncRecord], from store: UserDefaults = defaults) -> BabyCollection {
+        ProfileTransaction.withStore(store) {
+            var result = load(from: store)
+            var state = result.syncState ?? BabySyncState(babies: result.babies)
+            state.merge(records)
+            result.syncState = state
+            result.babies = state.babies(keeping: result.babies)
+            repairSelection(&result)
+            persist(result, to: store)
+            return result
+        }
+    }
+
+    /// legacy-baby was intentionally device-local. Give each device's old profile its own cloud ID.
+    static func prepareForSync(in store: UserDefaults = defaults) {
+        ProfileTransaction.withStore(store) {
+            var value = load(from: store)
+            guard var state = value.syncState, var old = state.records.removeValue(forKey: "legacy-baby") else { return }
+            let id = value.legacySyncID ?? UUID().uuidString
+            old.id = id
+            state.records[id] = old
+            value.syncState = state
+            value.legacySyncID = id
+            for index in value.babies.indices where value.babies[index].id == "legacy-baby" { value.babies[index].id = id }
+            if value.selectedID == "legacy-baby" { value.selectedID = id }
+            if value.iconBabyID == "legacy-baby" { value.iconBabyID = id }
+            persist(value, to: store)
+        }
+    }
+
+    private static func repairSelection(_ value: inout BabyCollection) {
+        if !value.babies.contains(where: { $0.id == value.selectedID }) { value.selectedID = value.babies.first?.id }
+        if !value.babies.contains(where: { $0.id == value.iconBabyID }) { value.iconBabyID = nil }
+    }
+
+    private static func persist(_ value: BabyCollection, to store: UserDefaults) {
+        if let data = store.data(forKey: recordsKey), decode(data) == value { return }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        guard let data = try? encoder.encode(value) else { return }
         store.set(data, forKey: recordsKey)
         // Keep older installed app/extension versions reading the default baby's latest date
         store.set(value.selected?.birth.storageValue, forKey: birthDateKey)
+        ProfileTransaction.changed(store)
     }
     static func baby(id: String?, from store: UserDefaults = defaults) -> Baby? {
         let value = load(from: store)
         guard let id else { return value.selected }
-        return value.babies.first { $0.id == id }
+        let resolved = id == "legacy-baby" ? value.legacySyncID ?? id : id
+        return value.babies.first { $0.id == resolved }
     }
     static var birthDate: BirthDate? {
         get { load().selected?.birth }
@@ -129,4 +200,48 @@ enum BabyProfile {
             save(value)
         }
     }
+}
+
+/// The App and its extensions are separate writers. Serialize their read/merge/write transactions.
+private enum ProfileTransaction {
+    private static let mutex = NSRecursiveLock()
+    private static var depth = 0
+    private static var pending = Set<UserDefaults>()
+    private static let lockURL: URL? = BabyProfile.appGroup.flatMap {
+        FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: $0)
+    }?.appendingPathComponent(".baby-profile.lock")
+
+    static func withStore<T>(_ store: UserDefaults, _ operation: () -> T) -> T {
+        mutex.lock()
+        let outermost = depth == 0
+        depth += 1
+        var descriptor: Int32 = -1
+        if outermost {
+            if store === BabyProfile.defaults, let lockURL {
+                descriptor = open(lockURL.path, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR)
+                if descriptor >= 0, flock(descriptor, LOCK_EX) != 0 {
+                    close(descriptor)
+                    descriptor = -1
+                }
+            }
+            // Refresh another process's committed preferences before rebasing this transaction.
+            store.synchronize()
+        }
+        defer {
+            var notifications: Set<UserDefaults> = []
+            if outermost {
+                store.synchronize()
+                if descriptor >= 0 { flock(descriptor, LOCK_UN); close(descriptor) }
+                notifications = pending
+                pending.removeAll()
+            }
+            depth -= 1
+            mutex.unlock()
+            // Main-queue observers may start another transaction. Never notify while holding the lock.
+            for item in notifications { NotificationCenter.default.post(name: BabyProfile.didChange, object: item) }
+        }
+        return operation()
+    }
+
+    static func changed(_ store: UserDefaults) { pending.insert(store) }
 }

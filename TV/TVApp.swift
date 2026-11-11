@@ -22,7 +22,7 @@ struct TVRootView: View {
     @State private var iconError: String?
     @State private var deleting = false
     @FocusState private var focusedAction: TVAction?
-    private enum TVAction { case edit, add, icon, delete }
+    private enum TVAction { case edit, add, settings, delete }
     private var collection: BabyCollection { BabyProfile.decode(records) ?? BabyProfile.load() }
 
     var body: some View {
@@ -41,12 +41,12 @@ struct TVRootView: View {
                         }.frame(width: 340)
                         action(.edit, title: "编辑", symbol: "pencil", palette: palette) { adding = false; editing = true }
                         action(.add, title: "添加", symbol: "plus", palette: palette) { adding = true; editing = true }
-                        action(.icon, title: "图标", symbol: "app.badge", palette: palette) { iconSettings = true }
+                        action(.settings, title: "设置", symbol: "gearshape", palette: palette) { iconSettings = true }
                         action(.delete, title: "删除", symbol: "trash", palette: palette) { deleting = true }
                     }.font(.system(size: 24, weight: .medium)).padding(40)
                 }
             } else {
-                TVSetupView(initial: adding ? nil : baby?.birth, initialName: adding ? "" : baby?.displayName ?? "", canCancel: !collection.babies.isEmpty) { birth, name in
+                TVSetupView(initial: adding ? nil : baby?.birth, initialName: adding ? "" : baby?.displayName ?? "", canCancel: !collection.babies.isEmpty, onSettings: { iconSettings = true }) { birth, name in
                     var state = collection
                     var value = adding ? Baby(name: name, birth: birth) : (baby ?? Baby(name: name, birth: birth))
                     value.birth = birth; value.name = String(name.prefix(20))
@@ -68,15 +68,18 @@ struct TVRootView: View {
                     save(state)
                 }
             }
+        } message: {
+            if BabyCloudSync.shared.isEnabled { Text("删除会同步到其他已开启 iCloud 同步的设备") }
         }
         .alert("图标暂未更换", isPresented: Binding(get: { iconError != nil }, set: { if !$0 { iconError = nil } })) {
             Button("好", role: .cancel) { iconError = nil }
         } message: { Text(iconError ?? "") }
-        .onAppear { _ = BabyProfile.load(); applyIcon() }
+        .onAppear { _ = BabyProfile.load(); BabyCloudSync.shared.refresh(); applyIcon() }
         .onChange(of: collection.iconZodiac) { _, _ in applyIcon() }
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
             today = .now
+            BabyCloudSync.shared.refresh()
             applyIcon()
             TVTopShelfContentProvider.topShelfContentDidChange()
         }
@@ -95,7 +98,7 @@ struct TVRootView: View {
         .buttonStyle(.plain)
         .focused($focusedAction, equals: kind)
         .scaleEffect(focused ? 1.06 : 1)
-        .accessibilityLabel(kind == .icon ? "应用图标" : "\(title)宝宝")
+        .accessibilityLabel(kind == .settings ? "设置" : "\(title)宝宝")
     }
     private func applyIcon() { IconAppearance.apply(collection.iconZodiac) { iconError = $0 } }
     private func save(_ state: BabyCollection) {
@@ -108,6 +111,7 @@ struct TVRootView: View {
 struct TVSetupView: View {
     let onSave: (BirthDate, String) -> Void
     let onCancel: () -> Void
+    private let onSettings: (() -> Void)?
     private let canCancel: Bool
     @State private var name: String
     @State private var year: Int
@@ -115,7 +119,7 @@ struct TVSetupView: View {
     @State private var day: Int
     @Environment(\.palette) private var palette
 
-    init(initial: BirthDate?, initialName: String, canCancel: Bool, onSave: @escaping (BirthDate, String) -> Void, onCancel: @escaping () -> Void) {
+    init(initial: BirthDate?, initialName: String, canCancel: Bool, onSettings: (() -> Void)? = nil, onSave: @escaping (BirthDate, String) -> Void, onCancel: @escaping () -> Void) {
         let start = initial ?? BirthDate(date: .now)
         _name = State(initialValue: initialName)
         self.canCancel = canCancel
@@ -124,6 +128,7 @@ struct TVSetupView: View {
         _day = State(initialValue: start.day)
         self.onSave = onSave
         self.onCancel = onCancel
+        self.onSettings = onSettings
     }
 
     private var today: BirthDate { BirthDate(date: .now) }
@@ -146,6 +151,11 @@ struct TVSetupView: View {
     var body: some View {
         NavigationStack {
             Form {
+                if !canCancel, let onSettings {
+                    Section {
+                        Button(action: onSettings) { Label("从 iCloud 同步", systemImage: "icloud") }
+                    }
+                }
                 Section {
                     TextField("称呼", text: $name)
                         .onChange(of: name) { _, value in name = String(value.prefix(20)) }

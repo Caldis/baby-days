@@ -20,7 +20,7 @@ case $TARGET in
   all) PLATFORMS=(iOS tvOS macOS) ;;
   *) fail "用法: scripts/release-appstore.sh [ios|tvos|macos|all]" ;;
 esac
-git diff --quiet && git diff --cached --quiet || fail "工作区有未提交的改动"
+[[ -z $(git status --porcelain) ]] || fail "工作区有未提交的改动"
 if command -v xcodegen >/dev/null; then
   xcodegen generate --quiet
 fi
@@ -40,6 +40,8 @@ cat > "$WORK/ExportOptions.plist" <<PLIST
 	<string>automatic</string>
 	<key>teamID</key>
 	<string>N7Z52F27XK</string>
+	<key>manageAppVersionAndBuildNumber</key>
+	<false/>
 </dict>
 </plist>
 PLIST
@@ -51,6 +53,8 @@ cat > "$WORK/tvos.entitlements" <<PLIST
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
+	<string>N7Z52F27XK.com.caldis.babydays</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.com.caldis.babydays</string>
@@ -58,6 +62,38 @@ cat > "$WORK/tvos.entitlements" <<PLIST
 </dict>
 </plist>
 PLIST
+
+# 导出前检查 App 与扩展, 避免云端重签名时因归档缺少权限而丢失 App Group 或跨平台 KVS
+verify_entitlements() {
+  local bundle=$1 platform=$2 expected_group=group.com.caldis.babydays
+  [[ $platform == macOS ]] && expected_group=N7Z52F27XK.com.caldis.babydays
+  codesign -d --entitlements :- "$bundle" > "$WORK/check-entitlements.plist" 2>/dev/null
+  python3 - "$WORK/check-entitlements.plist" "$expected_group" "$bundle" "$platform" <<'PY'
+import pathlib, plistlib, sys
+with open(sys.argv[1], "rb") as source:
+    entitlements = plistlib.load(source)
+assert entitlements.get("com.apple.developer.ubiquity-kvstore-identifier") == "N7Z52F27XK.com.caldis.babydays", "归档缺少共享 iCloud KVS 权限"
+assert sys.argv[2] in entitlements.get("com.apple.security.application-groups", []), "归档缺少 App Group 权限"
+bundle = pathlib.Path(sys.argv[3])
+info_path = bundle / ("Contents/Info.plist" if sys.argv[4] == "macOS" else "Info.plist")
+with info_path.open("rb") as source:
+    info = plistlib.load(source)
+assert info.get("BabyDaysAppGroup") == sys.argv[2], "App Group 读取配置与签名权限不一致"
+if sys.argv[4] == "iOS":
+    assert set(info.get("UIDeviceFamily", [])) == {1, 2}, "iOS App 与扩展均须支持 iPhone 和 iPad"
+PY
+}
+
+# 注销本次 Mac 副本, 避免系统在 /Applications 之外选中其小组件扩展
+unregister_mac_copies() {
+  local copy register=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister
+  for copy in "$WORK/macOS.xcarchive/Products/Applications/BabyDays.app" "$WORK/DerivedData/Build/Products/Release/BabyDays.app"; do
+    [[ -d $copy ]] || continue
+    pluginkit -r "$copy/Contents/PlugIns/BabyDaysWidget.appex" 2>/dev/null || true
+    "$register" -u "$copy" 2>/dev/null || true
+  done
+}
+trap unregister_mac_copies EXIT
 
 for PLATFORM in $PLATFORMS; do
   ARCHIVE=$WORK/$PLATFORM.xcarchive
@@ -78,7 +114,17 @@ for PLATFORM in $PLATFORMS; do
     codesign -f -s - --entitlements "$WORK/tvos.entitlements" "$APP/PlugIns/BabyDaysTopShelf.appex"
     codesign -f -s - --entitlements "$WORK/tvos.entitlements" "$APP"
   fi
+  APP=$ARCHIVE/Products/Applications/BabyDays.app
+  EXTENSIONS=$APP/PlugIns
+  [[ $PLATFORM == macOS ]] && EXTENSIONS=$APP/Contents/PlugIns
+  verify_entitlements "$APP" "$PLATFORM"
+  for EXTENSION in "$EXTENSIONS"/*.appex; do
+    verify_entitlements "$EXTENSION" "$PLATFORM"
+  done
+done
 
+for PLATFORM in $PLATFORMS; do
+  ARCHIVE=$WORK/$PLATFORM.xcarchive
   echo "上传 $PLATFORM 到 App Store Connect"
   # 云端签名偶尔返回空结果, 重试即可
   for attempt in {1..3}; do
@@ -94,5 +140,6 @@ for PLATFORM in $PLATFORMS; do
   done
 done
 
+unregister_mac_copies
 rm -rf "$WORK"
 echo "已上传 $VERSION ($BUILD_NUMBER), App Store Connect 处理完成后在 TestFlight 中可见"

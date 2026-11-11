@@ -5,12 +5,13 @@ import UIKit
 /// Apple TV 顶部栏: App 位于首行时, 展示一张实时渲染的年龄横幅
 final class ContentProvider: TVTopShelfContentProvider {
     override func loadTopShelfContent(completionHandler: @escaping (TVTopShelfContent?) -> Void) {
-        // 未设置生日时交回 nil, 系统显示静态顶部栏图
-        guard let baby = BabyProfile.load().selected else {
-            completionHandler(nil)
-            return
-        }
-        DispatchQueue.main.async {
+        Task { @MainActor in
+            BabyCloudSync.shared.refresh()
+            // 未设置生日时交回 nil, 系统显示静态顶部栏图
+            guard let baby = BabyProfile.load().selected else {
+                completionHandler(nil)
+                return
+            }
             let age = BabyAge(birth: baby.birth)
             let item = TVTopShelfItem(identifier: "age-\(baby.id)-\(age.totalDays)")
             for (scale, trait) in [(1, TVTopShelfItem.ImageTraits.screenScale1x), (2, .screenScale2x)] {

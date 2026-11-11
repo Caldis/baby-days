@@ -3,6 +3,7 @@ import SwiftUI
 struct IconSettings: View {
     let collection: BabyCollection
     let onChange: (BabyCollection) -> Void
+    @ObservedObject var sync: BabyCloudSync = .shared
     @Environment(\.dismiss) private var dismiss
     @Environment(\.palette) private var palette
 
@@ -12,7 +13,8 @@ struct IconSettings: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section {
+                CloudSyncSettings(sync: sync)
+                Section("应用图标") {
                     Picker("图标", selection: Binding(get: { mode }, set: { value in
                         var state = collection
                         state.iconMode = value == "manual" ? collection.iconZodiac.rawValue : value
@@ -86,7 +88,7 @@ struct IconSettings: View {
                 #endif
             }
             .formStyle(.grouped)
-            .navigationTitle("应用图标")
+            .navigationTitle("设置")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } }
         }
         .tint(palette.heroBottom)
